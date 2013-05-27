@@ -15,16 +15,14 @@ import com.letsmeetapp.R;
 import java.util.*;
 
 /**
- * Represents the activity holding a calendar view for a month.
+ * Represents the activity holding a calendar view for a month, the button to confirm the selection etc.
  */
 public class CalendarActivity extends Activity implements OnClickListener{
     private GridView calendarGridView;
     private CalendarAdapter calendarAdapter;
     private ArrayList<Day> allSelectedDays;
     private Calendar monthToShow;
-    HashMap<Calendar, ArrayList<Day>> daysInEachMonth;
-
-
+    private Button prev,next;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +39,35 @@ public class CalendarActivity extends Activity implements OnClickListener{
         //Register handler fot onTouch event of calendarGridView
         calendarGridView.setOnTouchListener(new CalendarActivityOnTouchListener(this));
 
+        Button prev = (Button)findViewById(R.id.prevButton);
+        Button next = (Button)findViewById(R.id.nextButton);
+
+        //TODO Put into separate files
+        next.setOnClickListener(
+                new OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        calendarAdapter = new CalendarAdapter(CalendarActivity.this, Calendar.FEBRUARY+1);
+                        calendarGridView.setAdapter(calendarAdapter);
+                    }
+                }
+
+
+        );
+        prev.setOnClickListener(
+                new OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        calendarAdapter = new CalendarAdapter(CalendarActivity.this, Calendar.FEBRUARY+2);
+                        calendarGridView.setAdapter(calendarAdapter);
+                    }
+                }
+
+
+        );
+
+
+
     }
 
     @Override
@@ -52,15 +79,11 @@ public class CalendarActivity extends Activity implements OnClickListener{
 
     @Override
 	public void onClick(View v) {
-		
 		//Log.d("CalendarActivity", v.toString());
-		
 	}
 
 
     //GETTER / SETTERS
-
-
     public GridView getCalendarGridView() {
         return calendarGridView;
     }
@@ -91,13 +114,5 @@ public class CalendarActivity extends Activity implements OnClickListener{
 
     public void setMonthToShow(Calendar monthToShow) {
         this.monthToShow = monthToShow;
-    }
-
-    public HashMap<Calendar, ArrayList<Day>> getDaysInEachMonth() {
-        return daysInEachMonth;
-    }
-
-    public void setDaysInEachMonth(HashMap<Calendar, ArrayList<Day>> daysInEachMonth) {
-        this.daysInEachMonth = daysInEachMonth;
     }
 }

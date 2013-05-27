@@ -17,11 +17,11 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
- * This adapter returns one calendar_day view for each day int that particular month (getCount())
- * It also generates the array of dates for the particular month the user is seing
+ * This is the adapter for the calendarGridView. It returns one calendar_day view for each day in that particular month (getCount())
  * User: luka
  */
 public class CalendarAdapter extends BaseAdapter {
+
     private Context mContext;
     private int dayViewDimension;   //value calculated as a screen_width/7 for the current orientation
     private ArrayList<Day> wholeMonth = new ArrayList<Day>();
@@ -32,13 +32,15 @@ public class CalendarAdapter extends BaseAdapter {
         repopulateMonth(month);
     }
 
+    /**
+     * It creates a new Day(calendar) object for each day in the month passed and adds it into the ArrayList<Day> wholeMonth
+     * @param month is a initial month to be shown
+     */
     private void repopulateMonth(int month){
         // Create a calendar object and set year and moth
         Calendar calendar = new GregorianCalendar(2013, month ,1);
-
         // Get the number of days in that month
         int daysInMonthNumber = calendar.getActualMaximum(Calendar.DAY_OF_MONTH); // 28
-
         for(int i=0; i < daysInMonthNumber; i++){
             Log.d("Luka","Adding a day "+i);
             calendar.set(Calendar.DAY_OF_MONTH, i+1);
@@ -48,8 +50,9 @@ public class CalendarAdapter extends BaseAdapter {
     }
 
     /**
-     * Returns a new new CalendarDayView for each item referenced by the Adapter (getCount)
+     * Returns a new new CalendarDayView for each item in ArrayList<Day> wholeMonth
      */
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         CalendarDayView cdv;
         if (convertView == null) {  // if it's not recycled, initialize some attributes
@@ -60,15 +63,15 @@ public class CalendarAdapter extends BaseAdapter {
         }
         return cdv;
     }
-
+    @Override
     public int getCount() {
         return wholeMonth.size();
     }
-
+    @Override
     public Object getItem(int position) {
         return wholeMonth.get(position);
     }
-
+    @Override
     public long getItemId(int position) {
         return 0;
     }
