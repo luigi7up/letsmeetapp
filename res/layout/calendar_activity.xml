@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/calendar_activity_view"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="vertical">
+
+    <TextView android:id="@+id/calendar_header_month"
+              android:layout_width="fill_parent"
+              android:layout_height="30dip"
+              android:text="a Month"
+              android:layout_marginTop="0px"
+              android:textSize="16dp"
+              android:background="#ffa500"
+              android:gravity="center"
+              android:textColor="#000"
+            >
+    </TextView>
+    <GridView android:id="@+id/calendar_grid_view"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:background="#000000"
+              android:numColumns="7"
+              android:stretchMode="columnWidth"
+              android:horizontalSpacing="1dp"
+              android:verticalSpacing="1dp"
+              android:gravity="top"
+            />
+
+</LinearLayout>
