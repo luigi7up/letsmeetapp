@@ -21,8 +21,8 @@ public class CalendarDayView extends LinearLayout{
     private Day day;
     private int dimension;      //holds the width/height value for the orientation
     private Context mContext;
-    private final int SELECTED_COLOR = Color.GRAY;
-    private final int NOT_SELECTED_COLOR = Color.GREEN;
+    private final int SELECTED_COLOR = Color.argb(255,220,220,220);
+    private final int NOT_SELECTED_COLOR = Color.argb(255,255,255,255);
 
 
     public CalendarDayView(Context context, Day day ,int dimension) {
@@ -45,10 +45,8 @@ public class CalendarDayView extends LinearLayout{
      protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);    //To change body of overridden methods use File | Settings | File Templates.
 
-        Log.d("Luka","onMeasure on CalendarDayView");
         CalendarActivity parentCalendarActivity = (CalendarActivity)mContext;
         //CalendarActivity parentActivity = (CalendarActivity)parentCalendarAdapter.getmContext();
-
 
         //If the day that is about to be returned as a grid view exist in allSelectedDayList mark it as selected
         if(parentCalendarActivity.getAllSelectedDays().contains(this.getDay())) this.getDay().setSelected(true);
@@ -57,7 +55,7 @@ public class CalendarDayView extends LinearLayout{
         else setBackgroundColor(SELECTED_COLOR);
 
         setMeasuredDimension(dimension-1,dimension-1);
-        Log.d("Luka", "onMeasure CalendarDayView with dimension "+dimension);
+        Log.d("Luka", "onMeasure CalendarDayView with day "+this.getDay().getDate());
     }
 
     //Toggles the value selected from true to false
