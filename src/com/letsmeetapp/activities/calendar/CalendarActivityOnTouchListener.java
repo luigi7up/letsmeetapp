@@ -1,6 +1,7 @@
 package com.letsmeetapp.activities.calendar;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -33,6 +34,7 @@ public class CalendarActivityOnTouchListener implements View.OnTouchListener {
 
         //NOTE: ACTION_MOVE until you dont release it fires, ACTION_UP once you release it fires it
         int newEventCode = event.getAction();
+
         if (event.getAction() == MotionEvent.ACTION_MOVE) {
             //calendarGridView.requestFocusFromTouch();
             //calendarGridView.setSelection(calendarGridView.pointToPosition((int) event.getX(), (int) event.getY()));
@@ -46,8 +48,8 @@ public class CalendarActivityOnTouchListener implements View.OnTouchListener {
 
             Log.d("Luka", "MotionEvent.ACTION_UP");
 
-            //If no movement happened
-            if(movementCoordinates == null) return false;
+            //If no movement happened, just indicate you got the event...
+            if(movementCoordinates == null) return true;
 
             //Convert coordinates into Set of positions in the grid that were touched
             HashSet<Integer> positionsTouched = new HashSet<Integer>();
@@ -63,17 +65,33 @@ public class CalendarActivityOnTouchListener implements View.OnTouchListener {
                 //calendarGridView.setSelection(position);
             }
             //For all touched positions toggleSelected();
-            Day touchedDay;
+            CalendarDayView touchedDayView;
             for(int p:positionsTouched){
-                touchedDay = (Day)this.calendarActivityContext.getCalendarAdapter().getItem(p);
-                touchedDay.toggleSelected();
+
+                touchedDayView = (CalendarDayView)this.calendarActivityContext.getCalendarAdapter().getItem(p);
+
+                touchedDayView.toggleSelected();
+
+                /*
+                if(touchedDayView.getDay().isSelected()) {
+                    touchedDayView.getDay().setSelected(false);
+                    calendarActivityContext.getAllSelectedDays().remove(touchedDayView.getDay());
+                }
+                else {
+                    touchedDayView.getDay().setSelected(true);
+                    calendarActivityContext.getAllSelectedDays().add(touchedDayView.getDay());
+                }
+                  */
+                Log.d("Luka", "Position touched" + p);
+
+                //touchedDayView.setBackgroundColor(Color.RED);
 
             }
 
+            //this.calendarActivityContext.getCalendarAdapter().notifyDataSetChanged();
+            //this.calendarGridView.setAdapter(this.calendarActivityContext.getCalendarAdapter());
 
-            this.calendarActivityContext.getCalendarAdapter().notifyDataSetChanged();
-            this.calendarGridView.setAdapter(this.calendarActivityContext.getCalendarAdapter());
-            //this.calendarGridView.invalidateViews();
+            //this.calendarGridView.noti
 
             //clear the HashSet of points
             calendarGridView.clearFocus();

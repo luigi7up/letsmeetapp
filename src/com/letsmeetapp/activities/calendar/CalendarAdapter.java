@@ -22,54 +22,74 @@ import java.util.GregorianCalendar;
  */
 public class CalendarAdapter extends BaseAdapter {
 
-    private Context mContext;
+    private CalendarActivity mContext;
     private int dayViewDimension;   //value calculated as a screen_width/7 for the current orientation
-    private ArrayList<Day> wholeMonth = new ArrayList<Day>();
+    private ArrayList<CalendarDayView> wholeMonthDayViews = new  ArrayList<CalendarDayView>();
+    private Calendar mCalendar;
+    private ArrayList<Day> allSelectedDays;
 
-    public CalendarAdapter(Context c, int month) {
-        mContext = c;
+    public CalendarAdapter(CalendarActivity c, Calendar calendar, ArrayList<Day> allSelectedDays) {
+
+        this.mContext = c;
+        this.mCalendar = calendar;
+        this.allSelectedDays = allSelectedDays;
         this.dayViewDimension = calculateDayViewDimension();
-        repopulateMonth(month);
+
+        Log.d("Luka", "Creating new CalendarAdapter for month"+calendar.get(Calendar.MONTH));
+
+        generateDaysInMonth();
     }
 
     /**
      * It creates a new Day(calendar) object for each day in the month passed and adds it into the ArrayList<Day> wholeMonth
-     * @param month is a initial month to be shown
      */
-    private void repopulateMonth(int month){
-        // Create a calendar object and set year and moth
-        Calendar calendar = new GregorianCalendar(2013, month ,1);
+    public void generateDaysInMonth(){
         // Get the number of days in that month
-        int daysInMonthNumber = calendar.getActualMaximum(Calendar.DAY_OF_MONTH); // 28
+        int daysInMonthNumber = mCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+        //add all Days into wholeMonth ArrayList that is returned in the method getCount() and getView()
         for(int i=0; i < daysInMonthNumber; i++){
-            Log.d("Luka","Adding a day "+i);
-            calendar.set(Calendar.DAY_OF_MONTH, i+1);
-            Day newDay = new Day(calendar.getTime());
-            this.wholeMonth.add(newDay);
+            mCalendar.set(Calendar.DAY_OF_MONTH, i+1);
+            Day newDay = new Day(mCalendar.getTime());
+
+            if(allSelectedDays.contains(newDay)){
+                newDay.setSelected(true);
+                Log.d("Luka", "allSelectedDays.contains: "+newDay);
+            }
+
+            CalendarDayView newDayCalendarDayView = new CalendarDayView(mContext, newDay, getDayViewDimension());
+            this.wholeMonthDayViews.add(newDayCalendarDayView);
+
         }
+        Log.d("Luka", "generateDaysInMonth" + wholeMonthDayViews);
     }
 
     /**
      * Returns a new new CalendarDayView for each item in ArrayList<Day> wholeMonth
      */
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        CalendarDayView cdv;
+    public View getView(int position, View convertView, ViewGroup parent){
+
+        CalendarDayView cdv = wholeMonthDayViews.get(position);
+
+        return cdv;
+        /*
         if (convertView == null) {  // if it's not recycled, initialize some attributes
-            cdv = new CalendarDayView(mContext, wholeMonth.get(position), getDayViewDimension() );
+            cdv = new CalendarDayView(mContext, dayForPosition, getDayViewDimension() );
         } else {
             cdv = (CalendarDayView) convertView;
-            cdv.setDay(wholeMonth.get(position));
+            cdv.setDay(dayForPosition);
         }
         return cdv;
+        */
     }
     @Override
     public int getCount() {
-        return wholeMonth.size();
+        return wholeMonthDayViews.size();
     }
     @Override
     public Object getItem(int position) {
-        return wholeMonth.get(position);
+        return wholeMonthDayViews.get(position);
     }
     @Override
     public long getItemId(int position) {
@@ -109,5 +129,21 @@ public class CalendarAdapter extends BaseAdapter {
     }
     public void setDayViewDimension(int dayViewDimension) {
         this.dayViewDimension = dayViewDimension;
+    }
+
+    public Calendar getmCalendar() {
+        return mCalendar;
+    }
+
+    public void setmCalendar(Calendar mCalendar) {
+        this.mCalendar = mCalendar;
+    }
+
+    public CalendarActivity getmContext() {
+        return mContext;
+    }
+
+    public void setmContext(CalendarActivity mContext) {
+        this.mContext = mContext;
     }
 }

@@ -20,9 +20,14 @@ public class CalendarDayView extends LinearLayout{
 
     private Day day;
     private int dimension;      //holds the width/height value for the orientation
+    private Context mContext;
+    private final int SELECTED_COLOR = Color.GRAY;
+    private final int NOT_SELECTED_COLOR = Color.GREEN;
+
 
     public CalendarDayView(Context context, Day day ,int dimension) {
         super(context, null);
+        this.mContext = context;
         this.day = day;
         this.dimension = dimension;
 
@@ -34,21 +39,42 @@ public class CalendarDayView extends LinearLayout{
         TextView dayNumberTextView = (TextView)findViewById(R.id.daynumber);
         dayNumberTextView.setText(String.valueOf(day.getDateDayNumber()));
 
-        Log.d("Luka", "Creating Calendar Day View for "+day.toString()+ " with dimension "+dimension);
     }
-
-
 
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);    //To change body of overridden methods use File | Settings | File Templates.
 
-        if(this.getDay().isSelected() == false) setBackgroundColor(Color.GREEN);
-        else setBackgroundColor(Color.GRAY);
+        Log.d("Luka","onMeasure on CalendarDayView");
+        CalendarActivity parentCalendarActivity = (CalendarActivity)mContext;
+        //CalendarActivity parentActivity = (CalendarActivity)parentCalendarAdapter.getmContext();
 
-        setMeasuredDimension(dimension-3,dimension-3);
+
+        //If the day that is about to be returned as a grid view exist in allSelectedDayList mark it as selected
+        if(parentCalendarActivity.getAllSelectedDays().contains(this.getDay())) this.getDay().setSelected(true);
+
+        if(this.getDay().isSelected() == false) setBackgroundColor(NOT_SELECTED_COLOR);
+        else setBackgroundColor(SELECTED_COLOR);
+
+        setMeasuredDimension(dimension-1,dimension-1);
         Log.d("Luka", "onMeasure CalendarDayView with dimension "+dimension);
     }
+
+    //Toggles the value selected from true to false
+    public void toggleSelected(){
+
+        Log.d("Luka","View for the day "+this.getDay()+" is toggled...");
+        if(this.getDay().isSelected()) {
+            this.getDay().setSelected(false);
+            setBackgroundColor(NOT_SELECTED_COLOR);
+        }
+        else {
+            this.getDay().setSelected(true);
+            setBackgroundColor(SELECTED_COLOR);
+        }
+
+    }
+
 
     /*  GET SET */
     public Day getDay() {

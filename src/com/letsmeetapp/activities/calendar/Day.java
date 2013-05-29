@@ -9,14 +9,12 @@ import java.util.HashMap;
 
 /**
  * Represents a Day in a calendar. It's holding info about the date, is it selected, people who also selected it etc.
- * User: luka
- * Date: 25.05.13.
- * Time: 14:01
  */
 public class Day {
 
     private Date date;
     private boolean isSelected;
+
     private int percentageOfAccordance;
     private HashMap<String, Boolean> membersDecisions;
 
@@ -33,14 +31,28 @@ public class Day {
 
     }
 
-    //Toggles the value selected from true to false
-    public void toggleSelected(){
-        if(this.isSelected()) {
-            this.setSelected(false);
-        }
-        else {
-            this.setSelected(true);
-        }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Day day = (Day) o;
+
+        if (!date.equals(day.getDate())) return false;
+
+        Log.d("Luka", "Day"+date+" AND "+day.getDate() +" are equal: ");
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return date.hashCode();
+    }
+
+    @Override
+    public String toString(){
+        return "This Day is:"+date.toString();
     }
 
     //SETTER GETTER
