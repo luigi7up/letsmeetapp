@@ -52,7 +52,7 @@ public class Day {
 
     @Override
     public String toString(){
-        return "This Day is:"+date.toString();
+        return "with date :"+date.toString();
     }
 
     //SETTER GETTER

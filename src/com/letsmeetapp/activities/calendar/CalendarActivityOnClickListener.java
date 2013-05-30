@@ -14,14 +14,14 @@ import java.util.HashSet;
  * This is a onTouch handler for calendarGridView set in CalendarActivity class. It captures touch movement coordinates
  * translates them into positions in the grid that were touched and toggles isSelected on the DayView that was touched
  */
-public class CalendarActivityOnTouchListener implements View.OnTouchListener {
+public class CalendarActivityOnClickListener implements View.OnTouchListener {
 
     private CalendarActivity calendarActivityContext;   //Context in which touch happened (CalendarAtivity)
     private GridView calendarGridView;
     private HashSet<Point> movementCoordinates = new HashSet<Point>();  //contains the coordinates of a movement. Duplicates excluded (hence Set)
 
     //Constructor
-    public CalendarActivityOnTouchListener(CalendarActivity context){
+    public CalendarActivityOnClickListener(CalendarActivity context){
         this.calendarActivityContext = context;
         calendarGridView = calendarActivityContext.getCalendarGridView();  //assign touched gridView into a local variable
     }
@@ -36,17 +36,11 @@ public class CalendarActivityOnTouchListener implements View.OnTouchListener {
         int newEventCode = event.getAction();
 
         if (event.getAction() == MotionEvent.ACTION_MOVE) {
-            //calendarGridView.requestFocusFromTouch();
-            //calendarGridView.setSelection(calendarGridView.pointToPosition((int) event.getX(), (int) event.getY()));
-
             //Collect the coordinates of the movement and when ACTION_UP event is fired execute selection and view invalidation
             movementCoordinates.add(new Point((int)event.getX(), (int)event.getY()));
             return true;
         }
         if (event.getAction() == MotionEvent.ACTION_UP) {
-            //calendarGridView.requestFocusFromTouch();
-
-            Log.d("Luka", "MotionEvent.ACTION_UP");
 
             //If no movement happened, just indicate you got the event...
             if(movementCoordinates == null) return true;
@@ -55,45 +49,31 @@ public class CalendarActivityOnTouchListener implements View.OnTouchListener {
             HashSet<Integer> positionsTouched = new HashSet<Integer>();
             int position;
             for(Point p : movementCoordinates){
-                Log.d("Luka", p.x +" / "+p.y);
                 position = calendarGridView.pointToPosition(p.x, p.y);
                 if(position == -1) {
                     Log.d("Luka", "Coordinates converted into -1. Probbably touched the space between the two");
                     break;
                 }
                 positionsTouched.add(position);
-                //calendarGridView.setSelection(position);
             }
-            //For all touched positions toggleSelected();
+
+            //For all touched positions: touchedDayView.toggleSelected();
             CalendarDayView touchedDayView;
             for(int p:positionsTouched){
-
                 touchedDayView = (CalendarDayView)this.calendarActivityContext.getCalendarAdapter().getItem(p);
-
                 touchedDayView.toggleSelected();
 
-                /*
-                if(touchedDayView.getDay().isSelected()) {
-                    touchedDayView.getDay().setSelected(false);
+                //If the day that is about to be returned as a grid view exist in allSelectedDayList mark it as selected
+                if(calendarActivityContext.getAllSelectedDays().contains(touchedDayView.getDay())) {
                     calendarActivityContext.getAllSelectedDays().remove(touchedDayView.getDay());
-                }
-                else {
-                    touchedDayView.getDay().setSelected(true);
+                }else{
                     calendarActivityContext.getAllSelectedDays().add(touchedDayView.getDay());
                 }
-                  */
-                Log.d("Luka", "Position touched" + p);
 
-                //touchedDayView.setBackgroundColor(Color.RED);
-
+                Log.d("Luka", "Position touched " + p);
             }
 
-            //this.calendarActivityContext.getCalendarAdapter().notifyDataSetChanged();
-            //this.calendarGridView.setAdapter(this.calendarActivityContext.getCalendarAdapter());
-
-            //this.calendarGridView.noti
-
-            //clear the HashSet of points
+            //clear the arrays...
             calendarGridView.clearFocus();
             movementCoordinates.clear();
             positionsTouched.clear();
