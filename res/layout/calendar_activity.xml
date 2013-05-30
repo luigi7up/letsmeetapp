@@ -4,6 +4,7 @@
               android:id="@+id/calendar_activity_view"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
+              android:background="@drawable/main_bckgrd"
               android:orientation="vertical">
 
     <RelativeLayout
