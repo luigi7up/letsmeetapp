@@ -21,8 +21,8 @@ public class CalendarDayView extends LinearLayout{
     private Day day;
     private int dimension;      //holds the width/height value for the orientation
     private Context mContext;
-    private final int SELECTED_COLOR = Color.argb(255,220,220,220);
-    private final int NOT_SELECTED_COLOR = Color.argb(255,255,255,255);
+    private final int SELECTED_COLOR        = Color.argb(220,220,220,220);
+    private final int NOT_SELECTED_COLOR    = Color.argb(220,240,240,240);
 
 
     public CalendarDayView(Context context, Day day ,int dimension) {

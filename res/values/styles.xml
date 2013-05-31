@@ -17,4 +17,23 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
+    <!-- Let's meetapp custom styles-->
+
+    <style name="EditTextletsmeetapp" parent="android:Widget.EditText">
+        <item name="android:background">@drawable/edit_text_holo_dark</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:minHeight">40dip</item>
+        <item name="android:minWidth">150dip</item>
+    </style>
+
+    <style name="Buttonletsmeetapp" parent="android:Widget.Button">
+        <item name="android:background">@drawable/btn_default_holo_dark</item>
+        <item name="android:minHeight">48dip</item>
+        <item name="android:minWidth">80dip</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
+
+
+
+
 </resources>

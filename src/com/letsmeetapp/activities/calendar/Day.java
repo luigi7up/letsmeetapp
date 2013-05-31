@@ -2,6 +2,7 @@ package com.letsmeetapp.activities.calendar;
 
 import android.util.Log;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -10,7 +11,7 @@ import java.util.HashMap;
 /**
  * Represents a Day in a calendar. It's holding info about the date, is it selected, people who also selected it etc.
  */
-public class Day {
+public class Day implements Serializable{
 
     private Date date;
     private boolean isSelected;

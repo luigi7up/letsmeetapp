@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:gravity="center_horizontal"
+              android:background="@drawable/app_background">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:orientation="vertical"
+                  android:layout_width="fill_parent"
+                  android:layout_height="55dip"
+                  android:background="#AA000000"
+                  android:gravity="bottom">
+
+        <EditText android:id="@+id/create_event_name"
+                android:hint="New event's name?"
+                android:inputType="textAutoComplete"
+                android:layout_width="fill_parent"
+                android:layout_height="40dip"
+                android:layout_marginBottom="4dip"
+               />
+    </LinearLayout>
+    <Button android:id="@+id/select_dates"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dip"
+            android:layout_marginBottom="20dip"
+            android:text="Define dates" />
+
+
+</LinearLayout>
