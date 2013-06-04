@@ -1,17 +1,16 @@
-package com.letsmeetapp.activities.calendar;
+package com.letsmeetapp.activities.eventcalendar;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.letsmeetapp.R;
+import com.letsmeetapp.model.Day;
 
 /**
- * Represents a one day in a calendar. It extends LinearLayout because it consists of a few simple UI widgets
+ * Represents a one day in a eventcalendar. It extends LinearLayout because it consists of a few simple UI widgets
  * User: luka
  * Date: 21.05.13.
  * Time: 20:36
@@ -55,7 +54,6 @@ public class CalendarDayView extends LinearLayout{
         else setBackgroundColor(SELECTED_COLOR);
 
         setMeasuredDimension(dimension-1,dimension-1);
-        Log.d("Luka", "onMeasure CalendarDayView with day "+this.getDay().getDate());
     }
 
     //Toggles the value selected from true to false

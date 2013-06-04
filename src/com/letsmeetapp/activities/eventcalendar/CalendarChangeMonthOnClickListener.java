@@ -1,4 +1,4 @@
-package com.letsmeetapp.activities.calendar;
+package com.letsmeetapp.activities.eventcalendar;
 
 import android.view.View;
 
@@ -28,37 +28,37 @@ public class CalendarChangeMonthOnClickListener implements View.OnClickListener 
 
     public void prevMonth(){
         //mCalendar.set(Calendar.MONTH, mCalendar.get(Calendar.MONTH)-1);
-        mContext.getmCalendar().add(Calendar.MONTH, -1);
+        mContext.getToday().add(Calendar.MONTH, -1);
 
         //Reset the gridViewAdapter because now it contains days for another month
         mContext.setCalendarAdapter(
                 new CalendarAdapter(mContext,
-                        mContext.getmCalendar(),
+                        mContext.getToday(),
                         mContext.getAllSelectedDays()));
 
         mContext.getCalendarGridView().setAdapter(mContext.getCalendarAdapter());
 
-        //TODO optimize! don't create object. Make it memeber var
+        //TODO optimize! don't createevent object. Make it memeber var
         SimpleDateFormat month_date = new SimpleDateFormat("MMM");
-        String month_name = month_date.format(mContext.getmCalendar().getTime());
+        String month_name = month_date.format(mContext.getToday().getTime());
         mContext.getCalendarHeaderMonth().setText(month_name);
     }
 
     public void nextMonth(){
         //mCalendar.set(Calendar.MONTH, mCalendar.get(Calendar.MONTH)-1);
-        mContext.getmCalendar().add(Calendar.MONTH, +1);
+        mContext.getToday().add(Calendar.MONTH, +1);
 
         //Reset the gridViewAdapter because now it contains days for another month
         mContext.setCalendarAdapter(
                 new CalendarAdapter(mContext,
-                        mContext.getmCalendar(),
+                        mContext.getToday(),
                         mContext.getAllSelectedDays()));
 
         mContext.getCalendarGridView().setAdapter(mContext.getCalendarAdapter());
 
-        //TODO optimize! don't create object. Make it memeber var
+        //TODO optimize! don't createevent object. Make it memeber var
         SimpleDateFormat month_date = new SimpleDateFormat("MMM");
-        String month_name = month_date.format(mContext.getmCalendar().getTime());
+        String month_name = month_date.format(mContext.getToday().getTime());
         mContext.getCalendarHeaderMonth().setText(month_name);
     }
 }

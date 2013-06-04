@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#eeeeee"
+              android:textSize="14dp">
+
+    <TextView android:id="@+id/all_events_event_name"
+              android:layout_width="fill_parent"
+              android:layout_height="20dp"
+              android:text="Let\'s have a beer this week..."
+              android:textColor="#000"/>
+    <TextView android:id="@+id/all_events_event_creator"
+              android:layout_width="fill_parent"
+              android:layout_height="20dp"
+              android:text="by Luka"
+              android:textColor="#000"/>
+    <TextView android:id="@+id/all_events_date_created"
+              android:layout_width="fill_parent"
+              android:layout_height="20dp"
+              android:text="by Luka"
+              android:textColor="#000"/>
+    <TextView android:id="@+id/all_events_period"
+              android:layout_width="fill_parent"
+              android:layout_height="20dp"
+              android:text="(May-Jun)"
+              android:textColor="#000"/>
+    <TextView android:id="@+id/all_events_status"
+              android:layout_width="fill_parent"
+              android:layout_height="20dp"
+              android:text="Ok"
+              android:textColor="#000"/>
+</LinearLayout>

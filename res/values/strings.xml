@@ -1,8 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">lllletsmeetapp</string>
+    <string name="app_name">let\'smeetapp</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
+
+    <string name="done">Done</string>
+
+    <!-- Event stuff -->
+    <string name="event_name">name of the event...</string>
+    <string name="event_select_days">Select days</string>
+    <string name="enter_email">enter email</string>
+    <string name="invite_people">Invite people</string>
+
+
+    <!-- Calendar stuff -->
+    <string name="week_day1">Mo</string>
+    <string name="week_day2">Tu</string>
+    <string name="week_day3">We</string>
+    <string name="week_day4">Th</string>
+    <string name="week_day5">Fr</string>
+    <string name="week_day6">Sa</string>
+    <string name="week_day7">Su</string>
+
+    <!-- Days dates periods ...-->
+    <string name="day">day</string>
+    <string name="days">days</string>
+    <string name="choose_period">Choose a period</string>
 
 </resources>

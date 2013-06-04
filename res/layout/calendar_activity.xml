@@ -21,7 +21,6 @@
         <TextView android:id="@+id/calendar_header_month"
                   android:layout_width="fill_parent"
                   android:layout_height="fill_parent"
-                  android:text="."
                   android:layout_marginTop="0px"
                   android:textSize="16dp"
                   android:background="#336699"
@@ -33,17 +32,17 @@
 
         <Button
                 android:id="@+id/prevButton"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
+                android:layout_height="50px"
+                android:layout_width="50px"
                 android:layout_alignParentLeft="true"
-                android:text="P"
+                android:background="@drawable/btn_prev_month"
                 />
         <Button
                 android:id="@+id/nextButton"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
+                android:layout_height="50px"
+                android:layout_width="50px"
                 android:layout_alignParentRight="true"
-                android:text="N"
+                android:background="@drawable/btn_next_month"
                 />
 
     </RelativeLayout>
@@ -59,70 +58,62 @@
         <TextView android:layout_width="0px"
                   android:layout_height="fill_parent"
                   android:layout_weight="1"
-                  android:text="Mo"
+                  android:text="@string/week_day1"
                   android:layout_marginTop="0px"
                   android:textSize="16dp"
-
                   android:gravity="center"
                   android:textColor="#fff"
                 />
         <TextView android:layout_width="0px"
                   android:layout_height="fill_parent"
                   android:layout_weight="1"
-                  android:text="Tu"
+                  android:text="@string/week_day2"
                   android:layout_marginTop="0px"
                   android:textSize="16dp"
-
                   android:gravity="center"
                   android:textColor="#fff"
                 />
         <TextView android:layout_width="0px"
                   android:layout_height="fill_parent"
                   android:layout_weight="1"
-                  android:text="We"
+                  android:text="@string/week_day3"
                   android:layout_marginTop="0px"
                   android:textSize="16dp"
-
                   android:gravity="center"
                   android:textColor="#fff"
                 />
         <TextView android:layout_width="0px"
                   android:layout_height="fill_parent"
                   android:layout_weight="1"
-                  android:text="Th"
+                  android:text="@string/week_day4"
                   android:layout_marginTop="0px"
                   android:textSize="16dp"
-
+                  android:gravity="center"
+                  android:textColor="#fff"
+                />
+        <TextView android:layout_width="0px"
+                  android:layout_height="fill_parent"
+                  android:text="@string/week_day5"
+                  android:layout_marginTop="0px"
+                  android:textSize="16dp"
                   android:gravity="center"
                   android:textColor="#fff"
                 />
         <TextView android:layout_width="0px"
                   android:layout_height="fill_parent"
                   android:layout_weight="1"
-                  android:text="Fr"
+                  android:text="@string/week_day6"
                   android:layout_marginTop="0px"
                   android:textSize="16dp"
-
                   android:gravity="center"
                   android:textColor="#fff"
                 />
         <TextView android:layout_width="0px"
                   android:layout_height="fill_parent"
                   android:layout_weight="1"
-                  android:text="Sa"
+                  android:text="@string/week_day7"
                   android:layout_marginTop="0px"
                   android:textSize="16dp"
-
-                  android:gravity="center"
-                  android:textColor="#fff"
-                />
-        <TextView android:layout_width="0px"
-                  android:layout_height="fill_parent"
-                  android:layout_weight="1"
-                  android:text="Su"
-                  android:layout_marginTop="0px"
-                  android:textSize="16dp"
-
                   android:gravity="center"
                   android:textColor="#fff"
                 />
@@ -145,7 +136,7 @@
     <Button android:id="@+id/done_selecting_dates"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Done"
+            android:text="@string/done"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dip"/>
 

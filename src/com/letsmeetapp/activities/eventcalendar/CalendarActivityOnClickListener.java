@@ -1,7 +1,5 @@
-package com.letsmeetapp.activities.calendar;
+package com.letsmeetapp.activities.eventcalendar;
 
-import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Point;
 import android.util.Log;
 import android.view.MotionEvent;

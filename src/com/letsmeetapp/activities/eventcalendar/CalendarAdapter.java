@@ -1,20 +1,14 @@
-package com.letsmeetapp.activities.calendar;
+package com.letsmeetapp.activities.eventcalendar;
 
 import android.content.Context;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.*;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import com.letsmeetapp.R;
-import com.letsmeetapp.utilities.VisualUtility;
+import com.letsmeetapp.model.Day;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 /**
  * This is the adapter for the calendarGridView. It returns one calendar_day view for each day in that particular month (getCount())
@@ -25,32 +19,32 @@ public class CalendarAdapter extends BaseAdapter {
     private CalendarActivity mContext;
     private int dayViewDimension;   //value calculated as a screen_width/7 for the current orientation
     private ArrayList<CalendarDayView> wholeMonthDayViews = new  ArrayList<CalendarDayView>();
-    private Calendar mCalendar;
+    private Calendar today;
     private ArrayList<Day> allSelectedDays;
 
-    public CalendarAdapter(CalendarActivity c, Calendar calendar, ArrayList<Day> allSelectedDays) {
+    public CalendarAdapter(CalendarActivity c, Calendar today, ArrayList<Day> allSelectedDays) {
 
         this.mContext = c;
-        this.mCalendar = calendar;
+        this.today = today;
         this.allSelectedDays = allSelectedDays;
         this.dayViewDimension = calculateDayViewDimension();
 
-        Log.d("Luka", "Creating new CalendarAdapter for month"+calendar.get(Calendar.MONTH));
+        Log.d("Luka", "Creating new CalendarAdapter for month"+today.get(Calendar.MONTH));
 
         generateDaysInMonth();
     }
 
     /**
-     * It creates a new Day(calendar) object for each day in the month passed and adds it into the ArrayList<Day> wholeMonth
+     * It creates a new Day(eventcalendar) object for each day in the month passed and adds it into the ArrayList<Day> wholeMonth
      */
     public void generateDaysInMonth(){
         // Get the number of days in that month
-        int daysInMonthNumber = mCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+        int daysInMonthNumber = today.getActualMaximum(Calendar.DAY_OF_MONTH);
 
         //add all Days into wholeMonth ArrayList that is returned in the method getCount() and getView()
         for(int i=0; i < daysInMonthNumber; i++){
-            mCalendar.set(Calendar.DAY_OF_MONTH, i+1);
-            Day newDay = new Day(mCalendar.getTime());
+            today.set(Calendar.DAY_OF_MONTH, i+1);
+            Day newDay = new Day(today);
 
             if(allSelectedDays.contains(newDay)){
                 newDay.setSelected(true);
@@ -100,7 +94,7 @@ public class CalendarAdapter extends BaseAdapter {
     /**
     * Method returns the width of 7th part of a screen in order to pass it to a CalendarDayView to
     * set its width and height
-    * @return 7th part of a calendar screen(in orientation)
+    * @return 7th part of a eventcalendar screen(in orientation)
     * */
     private int calculateDayViewDimension(){
         // get display metrics
@@ -115,7 +109,7 @@ public class CalendarAdapter extends BaseAdapter {
 
         return  orientation_width_dp/7;
 
-        //get the column width on this device to set the calendar day height.
+        //get the column width on this device to set the eventcalendar day height.
         //NOTE android.R.id.content gives you the root element of a view, without having to know its actual name/type/ID.
         //this.orientation_width_dp = VisualUtility.dpFromPxForScreen(width, display.findViewById(android.R.id.content));
         //this.orientation_height_dp = VisualUtility.dpFromPxForScreen(height, this.findViewById(android.R.id.content));
@@ -131,12 +125,12 @@ public class CalendarAdapter extends BaseAdapter {
         this.dayViewDimension = dayViewDimension;
     }
 
-    public Calendar getmCalendar() {
-        return mCalendar;
+    public Calendar getToday() {
+        return today;
     }
 
-    public void setmCalendar(Calendar mCalendar) {
-        this.mCalendar = mCalendar;
+    public void setToday(Calendar today) {
+        this.today = today;
     }
 
     public CalendarActivity getmContext() {

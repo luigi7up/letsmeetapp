@@ -10,12 +10,12 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                   android:orientation="vertical"
                   android:layout_width="fill_parent"
-                  android:layout_height="55dip"
+                  android:layout_height="45dip"
                   android:background="#AA000000"
                   android:gravity="bottom">
 
         <EditText android:id="@+id/create_event_name"
-                android:hint="New event's name?"
+                android:hint="@string/event_name"
                 android:inputType="textAutoComplete"
                 android:layout_width="fill_parent"
                 android:layout_height="40dip"
@@ -27,7 +27,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dip"
             android:layout_marginBottom="20dip"
-            android:text="Define dates" />
+            android:text="@string/choose_period" />
 
-
+    <Button android:id="@+id/invite_people"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dip"
+            android:layout_marginBottom="20dip"
+            android:text="@string/invite_people" />
 </LinearLayout>

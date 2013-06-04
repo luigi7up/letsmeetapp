@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/app_background"
+              >
+    <RelativeLayout
+            android:id="@+id/page_buttons"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="45dp"
+            android:gravity="right|center_vertical"
+            android:paddingRight="7dp"
+            android:background="#AA000000"
+            android:weightSum="1" >
+
+        <Button
+            android:id="@+id/goto_create_event"
+            android:layout_height="40dp"
+            android:layout_width="40dp"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/add_icon"
+            />
+    </RelativeLayout>
+
+    <ListView
+            android:id="@android:id/android:list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cacheColorHint="#00000000"/> <!-- solves the black list on scroll problem-->
+
+</LinearLayout>
