@@ -1,5 +1,8 @@
 package com.letsmeetapp.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -7,7 +10,7 @@ import java.util.Calendar;
  * Represents a created event. It holds all information downloaded from the server about an event.
  *
  */
-public class Event {
+public class Event implements Parcelable{
 
     private String id;
     private String name;
@@ -29,6 +32,59 @@ public class Event {
         this.initialEventDays       = initialEventDays;
         this.creationDate           = creationDate;
     }
+
+
+    //PARCELABLE methods
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(name);
+        dest.writeString(creatorId);
+        dest.writeString(creatorEmail);
+        dest.writeValue(invitedPeopleEmails);    //ArrayList<String>
+        dest.writeValue(initialEventDays);      //ArrayList<Day>   implements Parcelable
+        dest.writeValue(creationDate);          //Calendar
+    }
+
+    // this is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods
+    public static final Parcelable.Creator<Event> CREATOR = new Parcelable.Creator<Event>() {
+        public Event createFromParcel(Parcel in) {
+            //Read serialized values
+            String id           = in.readString();
+            String name         = in.readString();
+            String creatorId    = in.readString();
+            String creatorEmail    = in.readString();
+            ArrayList<String> invitedPeopleEmails    = (ArrayList<String>)in.readValue(getClass().getClassLoader());
+            ArrayList<Day> initialEventDays          = (ArrayList<Day>)in.readValue(getClass().getClassLoader());
+            Calendar creationDate           = (Calendar)in.readValue(getClass().getClassLoader());
+            //insert deserialized values
+            Event event = new Event();
+            event.setId(id);
+            event.setName(name);
+            event.setCreatorEmail(creatorEmail);
+            event.setCreatorId(creatorId);
+            event.setInvitedPeopleEmails(invitedPeopleEmails);
+            event.setInitialEventDays(initialEventDays);
+            event.setCreationDate(creationDate);
+
+            return event;
+        }
+
+        public Event[] newArray(int size) {
+            return new Event[size];
+        }
+    };
+
+
+
+
+
+
 
 
     //GETTER SETTERS

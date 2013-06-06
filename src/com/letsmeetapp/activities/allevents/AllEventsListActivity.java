@@ -1,35 +1,49 @@
 package com.letsmeetapp.activities.allevents;
 
-import android.app.ListActivity;
+import android.app.ActionBar;
+import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+
+import android.support.v4.app.LoaderManager;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Toast;
 import com.letsmeetapp.R;
 import com.letsmeetapp.activities.createevent.CreateEventActivity;
-import com.letsmeetapp.model.Day;
 import com.letsmeetapp.model.Event;
-import com.letsmeetapp.rest.RestLoader;
-import org.apache.http.HttpResponse;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONTokener;
+import com.letsmeetapp.rest.HTTPVerb;
+import com.letsmeetapp.rest.RESTEventsParser;
+import com.letsmeetapp.rest.RESTLoader;
+import com.letsmeetapp.rest.RESTResponse;
+import android.support.v4.app.FragmentActivity;
+import com.letsmeetapp.utilities.NetUtils;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+
 import java.util.ArrayList;
-import java.util.Calendar;
 
 /**
  * Represents the main screen in the application that shows a list of events a user has been invited to or that he(she
  * has created...
  */
-public class AllEventsListActivity extends ListActivity {
+public class AllEventsListActivity extends FragmentActivity
+        implements LoaderManager.LoaderCallbacks<RESTResponse>{
+
+    private static final String TAG = AllEventsListActivity.class.getName();
 
     private Button createEventButton;
     private ArrayList<Event> allEvents;
+    private RESTResponse mResponse;
+    AllEventsListAdapter listAdapter;
+    ListView listView;
+    ProgressDialog progressDialog;
 
     @Override
     public void onCreate(Bundle savedInstance) {
@@ -38,34 +52,18 @@ public class AllEventsListActivity extends ListActivity {
         //Give it the layout
         setContentView(R.layout.all_events_list);
 
+        //instantiate a progress bar
+        progressDialog = new ProgressDialog(AllEventsListActivity.this,ProgressDialog.STYLE_SPINNER);
 
-        allEvents = new ArrayList<Event>();
-        allEvents = fillWithTestData();
+        //Get the loaderManager and initialize a loader 1 which is defined in onCreateLoader
+        LoaderManager loaderManager = getSupportLoaderManager();
+        loaderManager.initLoader(1,null,this);
 
-        RestLoader rest = new RestLoader(AllEventsListActivity.this);
-        if(rest.isOnline()) Toast.makeText(getApplicationContext(), "Internet OK", Toast.LENGTH_LONG).show();
-        else Toast.makeText(getApplicationContext(), "No internet", Toast.LENGTH_LONG).show();
+        //get the reference to the list in the view to append it the adapter later...
+        listView = (ListView) findViewById(R.id.all_events_list_view);
+        listView.setOnItemClickListener(new AllEventsItemOnClickListener(this));
 
-
-
-        HttpResponse response = rest.get();
-
-        try{
-            BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
-            StringBuilder builder = new StringBuilder();
-            for (String line = null; (line = reader.readLine()) != null;) {
-                builder.append(line).append("\n");
-            }
-            JSONTokener tokener = new JSONTokener(builder.toString());
-
-            JSONArray finalResult = new JSONArray(tokener);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        AllEventsListAdapter listAdapter = new AllEventsListAdapter(AllEventsListActivity.this, allEvents);
-        this.setListAdapter(listAdapter);
-
-
+        //Create event button
         createEventButton = (Button)findViewById(R.id.goto_create_event);
         createEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,50 +77,45 @@ public class AllEventsListActivity extends ListActivity {
     }
 
 
-    //Returns an ArrayList with Events (TESTING DATA!!!)
-    private ArrayList<Event> fillWithTestData() {
 
-        ArrayList<String> emails = new ArrayList<String>();
-        emails.add("alibaba@gmail.com");
-        emails.add("luigi@gmail.com");
-        emails.add("jenny.young@co.uk");
 
-        Calendar calendar = Calendar.getInstance();
+    //Loader callbacks:
+    @Override
+    public android.support.v4.content.Loader<RESTResponse> onCreateLoader(int id, Bundle bundle) {
 
-        ArrayList<Day> initialEventDays = new ArrayList<Day>();
-        initialEventDays.add(new Day(calendar));
-        calendar.add(Calendar.MONTH, 1);
-        initialEventDays.add(new Day(calendar));
-        calendar.add(Calendar.MONTH, 2);
-        initialEventDays.add(new Day(calendar));
+        if(id == 1){
+            Log.d(TAG, "Creating RESTLoader for the LoaderManager");
 
-        for(int i=0; i<20; i++){
-            Event a = new Event();
-            a.setName("Morbi dui lectus, lacinia vel");
-            a.setCreationDate(calendar);
-            a.setCreatorEmail("luigi7up@gmail.com");
-            a.setInitialEventDays(initialEventDays);
-            a.setInvitedPeopleEmails(emails);
-            allEvents.add(a);
+            if(NetUtils.isOnline(AllEventsListActivity.this))    {
+                progressDialog.show();
+                return new RESTLoader(this, HTTPVerb.GET, Uri.parse("http://www.luigi7up.com/hosted/letsmeetapp-rest/events.json"));
+            }else{
+                Toast.makeText(AllEventsListActivity.this.getApplicationContext(), "No internet :(", Toast.LENGTH_LONG).show();
+            }
+        }
+        return null;
+    }
 
+    @Override
+    public void onLoadFinished(android.support.v4.content.Loader<RESTResponse> loader, RESTResponse data) {
+        switch (loader.getId()) {
+            case 1:         //ID of the loader...
+                // The asynchronous load is complete and the data is now available for use.
+                mResponse = data;
+                RESTEventsParser parser = new RESTEventsParser();       //new parser for /events
+                listAdapter = new AllEventsListAdapter(this, parser.parse(mResponse));
+                listView.setAdapter(listAdapter);
+                progressDialog.dismiss();
+                break;
         }
 
-        /*
-        Event b = new Event();
-        b.setName("Blastem ictis lec, laca velition");
-        calendar.add(Calendar.DAY_OF_MONTH, 5);
-        b.setCreationDate(calendar);
-        b.setCreatorEmail("luigi7up@gmail.com");
-        b.setInitialEventDays(initialEventDays);
-        b.setInvitedPeopleEmails(emails);
-        */
-        //allEvents.add(a);
-        //allEvents.add(b);
-
-        return allEvents;
-
-
     }
+
+    @Override
+    public void onLoaderReset(android.support.v4.content.Loader<RESTResponse> loader) {
+        Log.d(TAG, "onLoaderReset called");
+    }
+
 
 
 }

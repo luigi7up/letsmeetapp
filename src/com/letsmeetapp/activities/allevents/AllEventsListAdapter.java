@@ -25,7 +25,6 @@ public class AllEventsListAdapter extends BaseAdapter{
     public AllEventsListAdapter(Context context, ArrayList<Event> allItems) {
         this.mContext = context;
         this.allItems = allItems;
-
     }
 
     public int getCount() {

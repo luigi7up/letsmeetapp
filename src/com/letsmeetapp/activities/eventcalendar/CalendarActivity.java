@@ -12,6 +12,7 @@ import android.widget.GridView;
 import android.widget.TextView;
 import com.letsmeetapp.R;
 import com.letsmeetapp.model.Day;
+import com.letsmeetapp.model.Event;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class CalendarActivity extends Activity {
     private GridView calendarGridView;
     private CalendarAdapter calendarAdapter;
     private ArrayList<Day> allSelectedDays;
-    private Calendar today;
+    private Calendar startingDate;
     private Button prevButton,nextButton, doneSelectingButton;
     private TextView calendarHeaderMonth;
 
@@ -36,14 +37,16 @@ public class CalendarActivity extends Activity {
         //Inflate the default view (holds header with buttons, grid...)
         setContentView(R.layout.calendar_activity);
 
+        //get all previously selected dates
         this.allSelectedDays = (ArrayList<Day>)getIntent().getExtras().get("allSelectedDays");
+        //Define the central month to show. When viewing details of an event, event object with creationDate is used
+        startingDate = (Calendar)(((Event) getIntent().getExtras().get("event"))).getCreationDate();
+        if(startingDate == null) startingDate = Calendar.getInstance();
 
-        //eventcalendar instance. Returns the instance with getDate() returning now
-        today = Calendar.getInstance();
 
         //GEt the hold of the grid_element to assign it the adapter
         calendarGridView = (GridView)findViewById(R.id.calendar_grid_view);
-        calendarAdapter = new CalendarAdapter(this, today, this.allSelectedDays);
+        calendarAdapter = new CalendarAdapter(this, startingDate, this.allSelectedDays);
         calendarGridView.setAdapter(calendarAdapter);
 
         //Register handler fot onTouch event over calendarGridView
@@ -54,17 +57,15 @@ public class CalendarActivity extends Activity {
         prevButton.setTag("prevButton");
         nextButton = (Button)findViewById(R.id.nextButton);
         nextButton.setTag("nextButton");
+        prevButton.setOnClickListener(new CalendarChangeMonthOnClickListener(CalendarActivity.this));
+        nextButton.setOnClickListener(new CalendarChangeMonthOnClickListener(CalendarActivity.this));
 
         //get hold of the month name in the header
         calendarHeaderMonth = (TextView)findViewById(R.id.calendar_header_month);
-
         //Inject the month name
         SimpleDateFormat month_date = new SimpleDateFormat("MMM");
-        String month_name = month_date.format(today.getTime());
+        String month_name = month_date.format(startingDate.getTime());
         calendarHeaderMonth.setText(month_name);
-
-        prevButton.setOnClickListener(new CalendarChangeMonthOnClickListener(CalendarActivity.this));
-        nextButton.setOnClickListener(new CalendarChangeMonthOnClickListener(CalendarActivity.this));
 
         doneSelectingButton = (Button)findViewById(R.id.done_selecting_dates);
 
@@ -119,12 +120,12 @@ public class CalendarActivity extends Activity {
         this.allSelectedDays = allSelectedDays;
     }
 
-    public Calendar getToday() {
-        return today;
+    public Calendar getStartingDate() {
+        return startingDate;
     }
 
-    public void setToday(Calendar today) {
-        this.today = today;
+    public void setToday(Calendar startingDate) {
+        this.startingDate = startingDate;
     }
 
     public TextView getCalendarHeaderMonth() {

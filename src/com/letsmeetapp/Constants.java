@@ -13,8 +13,6 @@ public class Constants {
     //Change this between DEBUG & PROD
     public static final String APP_DEV_STATE = "DEV";
 
-
-
     //Declare all constants
     public static final String REST_BASE_URL;
 

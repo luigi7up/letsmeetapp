@@ -34,9 +34,7 @@ public class AllEventsItemView extends LinearLayout {
 
         name.setText(event.getName());
         eventCreator.setText(event.getCreatorEmail());
-        eventCreationDate.setText(event.getCreationDate().getTime().toString());
-        eventPeriod.setText(VisualUtility.periodForSelectedDates(event.getInitialEventDays()));
-        eventStatus.setText(event.getName());
+
 
 
     }

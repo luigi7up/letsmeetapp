@@ -1,5 +1,7 @@
 package com.letsmeetapp.rest;
 
+import java.util.ArrayList;
+
 /**
  * Created with IntelliJ IDEA.
  * User: luka
@@ -7,9 +9,7 @@ package com.letsmeetapp.rest;
  * Time: 21:39
  * To change this template use File | Settings | File Templates.
  */
-public interface Parsable {
-
-    public void parseCallback();
-
+public interface Parsable<E> {
+    public ArrayList<E> parse(RESTResponse resource);
 
 }

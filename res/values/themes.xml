@@ -3,7 +3,7 @@
 <!-- Generated with http://android-holo-colors.com -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-  <style name="letsmeetappTheme" parent="android:Theme.Black">
+  <style name="letsmeetappTheme" parent="android:Theme.Light">
 
     <item name="android:windowNoTitle">true</item>
 

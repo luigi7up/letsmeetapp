@@ -28,37 +28,37 @@ public class CalendarChangeMonthOnClickListener implements View.OnClickListener 
 
     public void prevMonth(){
         //mCalendar.set(Calendar.MONTH, mCalendar.get(Calendar.MONTH)-1);
-        mContext.getToday().add(Calendar.MONTH, -1);
+        mContext.getStartingDate().add(Calendar.MONTH, -1);
 
         //Reset the gridViewAdapter because now it contains days for another month
         mContext.setCalendarAdapter(
                 new CalendarAdapter(mContext,
-                        mContext.getToday(),
+                        mContext.getStartingDate(),
                         mContext.getAllSelectedDays()));
 
         mContext.getCalendarGridView().setAdapter(mContext.getCalendarAdapter());
 
         //TODO optimize! don't createevent object. Make it memeber var
         SimpleDateFormat month_date = new SimpleDateFormat("MMM");
-        String month_name = month_date.format(mContext.getToday().getTime());
+        String month_name = month_date.format(mContext.getStartingDate().getTime());
         mContext.getCalendarHeaderMonth().setText(month_name);
     }
 
     public void nextMonth(){
         //mCalendar.set(Calendar.MONTH, mCalendar.get(Calendar.MONTH)-1);
-        mContext.getToday().add(Calendar.MONTH, +1);
+        mContext.getStartingDate().add(Calendar.MONTH, +1);
 
         //Reset the gridViewAdapter because now it contains days for another month
         mContext.setCalendarAdapter(
                 new CalendarAdapter(mContext,
-                        mContext.getToday(),
+                        mContext.getStartingDate(),
                         mContext.getAllSelectedDays()));
 
         mContext.getCalendarGridView().setAdapter(mContext.getCalendarAdapter());
 
         //TODO optimize! don't createevent object. Make it memeber var
         SimpleDateFormat month_date = new SimpleDateFormat("MMM");
-        String month_name = month_date.format(mContext.getToday().getTime());
+        String month_name = month_date.format(mContext.getStartingDate().getTime());
         mContext.getCalendarHeaderMonth().setText(month_name);
     }
 }
