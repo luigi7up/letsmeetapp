@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/calendar_activity_view"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="vertical"
+              android:gravity="top"
+              android:background="@drawable/app_background"
+        >
+
+
+    <Button android:id="@+id/open_event_calendar_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/event_calendar"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dip"/>
+
+</LinearLayout>
