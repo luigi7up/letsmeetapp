@@ -50,9 +50,6 @@ public class AllEventsListAdapter extends BaseAdapter{
             itemView = new AllEventsItemView(mContext, allItems.get(position));
         } else {
             itemView = (AllEventsItemView) convertView;
-            //String name = allItems.get(position).getName();
-            //itemView.setName(name);
-
         }
         return itemView;
     }

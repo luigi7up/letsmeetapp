@@ -3,7 +3,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:background="@drawable/app_background">
+    <LinearLayout
+            android:id="@+id/page_buttons"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:paddingRight="7dp"
+            android:layout_gravity="center_vertical"
+            android:background="@raw/action_bar_back"
+            android:weightSum="100" >
+
+        <TextView android:id="@+id/create_event_action_bar"
+                  style="@style/ListEventActionBarHeader"
+                  android:layout_weight="100"
+                  android:layout_marginTop="11dp"
+                  android:layout_marginLeft="0dp"
+                  android:text="@string/invite_people" />
+    </LinearLayout>
 
     <EditText android:id="@+id/new_email"
               android:hint="@string/enter_email"
@@ -12,6 +30,8 @@
               android:layout_height="40dip"
               android:layout_marginBottom="4dip"
             />
+
+
     <Button android:id="@+id/done_adding_emails"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

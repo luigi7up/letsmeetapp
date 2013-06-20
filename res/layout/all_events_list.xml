@@ -2,38 +2,58 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-              android:orientation="vertical" >
-    <RelativeLayout
+              android:orientation="vertical"
+              android:background="@drawable/app_background">
+    <LinearLayout
             android:id="@+id/page_buttons"
             android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="45dp"
-            android:gravity="right|center_vertical"
+            android:layout_height="50dp"
             android:paddingRight="7dp"
-            android:background="#cccccc"
-            android:weightSum="1" >
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/action_bar_background"
+            android:weightSum="100" >
+
+        <TextView android:id="@+id/all_events_action_bar_header"
+                  style="@style/ListEventActionBarHeader"
+                  android:layout_width="0dp"
+                  android:layout_marginTop="11dp"
+                  android:layout_marginLeft="7dp"
+                  android:layout_weight="80"
+                  android:text="Events"
+                />
 
         <Button
+                android:id="@+id/all_events_refresh_btn"
+                android:layout_marginTop="10dp"
+                android:layout_height="30dp"
+                android:layout_width="0dp"
+                android:layout_weight="10"
+                android:layout_marginRight="15dp"
+                android:background="@android:drawable/ic_menu_recent_history"
+                />
+        <Button
                 android:id="@+id/goto_create_event"
-                android:layout_height="40dp"
-                android:layout_width="40dp"
-                android:layout_alignParentLeft="true"
+                android:layout_marginTop="10dp"
+                android:layout_height="30dp"
+                android:layout_width="0dp"
+                android:layout_weight="10"
                 android:background="@drawable/add_icon"
                 />
-    </RelativeLayout>
+    </LinearLayout>
 
     <ListView
             android:id="@+id/all_events_list_view"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_marginBottom="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="0dp"
             android:background="@android:color/transparent"
             android:cacheColorHint="@android:color/transparent"
+            android:listSelector="@drawable/events_list_selector"
             android:divider="#CCCCCC"
-            android:dividerHeight="1dp"
-            android:paddingLeft="2dp"
-            android:listSelector="@drawable/list_selector_background_transition_holo_light">
+            android:dividerHeight="0dp"
+            android:paddingLeft="0dp">
     </ListView>
 
 </LinearLayout>

@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.letsmeetapp.R;
 import com.letsmeetapp.model.Event;
+import com.letsmeetapp.utilities.TextUtils;
 import com.letsmeetapp.utilities.VisualUtility;
 
 /**
@@ -15,7 +16,7 @@ import com.letsmeetapp.utilities.VisualUtility;
 public class AllEventsItemView extends LinearLayout {
 
     private Event event;        //Model for the view
-    private TextView name,eventCreator,eventCreationDate,eventPeriod,eventStatus ;
+    private TextView name,eventCreator,eventDescription,eventDayNumber,invitedUsersNumber ;
 
 
     public AllEventsItemView(Context context, Event event) {
@@ -27,15 +28,15 @@ public class AllEventsItemView extends LinearLayout {
         layoutInflater.inflate(R.layout.all_events_list_item, this);
 
         name = (TextView)findViewById(R.id.all_events_event_name);
-        eventCreator = (TextView)findViewById(R.id.all_events_event_creator);;
-        eventCreationDate = (TextView)findViewById(R.id.all_events_date_created);;
-        eventPeriod = (TextView)findViewById(R.id.all_events_period);;
-        eventStatus = (TextView)findViewById(R.id.all_events_status);;
+        eventCreator = (TextView)findViewById(R.id.all_events_event_creator);
+        eventDescription = (TextView)findViewById(R.id.all_events_event_desc) ;
+        eventDayNumber = (TextView)findViewById(R.id.all_events_days_number) ;
+        invitedUsersNumber   = (TextView)findViewById(R.id.all_events_num_of_people) ;
 
-        name.setText(event.getName());
-        eventCreator.setText(event.getCreatorEmail());
-
-
+        name.setText(TextUtils.shorten(event.getName(),60));
+        eventDescription.setText(TextUtils.shorten(event.getDescription(),60));
+        eventDayNumber.setText(TextUtils.numOfDays(context, event.getDays().size()));
+        invitedUsersNumber.setText(TextUtils.numOfPeople(context, event.getInvited_users().size()));
 
     }
 

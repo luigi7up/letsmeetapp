@@ -2,13 +2,10 @@ package com.letsmeetapp.rest;
 
 
 import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
-import android.widget.Toast;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -16,8 +13,10 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.*;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
@@ -27,8 +26,12 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-//import android.support.v4.content.AsyncTaskLoader;
 
+/**
+ * It's an extension of AsyncTaskLoader class and what it does is it executes the DefaultHttpClient.execute to call
+ * the RESTful service. Everything is done in a separate thread to avoid blocking the main UI thread. When the client
+ * gets the response, it packs it into new RESTresponse class and returns it to  the caller (LoadManager)
+ */
 public class RESTLoader extends AsyncTaskLoader<RESTResponse> {
 
     private static final String TAG = RESTLoader.class.getName();
@@ -42,6 +45,8 @@ public class RESTLoader extends AsyncTaskLoader<RESTResponse> {
     private Uri          mAction;
     private Bundle       mParams;
     private RESTResponse mRestResponse;
+    private static final int TIMEOUT = 5000;      //if server doesn't respond fire timeout in TIEMOUT miliseconds
+    private static final int SO_TIMEOUT = 10000;      //if server takes more than SO_TIEMOUT in transfering data
 
     private long mLastLoad;
 
@@ -66,7 +71,7 @@ public class RESTLoader extends AsyncTaskLoader<RESTResponse> {
     }
 
     @Override
-    public RESTResponse loadInBackground() {
+    public RESTResponse loadInBackground(){
 
         try {
             // At the very least we always need an action.
@@ -105,11 +110,14 @@ public class RESTLoader extends AsyncTaskLoader<RESTResponse> {
                     // postRequest.setHeader('Content-Type', 'application/json')
                     // and StringEntity instead. Same thing for the PUT case 
                     // below.
+
+                    request.setHeader("Content-Type", "application/json");   //Since all our communication is done using JSON set the header....
                     HttpPost postRequest = (HttpPost) request;
 
                     if (mParams != null) {
-                        UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(paramsToList(mParams));
-                        postRequest.setEntity(formEntity);
+                        StringEntity requestEntity;
+                        requestEntity = new StringEntity(mParams.getString("postBodyJson"));
+                        postRequest.setEntity(requestEntity);
                     }
                 }
                 break;
@@ -130,7 +138,16 @@ public class RESTLoader extends AsyncTaskLoader<RESTResponse> {
             }
 
             if (request != null) {
+
                 HttpClient client = new DefaultHttpClient();
+
+                //Set timeout limits
+                // Set the timeout in milliseconds until a connection is established.
+                // The default value is zero, that means the timeout is not used.
+                HttpConnectionParams.setConnectionTimeout(client.getParams(), TIMEOUT);
+                // Set the default socket timeout (SO_TIMEOUT)
+                // in milliseconds which is the timeout for waiting for data.
+                HttpConnectionParams.setSoTimeout        (client.getParams(), SO_TIMEOUT);
 
                 // Let's send some useful debug information so we can monitor things
                 // in LogCat.
@@ -166,6 +183,7 @@ public class RESTLoader extends AsyncTaskLoader<RESTResponse> {
         }
         catch (IOException e) {
             Log.e(TAG, "There was a problem when sending the request.", e);
+            //TODO return and empty Response and then in the client code check if code == 0 to deduce if server was reached
             return new RESTResponse();
         }
     }
@@ -268,7 +286,6 @@ public class RESTLoader extends AsyncTaskLoader<RESTResponse> {
 
         return formList;
     }
-
 
 }
 

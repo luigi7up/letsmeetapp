@@ -23,6 +23,8 @@ import java.util.Calendar;
  */
 public class CalendarActivity extends Activity {
 
+    private static final String TAG = CalendarActivity.class.getName();
+
     private GridView calendarGridView;
     private CalendarAdapter calendarAdapter;
     private ArrayList<Day> allSelectedDays;
@@ -37,10 +39,10 @@ public class CalendarActivity extends Activity {
         //Inflate the default view (holds header with buttons, grid...)
         setContentView(R.layout.calendar_activity);
 
-        //get all previously selected dates
+        //get all previously selected dates (when exiting and coming back...)
         this.allSelectedDays = (ArrayList<Day>)getIntent().getExtras().get("allSelectedDays");
         //Define the central month to show. When viewing details of an event, event object with creationDate is used
-        startingDate = (Calendar)(((Event) getIntent().getExtras().get("event"))).getCreationDate();
+        startingDate = (Calendar)(((Event) getIntent().getExtras().get("event"))).getCreated();
         if(startingDate == null) startingDate = Calendar.getInstance();
 
 

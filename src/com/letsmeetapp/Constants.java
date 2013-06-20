@@ -1,7 +1,5 @@
 package com.letsmeetapp;
 
-import java.util.ArrayList;
-
 /**
  * Holds all application level constants as static final variables. It returns different values depending on the value
  * of APP_DEV_STATE. If APP_DEV_STATE = "DEV" and you call for Constants.VAR_NAME it returns the value assigned in the static
@@ -21,9 +19,10 @@ public class Constants {
     //Initialize all declared constants giving them different values if they're for DEV or PROD mode
     static{
 
-        if(APP_DEV_STATE == "DEV"){
+        if(APP_DEV_STATE.equals("DEV")){
 
-            REST_BASE_URL = "http://shoutplatform.appspot.com/rest/";
+            REST_BASE_URL = "http://10.6.22.66:1983/";
+            //REST_BASE_URL = "http://192.168.1.9:1983/";
         }else{  //for PROD
 
             REST_BASE_URL = "http://www.letsmeetapp.com/rest/";

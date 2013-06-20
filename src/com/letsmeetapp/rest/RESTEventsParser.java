@@ -1,87 +1,90 @@
 package com.letsmeetapp.rest;
 
 import android.util.Log;
+import com.google.gson.*;
+import com.letsmeetapp.model.Day;
 import com.letsmeetapp.model.Event;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
- * Created with IntelliJ IDEA.
- * User: luka.eterovic
- * Date: 5/06/13
- * Time: 18:46
- * To change this template use File | Settings | File Templates.
+ * It is used as the parser of EVENTS resource that the web service return. It implements the Parsable interface
+ * with one method : parse()
+ *
  */
 public class RESTEventsParser implements Parsable{
 
     private static final String TAG = RESTEventsParser.class.getName();
     private RESTResponse mResource;
-    private JSONArray eventsJsArray = null;
 
     public RESTEventsParser(){
     }
 
     @Override
-    public ArrayList<Event> parse(RESTResponse resource) {
+    public ArrayList<Event> parse(RESTResponse response) {
 
         ArrayList<Event> allEvents = new ArrayList<Event>();
+        if(response.getCode() == 0) return allEvents;        //host wasn't reached
 
-        // getting JSONObject from the resource
-        JSONObject jsObject = new JSONObject();
-        try{
-            jsObject = new JSONObject(resource.getData());
-        }catch (JSONException e){
-            Log.e(TAG, "Error parsing JSON",e);
-        }
+        JsonParser parser   = new JsonParser();
+        JsonArray jsonArray = parser.parse(response.getData()).getAsJsonArray();
 
-        try {
-            // Getting Array of Contacts
-            eventsJsArray = jsObject.getJSONArray("events");
 
-            // looping through All Contacts
-            for(int i = 0; i < eventsJsArray.length(); i++){
-                JSONObject c = eventsJsArray.getJSONObject(i);
+        for(int i = 0;i<jsonArray.size(); i++){
+            JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
 
-                // Storing each json item in variable
-                String id = c.getString("id");
-                String creatorId = c.getString("creatorId");
-                String creatorName = c.getString("creatorName");
-                String name = c.getString("name");
-                String description = c.getString("description");
-                String creationDate = c.getString("creationDate");
+            String id_event = jsonObject.get("id_event").getAsString();
+            int creator_id = jsonObject.get("creator_id").getAsInt();
+            String name = jsonObject.get("name").getAsString();
+            String description = jsonObject.get("description").getAsString();
+            String created = jsonObject.get("created").getAsString();
 
-                Event event = new Event();
-                event.setId(id);
-                event.setCreatorId(creatorId);
-                event.setCreatorEmail(creatorName);
-                event.setName(name);
-
-                allEvents.add(event);
-                /*
-                //initialDates is an array of dates....
-                JSONArray initialDates = c.getJSONArray("events");
-                ArrayList<String> initialDatesStrings = new  ArrayList<String>();
-                for(int j = 0; j<initialDates.length(); j++){
-                    initialDatesStrings.add(initialDates)
-
-                }
-
-                // Phone number is agin JSON Object
-                JSONObject phone = c.getJSONObject(TAG_PHONE);
-                String mobile = phone.getString(TAG_PHONE_MOBILE);
-                String home = phone.getString(TAG_PHONE_HOME);
-                String office = phone.getString(TAG_PHONE_OFFICE);
-                */
+            JsonArray daysArray = jsonObject.get("days").getAsJsonArray();
+            ArrayList<Day>days = new ArrayList <Day>();
+            for(int x = 0;x<daysArray.size(); x++){
+                days.add(new Day(stringToCalendar(daysArray.get(x).getAsString())));
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } finally {
-            //Always return allEvents even if empty...
-            return allEvents;
+
+            JsonArray invitedUsersArray = jsonObject.get("invited_users").getAsJsonArray();
+            ArrayList<String>invitedUsers = new ArrayList <String>();
+            for(int x = 0;x<invitedUsersArray.size(); x++){
+                invitedUsers.add(invitedUsersArray.get(x).getAsString());
+            }
+
+            Event event = new Event();
+            event.setId_event(id_event);
+            event.setCreator_id(creator_id);
+            event.setName(name);
+            event.setDescription(description);
+            event.setCreated(stringToCalendar(created));
+            event.setDays(days);
+            event.setInvited_users(invitedUsers);
+
+            allEvents.add(event);
+
         }
+
+        return allEvents;
+
 
     }
+    /**
+     * Parses a date string that node gets from mysql to Calendar object
+     */
+    private Calendar stringToCalendar(String input){
+        Calendar cal = Calendar.getInstance();
+        //SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+        try {
+            cal.setTime(sdf.parse(input));// all done
+        } catch (ParseException e) {
+            Log.e(TAG, "Provided string could not be parsed to Calendar: "+input);
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        return cal;
+    }
+
+
 }

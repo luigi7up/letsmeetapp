@@ -29,4 +29,9 @@
     <string name="days">days</string>
     <string name="choose_period">Choose a period</string>
 
+    <!-- Days dates periods ...-->
+    <string name="person">person</string>
+    <string name="people">people</string>
+
+
 </resources>

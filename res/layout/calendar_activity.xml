@@ -8,6 +8,23 @@
               android:gravity="top"
               android:background="@drawable/app_background"
         >
+    <LinearLayout
+            android:id="@+id/page_buttons"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:paddingRight="7dp"
+            android:layout_gravity="center_vertical"
+            android:background="@raw/action_bar_back"
+            android:weightSum="100" >
+
+        <TextView android:id="@+id/create_event_action_bar"
+                  style="@style/ListEventActionBarHeader"
+                  android:layout_weight="100"
+                  android:layout_marginTop="11dp"
+                  android:layout_marginLeft="0dp"
+                  android:text="Select dates" />
+    </LinearLayout>
 
     <RelativeLayout
             android:id="@+id/page_buttons"

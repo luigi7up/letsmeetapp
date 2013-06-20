@@ -1,16 +1,14 @@
 package com.letsmeetapp.activities.allevents;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-import com.letsmeetapp.BaseActivity;
 import com.letsmeetapp.R;
-import com.letsmeetapp.activities.createevent.CreateEventActivity;
 import com.letsmeetapp.activities.eventcalendar.CalendarActivity;
-import com.letsmeetapp.activities.eventinvite.InvitePeopleActivity;
 import com.letsmeetapp.model.Day;
 import com.letsmeetapp.model.Event;
 
@@ -23,7 +21,7 @@ import java.util.ArrayList;
  * Time: 18:41
  * To change this template use File | Settings | File Templates.
  */
-public class EventDetailsActivity extends BaseActivity{
+public class EventDetailsActivity extends Activity {
 
     private static final String TAG = EventDetailsActivity.class.getName();
 
