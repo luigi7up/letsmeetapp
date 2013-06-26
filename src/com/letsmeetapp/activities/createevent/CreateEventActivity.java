@@ -14,11 +14,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import com.google.gson.Gson;
 import com.letsmeetapp.Constants;
 import com.letsmeetapp.R;
-import com.letsmeetapp.activities.allevents.AllEventsListActivity;
-import com.letsmeetapp.activities.allevents.AllEventsListAdapter;
 import com.letsmeetapp.activities.eventcalendar.CalendarActivity;
 import com.letsmeetapp.activities.eventinvite.InvitePeopleActivity;
 import com.letsmeetapp.customviews.CustomProgressSpinner;
@@ -30,21 +27,19 @@ import com.letsmeetapp.rest.RESTLoader;
 import com.letsmeetapp.rest.RESTResponse;
 import com.letsmeetapp.utilities.NetUtils;
 import com.letsmeetapp.utilities.VisualUtility;
-import static com.letsmeetapp.utilities.TextUtils._;
 
 import java.util.ArrayList;
 
+import static com.letsmeetapp.utilities.TextUtils._;
+
 /**
- * Created with IntelliJ IDEA.
- * User: luka.eterovic
- * Date: 30/05/13
- * Time: 10:18
- * To change this template use File | Settings | File Templates.
+ * Represents a screen where user can create a new event by defining the name, description, initial days (starting new activity and fetching the result)
+ * and can define emails (another activity) to which he/she wants send an invitation. In the end the Activity is using a LoaderManager and a RESTLoader to send
+ * a POST /event to create the event...
  */
 
 public class CreateEventActivity extends FragmentActivity
         implements LoaderManager.LoaderCallbacks<RESTResponse>{
-
 
     private static final String TAG = CreateEventActivity.class.getName();
 
@@ -97,19 +92,37 @@ public class CreateEventActivity extends FragmentActivity
                 }
         );
 
+        //Finish and send
         createEvent  = (Button)findViewById(R.id.create_and_invite_button);
         createEvent.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //TODO implement the REST call etc.
+
                         Log.d(TAG, "Creating the event...");
+
+                        String warning = "";
+                        if(CreateEventActivity.this.createEventNameEditText.getText().toString().length() < 1){
+                            warning = "What's with the name?";
+                        }else if(CreateEventActivity.this.createEventDescEditText.getText().toString().length() < 1){
+                            warning = "Please, describe the event";
+                        }else if(allSelectedDays.size() == 0){
+                            warning = "Please, select days of the event";
+                        }else if(invitedUsers.size() == 0){
+                            warning = "Please, invite people";
+                        }
+
+                        //If warning is not empty show toast and return
+                        if(!warning.equals("")){
+                            Toast.makeText(CreateEventActivity.this.getApplicationContext(), warning, Toast.LENGTH_LONG).show();
+                            return;
+                        }
 
                         //Collect data from the EditFields....
                         newEvent = new Event();
                         newEvent.setName(CreateEventActivity.this.createEventNameEditText.getText().toString());
                         newEvent.setDescription(CreateEventActivity.this.createEventDescEditText.getText().toString());
-                        newEvent.setCreator_id(101);
+                        newEvent.setId_creator(101);
                         newEvent.setDays(allSelectedDays);
                         newEvent.setInvited_users(invitedUsers);
 
@@ -153,7 +166,7 @@ public class CreateEventActivity extends FragmentActivity
                 }
             }
             else if (resultCode == RESULT_CANCELED) {
-                Log.d(TAG, "onAcivityResult received RESULT_CANCEL from CalendarActivity with data: "+data);
+                Log.d(TAG, "onActivityResult received RESULT_CANCEL from CalendarActivity with data: "+data);
             }
         }
 
@@ -167,13 +180,14 @@ public class CreateEventActivity extends FragmentActivity
                 }
             }
             else if (resultCode == RESULT_CANCELED) {
-                Log.d(TAG, "onAcivityResult received RESULT_CANCEL from CalendarActivity with data: "+data);
+                Log.d(TAG, "onActivityResult received RESULT_CANCEL from CalendarActivity with data: "+data);
             }
         }
 
 
     }//onActivityResult
 
+    //onCreateLoader
     @Override
     public Loader<RESTResponse> onCreateLoader(int id, Bundle bundle) {
         //Create the loader...
@@ -185,8 +199,6 @@ public class CreateEventActivity extends FragmentActivity
                 progressDialog = CustomProgressSpinner.show(CreateEventActivity.this, "", "");
 
                 Bundle myParams = new Bundle();
-                Gson gson = new Gson();
-                //String postBodyJson = gson.toJson(newEvent);      //automatic json serialization with gson
                 String postBodyJson = newEvent.asJSON();            //custom json serialization
 
                 myParams.putCharSequence("postBodyJson", postBodyJson);

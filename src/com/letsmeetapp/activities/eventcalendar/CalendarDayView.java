@@ -72,6 +72,11 @@ public class CalendarDayView extends LinearLayout{
     }
 
 
+    @Override
+    public String toString(){
+        return day.toString();
+    }
+
     /*  GET SET */
     public Day getDay() {
         return day;

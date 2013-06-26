@@ -46,7 +46,7 @@ public class CalendarActivity extends Activity {
         if(startingDate == null) startingDate = Calendar.getInstance();
 
 
-        //GEt the hold of the grid_element to assign it the adapter
+        //GEt the hold of the grid to assign it to the adapter
         calendarGridView = (GridView)findViewById(R.id.calendar_grid_view);
         calendarAdapter = new CalendarAdapter(this, startingDate, this.allSelectedDays);
         calendarGridView.setAdapter(calendarAdapter);

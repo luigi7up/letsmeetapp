@@ -2,12 +2,14 @@ package com.letsmeetapp.activities.eventinvite;
 
 import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import com.letsmeetapp.R;
 import com.letsmeetapp.model.Day;
@@ -41,6 +43,10 @@ public class InvitePeopleActivity extends Activity{
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                //Focus has been lost hide keyboard. Since getContext() can be called on whichever View I did it on doneButton since it's the cheapest way
+                InputMethodManager imm = (InputMethodManager) doneButton.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(doneButton.getWindowToken(), 0);
 
                 //If new email is entered add it to emails and return it to the calling activity
                 if(newEmailInput.getText().toString().length() > 0){

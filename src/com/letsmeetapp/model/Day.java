@@ -71,7 +71,7 @@ public class Day implements Serializable, Comparable<Day>,Parcelable {
 
     @Override
     public String toString(){
-        return "with date :"+currentDate.toString();
+        return "Day.currentDate: "+ddMMyyyyFormatter.format(currentDate.getTime());
     }
 
 

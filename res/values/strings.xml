@@ -8,6 +8,7 @@
 
     <!-- Event stuff -->
     <string name="event_name">name of the event...</string>
+    <string name="event_description">describe event...</string>
     <string name="event_select_days">Select days</string>
     <string name="enter_email">enter email</string>
     <string name="invite_people">Invite people</string>

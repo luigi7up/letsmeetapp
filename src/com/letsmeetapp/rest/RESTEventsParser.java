@@ -26,8 +26,6 @@ public class RESTEventsParser implements Parsable{
     public ArrayList<Event> parse(RESTResponse response) {
 
         ArrayList<Event> allEvents = new ArrayList<Event>();
-        if(response.getCode() == 0) return allEvents;        //host wasn't reached
-
         JsonParser parser   = new JsonParser();
         JsonArray jsonArray = parser.parse(response.getData()).getAsJsonArray();
 
@@ -36,12 +34,13 @@ public class RESTEventsParser implements Parsable{
             JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
 
             String id_event = jsonObject.get("id_event").getAsString();
-            int creator_id = jsonObject.get("creator_id").getAsInt();
+            int id_creator = jsonObject.get("id_creator").getAsInt();
             String name = jsonObject.get("name").getAsString();
             String description = jsonObject.get("description").getAsString();
             String created = jsonObject.get("created").getAsString();
 
             JsonArray daysArray = jsonObject.get("days").getAsJsonArray();
+
             ArrayList<Day>days = new ArrayList <Day>();
             for(int x = 0;x<daysArray.size(); x++){
                 days.add(new Day(stringToCalendar(daysArray.get(x).getAsString())));
@@ -55,7 +54,7 @@ public class RESTEventsParser implements Parsable{
 
             Event event = new Event();
             event.setId_event(id_event);
-            event.setCreator_id(creator_id);
+            event.setId_creator(id_creator);
             event.setName(name);
             event.setDescription(description);
             event.setCreated(stringToCalendar(created));

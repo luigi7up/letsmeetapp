@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.letsmeetapp.R;
 import com.letsmeetapp.activities.eventcalendar.CalendarActivity;
@@ -27,6 +28,7 @@ public class EventDetailsActivity extends Activity {
 
     private Event event;
     private Button eventCalendarButton;
+    private TextView nameTextView, descriptionTextView, invitedPeopleTextView, daysTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +38,19 @@ public class EventDetailsActivity extends Activity {
 
         //get passed event object
         this.event = (Event)getIntent().getExtras().get("event");
-
-
         Toast.makeText(this.getApplicationContext(), "Im gonna show the details of "+event.getName(), Toast.LENGTH_SHORT).show();
         Log.d(TAG, "Details for the event "+ event.getName());
+
+
+        nameTextView               = (TextView)findViewById(R.id.event_details_name);
+        descriptionTextView        = (TextView)findViewById(R.id.event_details_description);
+        invitedPeopleTextView      = (TextView)findViewById(R.id.event_details_invited_people);
+        daysTextView               = (TextView)findViewById(R.id.event_details_days);
+
+        nameTextView.setText(event.getName());
+        descriptionTextView.setText(event.getDescription());
+        daysTextView.setText(event.getDays().toString());
+        invitedPeopleTextView.setText(event.getInvited_users().toString());
 
         //Create event button
         eventCalendarButton = (Button)findViewById(R.id.open_event_calendar_button);

@@ -33,14 +33,17 @@ public class CalendarActivityOnClickListener implements View.OnTouchListener {
         //NOTE: ACTION_MOVE until you dont release it fires, ACTION_UP once you release it fires it
         int newEventCode = event.getAction();
 
+        //Collect movement coordinates in a set
         if (event.getAction() == MotionEvent.ACTION_MOVE) {
             //Collect the coordinates of the movement and when ACTION_UP event is fired execute selection and view invalidation
             movementCoordinates.add(new Point((int)event.getX(), (int)event.getY()));
             return true;
         }
+
+        //Register the stop of movement
         if (event.getAction() == MotionEvent.ACTION_UP) {
 
-            //If no movement happened, just indicate you got the event...
+            //If no movement happened, just indicate you got the event to stop propagation...
             if(movementCoordinates == null) return true;
 
             //Convert coordinates into Set of positions in the grid that were touched
@@ -56,9 +59,8 @@ public class CalendarActivityOnClickListener implements View.OnTouchListener {
             }
 
             //For all touched positions: touchedDayView.toggleSelected();
-            CalendarDayView touchedDayView;
             for(int p:positionsTouched){
-                touchedDayView = (CalendarDayView)this.calendarActivityContext.getCalendarAdapter().getItem(p);
+                CalendarDayView touchedDayView = (CalendarDayView)this.calendarActivityContext.getCalendarAdapter().getItem(p);
                 touchedDayView.toggleSelected();
 
                 //If the day that is about to be returned as a grid view exist in allSelectedDayList mark it as selected
@@ -67,8 +69,6 @@ public class CalendarActivityOnClickListener implements View.OnTouchListener {
                 }else{
                     calendarActivityContext.getAllSelectedDays().add(touchedDayView.getDay());
                 }
-
-                Log.d("Luka", "Position touched " + p);
             }
 
             //clear the arrays...

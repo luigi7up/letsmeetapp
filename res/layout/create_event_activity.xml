@@ -24,9 +24,7 @@
                   android:layout_weight="100"
                   android:layout_marginTop="11dp"
                   android:layout_marginLeft="0dp"
-
                   android:text="Create event" />
-
 
     </LinearLayout>
 
@@ -37,8 +35,9 @@
               android:gravity="center|left"
               android:layout_width="260dp"  />
     <EditText android:id="@+id/create_event_desc"
+
               style="@style/InputField"
-              android:hint="@string/event_name"
+              android:hint="@string/event_description"
               android:inputType="textMultiLine"
               android:gravity="top|left"
               android:layout_width="260dp"

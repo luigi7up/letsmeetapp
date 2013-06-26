@@ -2,10 +2,8 @@ package com.letsmeetapp.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,7 +16,7 @@ import java.util.Calendar;
 public class Event implements Parcelable{
 
     private String id_event;
-    private int creator_id;
+    private int id_creator;
     private String name;
     private String description;
     private ArrayList<Day> days;    //Days selected by creator
@@ -31,12 +29,12 @@ public class Event implements Parcelable{
 
     public Event() {
     }
-    public Event(String id_event, String name, String description,int creator_id,
+    public Event(String id_event, String name, String description,int id_creator,
                  ArrayList<String> invited_users, ArrayList<Day> days,
                  Calendar created ) {
 
         this.id_event                = id_event;
-        this.creator_id              = creator_id;
+        this.id_creator              = id_creator;
         this.name                    = name;
         this.description             = description;
         this.days                    = days;
@@ -55,7 +53,7 @@ public class Event implements Parcelable{
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(id_event);
-        dest.writeInt(creator_id);
+        dest.writeInt(id_creator);
         dest.writeString(name);
         dest.writeString(description);
         dest.writeValue(days);              //ArrayList<Day>   implements Parcelable
@@ -68,7 +66,7 @@ public class Event implements Parcelable{
         public Event createFromParcel(Parcel in) {
             //Read serialized values
             String id_event                 = in.readString();
-            int creator_id                  = in.readInt();
+            int id_creator                  = in.readInt();
             String name         = in.readString();
             String description    = in.readString();
             ArrayList<Day> days             = (ArrayList<Day>)in.readValue(getClass().getClassLoader());
@@ -80,7 +78,7 @@ public class Event implements Parcelable{
             Event event = new Event();
 
             event.setId_event(id_event);
-            event.setCreator_id(creator_id);
+            event.setId_creator(id_creator);
             event.setName(name);
             event.setDescription(description);
             event.setDays(days);
@@ -97,19 +95,19 @@ public class Event implements Parcelable{
 
 
     /**
-     * Instead of just calling gson.toJson(newEvent); we use this method that manually serializes an event into JSON object
-     * It is used in CreateEventActivity
+     * Instead of just calling gson.toJson(newEvent); we use this method that manually serializes an event into JSON object to be sent to the Web Service
+     * It is originally used in CreateEventActivity
      */
     public String asJSON(){
-        Gson gson = new Gson();
+        //Gson gson = new Gson();
+       //Gson gson = new Gson();
+        Gson gson = new GsonBuilder().disableHtmlEscaping().create();
 
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("creator_id", this.getCreator_id());
+        jsonObject.addProperty("id_creator", this.getId_creator());
         jsonObject.addProperty("name", this.getName());
         jsonObject.addProperty("description", this.getDescription());
         //jsonObject.addProperty("created", this.getCreated().toString());
-
-
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
         ArrayList<String> daysAsStrings = new ArrayList<String>();
@@ -117,9 +115,12 @@ public class Event implements Parcelable{
             String calendarString = sdf.format(d.getCurrentDate().getTime());
             daysAsStrings.add(calendarString);
         }
-        jsonObject.addProperty("days", gson.toJson(daysAsStrings));
+        JsonElement daysAsArray = gson.toJsonTree(daysAsStrings, new TypeToken<ArrayList<String>>() {}.getType());
+        jsonObject.add("days",daysAsArray);
 
-        jsonObject.addProperty("invited_users", gson.toJson(this.getInvited_users()));
+
+        JsonElement invitedUsersAsArray = gson.toJsonTree(this.getInvited_users(), new TypeToken<ArrayList<String>>() {}.getType());
+        jsonObject.add("invited_users",invitedUsersAsArray);
 
         /*
         {
@@ -132,9 +133,7 @@ public class Event implements Parcelable{
             "invited_users" : ["luigi", "mickey"]
         }
         */
-
-
-        return gson.toJson("");
+        return jsonObject.toString();
 
 
     }
@@ -150,12 +149,12 @@ public class Event implements Parcelable{
         this.id_event = id_event;
     }
 
-    public int getCreator_id() {
-        return creator_id;
+    public int getId_creator() {
+        return id_creator;
     }
 
-    public void setCreator_id(int creator_id) {
-        this.creator_id = creator_id;
+    public void setId_creator(int id_creator) {
+        this.id_creator= id_creator;
     }
 
     public String getName() {

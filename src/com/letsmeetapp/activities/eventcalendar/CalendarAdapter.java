@@ -9,6 +9,7 @@ import com.letsmeetapp.model.Day;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  * This is the adapter for the calendarGridView. It returns one calendar_day view for each day in that particular month (getCount())
@@ -16,20 +17,22 @@ import java.util.Calendar;
  */
 public class CalendarAdapter extends BaseAdapter {
 
-    private CalendarActivity mContext;
-    private int dayViewDimension;   //value calculated as a screen_width/7 for the current orientation
-    private ArrayList<CalendarDayView> wholeMonthDayViews = new  ArrayList<CalendarDayView>();
-    private Calendar today;
-    private ArrayList<Day> allSelectedDays;
+    private static final String TAG = CalendarAdapter.class.getName();
 
-    public CalendarAdapter(CalendarActivity c, Calendar today, ArrayList<Day> allSelectedDays) {
+    private CalendarActivity mContext;
+    private ArrayList<Day> allSelectedDays;     //returning to calendar with previously selected days
+    private ArrayList<CalendarDayView> wholeMonthDayViews = new  ArrayList<CalendarDayView>();  //Holds the list of CalendarDayView
+    private Calendar startingDate;
+    private int dayViewDimension;   //value calculated as a screen_width/7 for the current orientation
+
+    public CalendarAdapter(CalendarActivity c, Calendar startingDate, ArrayList<Day> allSelectedDays) {
 
         this.mContext = c;
-        this.today = today;
+        this.startingDate = startingDate;
         this.allSelectedDays = allSelectedDays;
         this.dayViewDimension = calculateDayViewDimension();
 
-        Log.d("Luka", "Creating new CalendarAdapter for month"+today.get(Calendar.MONTH));
+        Log.d(TAG, "Creating new CalendarAdapter for month"+startingDate.get(Calendar.MONTH));
 
         generateDaysInMonth();
     }
@@ -39,23 +42,30 @@ public class CalendarAdapter extends BaseAdapter {
      */
     public void generateDaysInMonth(){
         // Get the number of days in that month
-        int daysInMonthNumber = today.getActualMaximum(Calendar.DAY_OF_MONTH);
+        int daysInMonthNumber = startingDate.getActualMaximum(Calendar.DAY_OF_MONTH);
+        Log.d(TAG, "generating days for: "+startingDate.getTime());
 
         //add all Days into wholeMonth ArrayList that is returned in the method getCount() and getView()
-        for(int i=0; i < daysInMonthNumber; i++){
-            today.set(Calendar.DAY_OF_MONTH, i+1);
-            Day newDay = new Day(today);
 
-            if(allSelectedDays.contains(newDay)){
+       for(int i=0; i < daysInMonthNumber; i++){
+
+           GregorianCalendar newDate = new GregorianCalendar();
+           newDate.set(newDate.MONTH, startingDate.get(startingDate.MONTH));    //Set the MONTH value of the newDate to the startingDay's MONTH
+           newDate.set(newDate.DAY_OF_MONTH, i+1);              //Set the DAY of newDate to 1,2,3,...31
+
+            Log.d(TAG, "adapter, day added: "+newDate.getTime());
+
+            Day newDay = new Day(newDate);
+
+            if(allSelectedDays.contains(newDate)){
                 newDay.setSelected(true);
-                Log.d("Luka", "allSelectedDays.contains: "+newDay);
             }
 
             CalendarDayView newDayCalendarDayView = new CalendarDayView(mContext, newDay, getDayViewDimension());
             this.wholeMonthDayViews.add(newDayCalendarDayView);
 
         }
-        Log.d("Luka", "generateDaysInMonth" + wholeMonthDayViews);
+        Log.d(TAG, "generateDaysInMonth" + wholeMonthDayViews);
     }
 
     /**
@@ -125,12 +135,12 @@ public class CalendarAdapter extends BaseAdapter {
         this.dayViewDimension = dayViewDimension;
     }
 
-    public Calendar getToday() {
-        return today;
+    public Calendar getStartingDate() {
+        return startingDate;
     }
 
-    public void setToday(Calendar today) {
-        this.today = today;
+    public void setStartingDate(Calendar startingDate) {
+        this.startingDate = startingDate;
     }
 
     public CalendarActivity getmContext() {
