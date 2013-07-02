@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.letsmeetapp.R;
-import com.letsmeetapp.activities.eventcalendar.CalendarActivity;
+import com.letsmeetapp.activities.calendar.creating.CalendarActivity;
 import com.letsmeetapp.model.Day;
 import com.letsmeetapp.model.Event;
 

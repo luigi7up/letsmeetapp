@@ -110,6 +110,7 @@
                 />
         <TextView android:layout_width="0px"
                   android:layout_height="fill_parent"
+                  android:layout_weight="1"
                   android:text="@string/week_day5"
                   android:layout_marginTop="0px"
                   android:textSize="16dp"

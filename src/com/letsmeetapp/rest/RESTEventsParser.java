@@ -8,6 +8,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * It is used as the parser of EVENTS resource that the web service return. It implements the Parsable interface
@@ -25,6 +27,7 @@ public class RESTEventsParser implements Parsable{
     @Override
     public ArrayList<Event> parse(RESTResponse response) {
 
+        //TODO test this and add necessary exception catchers!
         ArrayList<Event> allEvents = new ArrayList<Event>();
         JsonParser parser   = new JsonParser();
         JsonArray jsonArray = parser.parse(response.getData()).getAsJsonArray();
@@ -46,10 +49,16 @@ public class RESTEventsParser implements Parsable{
                 days.add(new Day(stringToCalendar(daysArray.get(x).getAsString())));
             }
 
+            //invited_users:[ {"email@asd.com":[ false, true , false...]}, {"email@asd.com":[ false, true , false...]} ]
             JsonArray invitedUsersArray = jsonObject.get("invited_users").getAsJsonArray();
             ArrayList<String>invitedUsers = new ArrayList <String>();
             for(int x = 0;x<invitedUsersArray.size(); x++){
-                invitedUsers.add(invitedUsersArray.get(x).getAsString());
+                //invitedUsers.add(invitedUsersArray.get(x).getAsString());
+                JsonObject e = invitedUsersArray.get(x).getAsJsonObject();
+                for (Map.Entry<String,JsonElement> entry : e.entrySet()){       //entrySet() returns a map of key/values. We extract the key name that represents the email
+                    invitedUsers.add(entry.getKey());
+                }
+
             }
 
             Event event = new Event();

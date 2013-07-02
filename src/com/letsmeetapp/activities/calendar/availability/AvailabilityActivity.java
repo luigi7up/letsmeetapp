@@ -1,16 +1,17 @@
-package com.letsmeetapp.activities.eventcalendar;
+package com.letsmeetapp.activities.calendar.availability;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 import com.letsmeetapp.R;
+import com.letsmeetapp.activities.calendar.CalendarActivityBase;
+import com.letsmeetapp.activities.calendar.CalendarAdapter;
+import com.letsmeetapp.activities.calendar.CalendarActivityOnClickListener;
+import com.letsmeetapp.activities.calendar.CalendarChangeMonthOnClickListener;
 import com.letsmeetapp.model.Day;
 import com.letsmeetapp.model.Event;
 
@@ -19,18 +20,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
- * Represents the activity holding a eventcalendar view for a month, the button to confirm the selection etc.
+ * Represents the activity holding a calendar view for a month, the button to confirm the selection etc.
  */
-public class CalendarActivity extends Activity {
+public class AvailabilityActivity extends CalendarActivityBase {
 
-    private static final String TAG = CalendarActivity.class.getName();
-
-    private GridView calendarGridView;
-    private CalendarAdapter calendarAdapter;
-    private ArrayList<Day> allSelectedDays;
-    private Calendar startingDate;
-    private Button prevButton,nextButton, doneSelectingButton;
-    private TextView calendarHeaderMonth;
+    private static final String TAG = AvailabilityActivity.class.getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +53,8 @@ public class CalendarActivity extends Activity {
         prevButton.setTag("prevButton");
         nextButton = (Button)findViewById(R.id.nextButton);
         nextButton.setTag("nextButton");
-        prevButton.setOnClickListener(new CalendarChangeMonthOnClickListener(CalendarActivity.this));
-        nextButton.setOnClickListener(new CalendarChangeMonthOnClickListener(CalendarActivity.this));
+        prevButton.setOnClickListener(new CalendarChangeMonthOnClickListener(AvailabilityActivity.this));
+        nextButton.setOnClickListener(new CalendarChangeMonthOnClickListener(AvailabilityActivity.this));
 
         //get hold of the month name in the header
         calendarHeaderMonth = (TextView)findViewById(R.id.calendar_header_month);
@@ -72,12 +66,12 @@ public class CalendarActivity extends Activity {
         doneSelectingButton = (Button)findViewById(R.id.done_selecting_dates);
 
         //Done button returns allSelectedDays to calling activity
-        doneSelectingButton.setOnClickListener(new OnClickListener() {
+        doneSelectingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent returnIntent = new Intent();
-                Log.d("Luka", "getAllSelectedDays: "+CalendarActivity.this.getAllSelectedDays().toString());
-                returnIntent.putParcelableArrayListExtra("allSelectedDays", CalendarActivity.this.allSelectedDays);
+                Log.d("Luka", "getAllSelectedDays: " + AvailabilityActivity.this.getAllSelectedDays().toString());
+                returnIntent.putParcelableArrayListExtra("allSelectedDays", AvailabilityActivity.this.allSelectedDays);
                 setResult(RESULT_OK, returnIntent);
                 finish();
             }
@@ -86,55 +80,4 @@ public class CalendarActivity extends Activity {
     }//onCreate
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-
-
-
-
-    //GETTER / SETTERS
-    public GridView getCalendarGridView() {
-        return calendarGridView;
-    }
-
-    public void setCalendarGridView(GridView calendarGridView) {
-        this.calendarGridView = calendarGridView;
-    }
-
-    public CalendarAdapter getCalendarAdapter() {
-        return calendarAdapter;
-    }
-
-    public void setCalendarAdapter(CalendarAdapter calendarAdapter) {
-        this.calendarAdapter = calendarAdapter;
-    }
-
-    public ArrayList<Day> getAllSelectedDays() {
-        return allSelectedDays;
-    }
-
-    public void setAllSelectedDays(ArrayList<Day> allSelectedDays) {
-        this.allSelectedDays = allSelectedDays;
-    }
-
-    public Calendar getStartingDate() {
-        return startingDate;
-    }
-
-    public void setToday(Calendar startingDate) {
-        this.startingDate = startingDate;
-    }
-
-    public TextView getCalendarHeaderMonth() {
-        return calendarHeaderMonth;
-    }
-
-    public void setCalendarHeaderMonth(TextView calendarHeaderMonth) {
-        this.calendarHeaderMonth = calendarHeaderMonth;
-    }
 }

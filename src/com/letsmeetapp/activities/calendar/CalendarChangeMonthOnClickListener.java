@@ -1,6 +1,8 @@
-package com.letsmeetapp.activities.eventcalendar;
+package com.letsmeetapp.activities.calendar;
 
 import android.view.View;
+import com.letsmeetapp.activities.calendar.CalendarActivityBase;
+import com.letsmeetapp.activities.calendar.CalendarAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -12,9 +14,9 @@ import java.util.Calendar;
  */
 public class CalendarChangeMonthOnClickListener implements View.OnClickListener {
 
-    private CalendarActivity mContext;
+    private CalendarActivityBase mContext;
 
-    public CalendarChangeMonthOnClickListener(CalendarActivity calendarActivityContext){
+    public CalendarChangeMonthOnClickListener(CalendarActivityBase calendarActivityContext){
         this.mContext = calendarActivityContext;
     }
 

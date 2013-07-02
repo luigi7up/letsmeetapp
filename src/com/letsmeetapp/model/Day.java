@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 /**
- * Represents a Day in a eventcalendar. It's holding info about the date, is it selected, people who also selected it etc.
+ * Represents a Day in a calendar. It's holding info about the date, is it selected, people who also selected it etc.
  * Implements Parcelable in order to be sent from one Activity to another
  */
 public class Day implements Serializable, Comparable<Day>,Parcelable {
@@ -30,7 +30,7 @@ public class Day implements Serializable, Comparable<Day>,Parcelable {
         super();
         this.currentDate = currentDate;
 
-        //Extract from eventcalendar object dd-MM-yyyy for comparison
+        //Extract from calendar object dd-MM-yyyy for comparison
         dateAsString = ddMMyyyyFormatter.format(currentDate.getTime());
 
         Log.d("Luka", "Creating the day " + currentDate);

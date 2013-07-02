@@ -1,10 +1,11 @@
-package com.letsmeetapp.activities.eventcalendar;
+package com.letsmeetapp.activities.calendar;
 
 import android.content.Context;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.*;
 import android.widget.BaseAdapter;
+import com.letsmeetapp.activities.calendar.creating.CalendarActivity;
 import com.letsmeetapp.model.Day;
 
 import java.util.ArrayList;
@@ -19,13 +20,13 @@ public class CalendarAdapter extends BaseAdapter {
 
     private static final String TAG = CalendarAdapter.class.getName();
 
-    private CalendarActivity mContext;
+    private Context mContext;
     private ArrayList<Day> allSelectedDays;     //returning to calendar with previously selected days
     private ArrayList<CalendarDayView> wholeMonthDayViews = new  ArrayList<CalendarDayView>();  //Holds the list of CalendarDayView
     private Calendar startingDate;
     private int dayViewDimension;   //value calculated as a screen_width/7 for the current orientation
 
-    public CalendarAdapter(CalendarActivity c, Calendar startingDate, ArrayList<Day> allSelectedDays) {
+    public CalendarAdapter(Context c, Calendar startingDate, ArrayList<Day> allSelectedDays) {
 
         this.mContext = c;
         this.startingDate = startingDate;
@@ -38,14 +39,28 @@ public class CalendarAdapter extends BaseAdapter {
     }
 
     /**
-     * It creates a new Day(eventcalendar) object for each day in the month passed and adds it into the ArrayList<Day> wholeMonth
+     * It creates a new Day(calendar) object for each day in the month passed and adds it into the ArrayList<Day> wholeMonth
      */
     public void generateDaysInMonth(){
         // Get the number of days in that month
         int daysInMonthNumber = startingDate.getActualMaximum(Calendar.DAY_OF_MONTH);
-        Log.d(TAG, "generating days for: "+startingDate.getTime());
 
-        //add all Days into wholeMonth ArrayList that is returned in the method getCount() and getView()
+        Calendar firstDayInMonth = new GregorianCalendar();
+        firstDayInMonth.set(startingDate.get(Calendar.YEAR), startingDate.get(Calendar.MONTH), 1);  //1 is Sunday, 2 is Monday etc...
+
+        Log.d(TAG, "First day of month : "+firstDayInMonth.get(Calendar.DAY_OF_WEEK));
+        int inactiveDaysToInject = firstDayInMonth.get(Calendar.DAY_OF_WEEK) - 2;
+
+        //Inject first few dead days
+        for(int i = 0; i<inactiveDaysToInject; i++){
+            GregorianCalendar newDate = new GregorianCalendar();
+            Day deadDay = new Day(newDate);
+            CalendarDayView newDayCalendarDayView = new CalendarDayView(mContext, deadDay, getDayViewDimension(),true);
+            this.wholeMonthDayViews.add(newDayCalendarDayView);
+        }
+
+
+
 
        for(int i=0; i < daysInMonthNumber; i++){
 
@@ -104,7 +119,7 @@ public class CalendarAdapter extends BaseAdapter {
     /**
     * Method returns the width of 7th part of a screen in order to pass it to a CalendarDayView to
     * set its width and height
-    * @return 7th part of a eventcalendar screen(in orientation)
+    * @return 7th part of a calendar screen(in orientation)
     * */
     private int calculateDayViewDimension(){
         // get display metrics
@@ -119,7 +134,7 @@ public class CalendarAdapter extends BaseAdapter {
 
         return  orientation_width_dp/7;
 
-        //get the column width on this device to set the eventcalendar day height.
+        //get the column width on this device to set the calendar day height.
         //NOTE android.R.id.content gives you the root element of a view, without having to know its actual name/type/ID.
         //this.orientation_width_dp = VisualUtility.dpFromPxForScreen(width, display.findViewById(android.R.id.content));
         //this.orientation_height_dp = VisualUtility.dpFromPxForScreen(height, this.findViewById(android.R.id.content));
@@ -143,7 +158,7 @@ public class CalendarAdapter extends BaseAdapter {
         this.startingDate = startingDate;
     }
 
-    public CalendarActivity getmContext() {
+    public Context getmContext() {
         return mContext;
     }
 

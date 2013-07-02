@@ -1,4 +1,4 @@
-package com.letsmeetapp.activities.eventcalendar;
+package com.letsmeetapp.activities.calendar;
 
 import android.graphics.Point;
 import android.util.Log;
@@ -14,12 +14,12 @@ import java.util.HashSet;
  */
 public class CalendarActivityOnClickListener implements View.OnTouchListener {
 
-    private CalendarActivity calendarActivityContext;   //Context in which touch happened (CalendarAtivity)
+    private CalendarActivityBase calendarActivityContext;   //Context in which touch happened (CalendarAtivity)
     private GridView calendarGridView;
     private HashSet<Point> movementCoordinates = new HashSet<Point>();  //contains the coordinates of a movement. Duplicates excluded (hence Set)
 
     //Constructor
-    public CalendarActivityOnClickListener(CalendarActivity context){
+    public CalendarActivityOnClickListener(CalendarActivityBase context){
         this.calendarActivityContext = context;
         calendarGridView = calendarActivityContext.getCalendarGridView();  //assign touched gridView into a local variable
     }
