@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import com.letsmeetapp.activities.calendar.CalendarAdapter;
 import com.letsmeetapp.model.Day;
 
 import java.util.ArrayList;
@@ -17,28 +18,11 @@ import java.util.Calendar;
  * Time: 12:17
  * To change this template use File | Settings | File Templates.
  */
-public class AvailabilityCalendarAdapter extends BaseAdapter {
+public class AvailabilityCalendarAdapter extends CalendarAdapter {
 
     private static final String TAG = AvailabilityCalendarAdapter.class.getName();
 
-
-    @Override
-    public int getCount() {
-        return 0;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return 0;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    public AvailabilityCalendarAdapter(Context c, Calendar startingDate, ArrayList<Day> allSelectedDays) {
+        super(c, startingDate, allSelectedDays);
     }
 }

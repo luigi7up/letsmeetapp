@@ -18,22 +18,20 @@ import java.util.HashMap;
  */
 public class Day implements Serializable, Comparable<Day>,Parcelable {
 
+    private double IdDayOfEvent = -1;
+    private HashMap<String, String> userAvailability = new HashMap<String, String>();    //it's a "email@asd.com":"y", "ccc@asd.com":"n" combination...
+
     private Calendar currentDate;
     private SimpleDateFormat ddMMyyyyFormatter = new SimpleDateFormat("dd-MM-yyyy");
     private String dateAsString;
-    private boolean isSelected;
-
-    private int percentageOfAccordance;
-    private HashMap<String, Boolean> membersDecisions;
+    private boolean isSelected;            //is it selected by the current user
 
     public Day(Calendar currentDate){
         super();
         this.currentDate = currentDate;
-
         //Extract from calendar object dd-MM-yyyy for comparison
         dateAsString = ddMMyyyyFormatter.format(currentDate.getTime());
 
-        Log.d("Luka", "Creating the day " + currentDate);
     }
 
     //Returns just the number from the Date
@@ -120,9 +118,33 @@ public class Day implements Serializable, Comparable<Day>,Parcelable {
 
 
     //SETTER GETTER
+
+
     public Calendar getCurrentDate() {
         return currentDate;
     }
+
+    public double getIdDayOfEvent() {
+        return IdDayOfEvent;
+    }
+
+    public void setIdDayOfEvent(double idDayOfEvent) {
+        IdDayOfEvent = idDayOfEvent;
+    }
+
+    public HashMap<String, String> getUserAvailability() {
+        return userAvailability;
+    }
+
+    public void setUserAvailability(HashMap<String, String> userAvailability) {
+        this.userAvailability = userAvailability;
+    }
+
+    public void setCurrentDate(Calendar currentDate) {
+        this.currentDate = currentDate;
+    }
+
+
 
     public void setDate(Calendar currentDate) {
         this.currentDate = currentDate;
@@ -134,22 +156,6 @@ public class Day implements Serializable, Comparable<Day>,Parcelable {
 
     public void setSelected(boolean selected) {
         isSelected = selected;
-    }
-
-    public int getPercentageOfAccordance() {
-        return percentageOfAccordance;
-    }
-
-    public void setPercentageOfAccordance(int percentageOfAccordance) {
-        this.percentageOfAccordance = percentageOfAccordance;
-    }
-
-    public HashMap<String, Boolean> getMembersDecisions() {
-        return membersDecisions;
-    }
-
-    public void setMembersDecisions(HashMap<String, Boolean> membersDecisions) {
-        this.membersDecisions = membersDecisions;
     }
 
     public String getDateAsString() {
@@ -167,4 +173,6 @@ public class Day implements Serializable, Comparable<Day>,Parcelable {
     public void setDdMMyyyyFormatter(SimpleDateFormat ddMMyyyyFormatter) {
         this.ddMMyyyyFormatter = ddMMyyyyFormatter;
     }
+
+
 }

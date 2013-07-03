@@ -122,7 +122,7 @@ public class CreateEventActivity extends FragmentActivity
                         newEvent = new Event();
                         newEvent.setName(CreateEventActivity.this.createEventNameEditText.getText().toString());
                         newEvent.setDescription(CreateEventActivity.this.createEventDescEditText.getText().toString());
-                        newEvent.setId_creator(101);
+                        newEvent.setId_creator(1);
                         newEvent.setDays(allSelectedDays);
                         newEvent.setInvited_users(invitedUsers);
 

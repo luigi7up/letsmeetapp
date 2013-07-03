@@ -1,22 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/calendar_activity_view"
+              android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-              android:orientation="vertical"
-              android:gravity="top"
-              android:background="@drawable/app_background" >
+              android:gravity="center_horizontal"
+              android:background="@drawable/app_background"
+              android:clickable="true"
+              android:focusable="false"
+              android:focusableInTouchMode="false" >
+    <LinearLayout
+            android:id="@+id/page_buttons"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:paddingRight="7dp"
+            android:layout_gravity="center_vertical"
+            android:background="@raw/action_bar_back"
+            android:weightSum="100" >
 
-    <TextView android:id="@+id/event_details_name"
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:text="name" />
+        <TextView android:id="@+id/event_details_name"
+                  style="@style/ListEventActionBarHeader"
+                  android:layout_weight="100"
+                  android:layout_marginTop="11dp"
+                  android:layout_marginLeft="0dp"
+                  android:text="Create event" />
+
+    </LinearLayout>
 
     <TextView android:id="@+id/event_details_description"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:text="description" />
+
+
+
+
+    <TextView android:id="@+id/event_details_description"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:text="description" />
+
+    <!--
     <TextView android:id="@+id/event_details_invited_people"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
@@ -25,6 +50,7 @@
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:text="days" />
+    -->
 
 
     <Button android:id="@+id/open_event_calendar_button"
@@ -34,4 +60,25 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dip"/>
 
+    <!--Table of availability, scrollabe horizontally-->
+    <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="#bb000000">
+            <TextView android:id="@+id/event_details_descriptionnn"
+                      android:layout_width="600dp"
+                      android:layout_height="wrap_content"
+                      android:text="asdf asdf asdfasdf adfasd asdfa sdfasdf asdf asdf asdfasdf asdfa sdf asdfas dfasdf asdf asdfasdf asdf asdf" />
+
+        </LinearLayout>
+    </ScrollView>
+
 </LinearLayout>
+
+
+
+

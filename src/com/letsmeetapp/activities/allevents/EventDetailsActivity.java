@@ -44,13 +44,13 @@ public class EventDetailsActivity extends Activity {
 
         nameTextView               = (TextView)findViewById(R.id.event_details_name);
         descriptionTextView        = (TextView)findViewById(R.id.event_details_description);
-        invitedPeopleTextView      = (TextView)findViewById(R.id.event_details_invited_people);
-        daysTextView               = (TextView)findViewById(R.id.event_details_days);
+        //invitedPeopleTextView      = (TextView)findViewById(R.id.event_details_invited_people);
+        //daysTextView               = (TextView)findViewById(R.id.event_details_days);
 
         nameTextView.setText(event.getName());
         descriptionTextView.setText(event.getDescription());
-        daysTextView.setText(event.getDays().toString());
-        invitedPeopleTextView.setText(event.getInvited_users().toString());
+        //daysTextView.setText(event.getDays().toString());
+        //invitedPeopleTextView.setText(event.getInvited_users().toString());
 
         //Create event button
         eventCalendarButton = (Button)findViewById(R.id.open_event_calendar_button);
@@ -64,6 +64,11 @@ public class EventDetailsActivity extends Activity {
                 startActivity(intent);
             }
         });
+
+    }
+
+
+    public void buildTableOfAvailability(){
 
     }
 }

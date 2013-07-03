@@ -21,8 +21,9 @@ public class Constants {
 
         if(APP_DEV_STATE.equals("DEV")){
 
-            REST_BASE_URL = "http://10.6.22.66:1983/";        //my comp in Altran
-            //REST_BASE_URL = "http://192.168.1.133:1983/";     //my comp at home
+            //REST_BASE_URL = "http://10.6.22.66:1983/";        //my comp in Altran
+
+            REST_BASE_URL = "http://192.168.1.64:1983/";     //my comp at home
             //REST_BASE_URL = "http://letsmeetapp.herokuapp.com/";
 
             //Harcoded string to be sent to APIs in order to authenticate the user. TESTING PURPOSES!!!
@@ -30,7 +31,6 @@ public class Constants {
 
 
         }else{  //for PROD
-
             REST_BASE_URL = "http://www.letsmeetapp.com/rest/";
         }
     }

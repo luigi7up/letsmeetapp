@@ -7,6 +7,7 @@ import android.view.*;
 import android.widget.BaseAdapter;
 import com.letsmeetapp.activities.calendar.creating.CalendarActivity;
 import com.letsmeetapp.model.Day;
+import com.letsmeetapp.model.Event;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -26,15 +27,15 @@ public class CalendarAdapter extends BaseAdapter {
     private Calendar startingDate;
     private int dayViewDimension;   //value calculated as a screen_width/7 for the current orientation
 
+    public CalendarAdapter() {}
+
     public CalendarAdapter(Context c, Calendar startingDate, ArrayList<Day> allSelectedDays) {
 
         this.mContext = c;
         this.startingDate = startingDate;
         this.allSelectedDays = allSelectedDays;
         this.dayViewDimension = calculateDayViewDimension();
-
         Log.d(TAG, "Creating new CalendarAdapter for month"+startingDate.get(Calendar.MONTH));
-
         generateDaysInMonth();
     }
 
@@ -59,11 +60,7 @@ public class CalendarAdapter extends BaseAdapter {
             this.wholeMonthDayViews.add(newDayCalendarDayView);
         }
 
-
-
-
        for(int i=0; i < daysInMonthNumber; i++){
-
            GregorianCalendar newDate = new GregorianCalendar();
            newDate.set(newDate.MONTH, startingDate.get(startingDate.MONTH));    //Set the MONTH value of the newDate to the startingDay's MONTH
            newDate.set(newDate.DAY_OF_MONTH, i+1);              //Set the DAY of newDate to 1,2,3,...31

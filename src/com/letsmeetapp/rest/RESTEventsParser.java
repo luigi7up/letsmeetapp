@@ -6,10 +6,7 @@ import com.letsmeetapp.model.Day;
 import com.letsmeetapp.model.Event;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * It is used as the parser of EVENTS resource that the web service return. It implements the Parsable interface
@@ -44,21 +41,29 @@ public class RESTEventsParser implements Parsable{
 
             JsonArray daysArray = jsonObject.get("days").getAsJsonArray();
 
+            //"days": [ "2013-06-02T09:04:27.000Z", "2013-06-01T09:04:27.000Z" ]
             ArrayList<Day>days = new ArrayList <Day>();
             for(int x = 0;x<daysArray.size(); x++){
                 days.add(new Day(stringToCalendar(daysArray.get(x).getAsString())));
             }
 
-            //invited_users:[ {"email@asd.com":[ false, true , false...]}, {"email@asd.com":[ false, true , false...]} ]
+            //"invited_users":[ {"email@asd.com":[ "y", "n" , "m"...]}, {"email@asd.com":[ y, y , y...]} ]
             JsonArray invitedUsersArray = jsonObject.get("invited_users").getAsJsonArray();
             ArrayList<String>invitedUsers = new ArrayList <String>();
             for(int x = 0;x<invitedUsersArray.size(); x++){
-                //invitedUsers.add(invitedUsersArray.get(x).getAsString());
+
+                //e = "luis.perez2@gmail.com": ["y","y","y","y"]
                 JsonObject e = invitedUsersArray.get(x).getAsJsonObject();
                 for (Map.Entry<String,JsonElement> entry : e.entrySet()){       //entrySet() returns a map of key/values. We extract the key name that represents the email
-                    invitedUsers.add(entry.getKey());
-                }
 
+                    String email = entry.getKey();      //email
+                    JsonArray userDaysAvailability = entry.getValue().getAsJsonArray();     //values [y, n, y, m];
+
+                    for(int q = 0; q<userDaysAvailability.size(); q++){
+                        days.get(q).getUserAvailability().put(email, userDaysAvailability.get(q).getAsString());
+                    }
+                    invitedUsers.add(email);
+                }
             }
 
             Event event = new Event();

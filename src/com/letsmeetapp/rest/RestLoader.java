@@ -4,6 +4,7 @@ package com.letsmeetapp.rest;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 import org.apache.http.HttpEntity;
@@ -33,10 +34,9 @@ import java.util.List;
  * gets the response, it packs it into new RESTresponse class and returns it to  the caller (LoadManager)
  */
 public class RESTLoader extends AsyncTaskLoader<RESTResponse> {
-
     private static final String TAG = RESTLoader.class.getName();
 
-    // We use this delta to determine if our cached data is 
+    // We use this delta to determine if our cached data is
     // old or not. The value we have here is 10 minutes;
     private static final long STALE_DELTA = 600000;
 
