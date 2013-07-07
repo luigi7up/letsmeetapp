@@ -1,10 +1,20 @@
 package com.letsmeetapp.activities.calendar;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Point;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.nfc.Tag;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.GridView;
+import com.letsmeetapp.R;
+import com.letsmeetapp.model.Day;
 
 import java.util.HashSet;
 
@@ -14,13 +24,15 @@ import java.util.HashSet;
  */
 public class CalendarActivityOnClickListener implements View.OnTouchListener {
 
+    private static final String TAG = CalendarActivityOnClickListener.class.getName();
+
     private CalendarActivityBase calendarActivityContext;   //Context in which touch happened (CalendarAtivity)
     private GridView calendarGridView;
     private HashSet<Point> movementCoordinates = new HashSet<Point>();  //contains the coordinates of a movement. Duplicates excluded (hence Set)
 
     //Constructor
     public CalendarActivityOnClickListener(CalendarActivityBase context){
-        this.calendarActivityContext = context;
+        calendarActivityContext = context;
         calendarGridView = calendarActivityContext.getCalendarGridView();  //assign touched gridView into a local variable
     }
 
@@ -69,6 +81,11 @@ public class CalendarActivityOnClickListener implements View.OnTouchListener {
                 }else{
                     calendarActivityContext.getAllSelectedDays().add(touchedDayView.getDay());
                 }
+
+                if(touchedDayView.getDay().isInEvent() == true){
+                    showAvailabilityDialog(touchedDayView);
+
+                }
             }
 
             //clear the arrays...
@@ -80,6 +97,49 @@ public class CalendarActivityOnClickListener implements View.OnTouchListener {
         }
 
         return false;
+
+    }
+
+    /*
+    * Takes the context in which to show the dialog and a CalendarDayView on which it should perform the action of switching its Day availability to OK or NO
+    * */
+    private void showAvailabilityDialog(CalendarDayView dayView){
+        Log.d(TAG, "POPUP!");
+
+        final CalendarDayView dayView1 = dayView;
+
+        final Dialog dialog = new Dialog(calendarActivityContext);
+        dialog.setContentView(R.layout.availability_popup);
+        dialog.show();
+        //Get the reference to OK and NO buttons
+        Button ok_button = (Button)dialog.findViewById(R.id.availability_btn_yes);
+        Button no_button = (Button)dialog.findViewById(R.id.availability_btn_no);
+
+        ok_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "Clicked OK on " + dayView1.getDay().getDateAsString());
+                calendarActivityContext.event.getEventDayByDateString(dayView1.getDay().getDateAsString()).setCurrentUserAvailability("y");
+
+                Log.d(TAG, "and it's set to " + calendarActivityContext.event.getEventDayByDateString(dayView1.getDay().getDateAsString()).getCurrentUserAvailability());
+
+                dialog.dismiss();
+
+            }
+        });
+
+        no_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "Clicked NO  "+dayView1.getDay().getDateAsString());
+                calendarActivityContext.event.getEventDayByDateString(dayView1.getDay().getDateAsString()).setCurrentUserAvailability("n");
+                Log.d(TAG, "and it's set to " + calendarActivityContext.event.getEventDayByDateString(dayView1.getDay().getDateAsString()).getCurrentUserAvailability());
+                dialog.dismiss();
+            }
+        });
+
+
+
 
     }
 

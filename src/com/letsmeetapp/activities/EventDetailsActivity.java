@@ -1,4 +1,4 @@
-package com.letsmeetapp.activities.allevents;
+package com.letsmeetapp.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,8 +12,11 @@ import com.letsmeetapp.R;
 import com.letsmeetapp.activities.calendar.creating.CalendarActivity;
 import com.letsmeetapp.model.Day;
 import com.letsmeetapp.model.Event;
+import com.letsmeetapp.utilities.VisualUtility;
 
 import java.util.ArrayList;
+
+import static com.letsmeetapp.utilities.TextUtils._;
 
 /**
  * Created with IntelliJ IDEA.
@@ -59,16 +62,27 @@ public class EventDetailsActivity extends Activity {
             public void onClick(View view) {
                 Intent intent = new Intent(EventDetailsActivity.this, CalendarActivity.class);
                 intent.putExtra("event", EventDetailsActivity.this.event);      //Calendar doesn't implemetn Parcelable so I send the whole event instead of event.getCreationdate...
-                intent.putExtra("allSelectedDays",new ArrayList<Day>());      //Calendar doesn't implemetn Parcelable so I send the whole event instead of event.getCreationdate...
-                //startActivityForResult(intent, 2);
-                startActivity(intent);
+                intent.putExtra("allSelectedDays",new ArrayList<Day>());        //Calendar doesn't implemetn Parcelable so I send the whole event instead of event.getCreationdate...
+                startActivityForResult(intent, 1);
+
             }
         });
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-    public void buildTableOfAvailability(){
-
+        //coming back from CalendarActivity
+        if(requestCode == 1){
+            if(resultCode == RESULT_OK){
+                //fill with the values returned
+                //event = (Event)data.getParcelableExtra("event");
+                EventDetailsActivity.this.event = (Event)data.getParcelableExtra("event");
+            }
+            else if (resultCode == RESULT_CANCELED) {
+                Log.d(TAG, "onActivityResult received RESULT_CANCEL from CalendarActivity with data: "+data);
+            }
+        }
     }
 }

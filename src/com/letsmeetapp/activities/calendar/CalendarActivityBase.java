@@ -8,6 +8,7 @@ import android.widget.GridView;
 import android.widget.TextView;
 import com.letsmeetapp.R;
 import com.letsmeetapp.model.Day;
+import com.letsmeetapp.model.Event;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -22,8 +23,10 @@ public class CalendarActivityBase extends Activity {
     protected BaseAdapter calendarAdapter;
     protected ArrayList<Day> allSelectedDays;     //a list of days that the creator initially selected
     protected Calendar startingDate;              //a Calendar instance that is used to determinate which month to present when Activity is started
+    protected Event event;                         //used when seeing calendar for a Created event
     protected Button prevButton,nextButton, doneSelectingButton;
     protected TextView calendarHeaderMonth;
+
 
 
     @Override

@@ -24,7 +24,9 @@ public class Day implements Serializable, Comparable<Day>,Parcelable {
     private Calendar currentDate;
     private SimpleDateFormat ddMMyyyyFormatter = new SimpleDateFormat("dd-MM-yyyy");
     private String dateAsString;
-    private boolean isSelected;            //is it selected by the current user
+    private boolean isSelected;                         //is it selected by the current user
+    private boolean isInEvent;                          //when viewing a calendar of a created Event then all Days that belong to the current event have to be marked as isInEvent = true
+    private String currentUserAvailability  =   "m";    //by default is on maybe
 
     public Day(Calendar currentDate){
         super();
@@ -86,6 +88,9 @@ public class Day implements Serializable, Comparable<Day>,Parcelable {
         //dest.writeValue(ddMMyyyyFormatter);
         dest.writeString(dateAsString);
         dest.writeValue(isSelected);
+        dest.writeValue(isInEvent);
+        dest.writeString(currentUserAvailability);
+
     }
 
     // this is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods
@@ -95,10 +100,15 @@ public class Day implements Serializable, Comparable<Day>,Parcelable {
             //SimpleDateFormat ddMMyyyyFormatter   = (SimpleDateFormat)in.readValue(getClass().getClassLoader());
             String dateAsString         =  in.readString();
             boolean isSelected          =  (Boolean)in.readValue(getClass().getClassLoader());
+            boolean isInEvent           =  (Boolean)in.readValue(getClass().getClassLoader());
+            String currentUserAvailability = (String)in.readString();
 
+            //Now create a new Day from collected data
             Day day = new Day(currentDate);
             day.setSelected(isSelected);
             day.setDateAsString(dateAsString);
+            day.setInEvent(isInEvent);
+            day.setCurrentUserAvailability(currentUserAvailability);
             return day;
         }
 
@@ -114,12 +124,13 @@ public class Day implements Serializable, Comparable<Day>,Parcelable {
         //ddMMyyyyFormatter   = (SimpleDateFormat)in.readValue(getClass().getClassLoader());
         dateAsString        =  in.readString();
         isSelected          =  (Boolean)in.readValue(getClass().getClassLoader());
+        isInEvent          =  (Boolean)in.readValue(getClass().getClassLoader());
+        currentUserAvailability        =  in.readString();
+
     }
 
 
     //SETTER GETTER
-
-
     public Calendar getCurrentDate() {
         return currentDate;
     }
@@ -156,6 +167,22 @@ public class Day implements Serializable, Comparable<Day>,Parcelable {
 
     public void setSelected(boolean selected) {
         isSelected = selected;
+    }
+
+    public boolean isInEvent() {
+        return isInEvent;
+    }
+
+    public void setInEvent(boolean inEvent) {
+        isInEvent = inEvent;
+    }
+
+    public String getCurrentUserAvailability() {
+        return currentUserAvailability;
+    }
+
+    public void setCurrentUserAvailability(String currentUserAvailability) {
+        this.currentUserAvailability = currentUserAvailability;
     }
 
     public String getDateAsString() {

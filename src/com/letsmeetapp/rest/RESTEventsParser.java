@@ -89,7 +89,7 @@ public class RESTEventsParser implements Parsable{
     private Calendar stringToCalendar(String input){
         Calendar cal = Calendar.getInstance();
         //SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy");
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         try {
             cal.setTime(sdf.parse(input));// all done
         } catch (ParseException e) {

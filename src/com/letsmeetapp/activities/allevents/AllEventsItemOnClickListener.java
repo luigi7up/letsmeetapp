@@ -4,8 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Toast;
-import com.letsmeetapp.activities.createevent.CreateEventActivity;
+import com.letsmeetapp.activities.EventDetailsActivity;
 import com.letsmeetapp.model.Event;
 
 /**

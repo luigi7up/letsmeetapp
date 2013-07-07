@@ -23,6 +23,9 @@ public class CalendarDayView extends LinearLayout{
     private Context mContext;
     private final int SELECTED_COLOR        = Color.argb(220,220,220,220);
     private final int NOT_SELECTED_COLOR    = Color.argb(220,240,240,240);
+    private final int IN_EVENT_COLOR        = Color.argb(180,140,140,140);
+    private final int AVAILABLE_Y_COLOR             = Color.GREEN;
+    private final int AVAILABLE_N_COLOR             = Color.RED;
 
     private boolean isDead;        //If a month starts on Wednesday then Monday and Tuesday are dead: gray, no date
 
@@ -65,6 +68,17 @@ public class CalendarDayView extends LinearLayout{
         if(this.getDay().isSelected() == false) setBackgroundColor(NOT_SELECTED_COLOR);
         else setBackgroundColor(SELECTED_COLOR);
 
+        if(this.getDay().isInEvent())
+        {
+            setBackgroundColor(IN_EVENT_COLOR);
+
+            if((this.getDay().getCurrentUserAvailability()).equalsIgnoreCase("y")==true) setBackgroundColor(AVAILABLE_Y_COLOR);
+            if((this.getDay().getCurrentUserAvailability()).equalsIgnoreCase("n")==true) setBackgroundColor(AVAILABLE_N_COLOR);
+        }
+
+
+
+
         setMeasuredDimension(dimension-1,dimension-1);
     }
 
@@ -72,6 +86,7 @@ public class CalendarDayView extends LinearLayout{
     public void toggleSelected(){
 
         if(isDead() == true) return;        //don't allow click
+        if(this.getDay().isInEvent()) return;
 
         Log.d("Luka","View for the day "+this.getDay()+" is toggled...");
         if(this.getDay().isSelected()) {

@@ -29,6 +29,7 @@ public class Event implements Parcelable{
 
     public Event() {
     }
+
     public Event(String id_event, String name, String description,int id_creator,
                  ArrayList<String> invited_users, ArrayList<Day> days,
                  Calendar created ) {
@@ -139,8 +140,18 @@ public class Event implements Parcelable{
     }
 
 
+    /*
+    * Event contains an ArrayList<Day> days; and this method returns a Day in this ArrayList if its dateToString is equal
+    * to the passed one.
+    * */
+    public Day getEventDayByDateString(String dateAsString){
+        for(Day d:days){
+            if(d.getDateAsString().equalsIgnoreCase(dateAsString)) return d;
+        }
+        return null;
+    }
 
-
+   //SETTER / GETTER
     public String getId_event() {
         return id_event;
     }

@@ -61,21 +61,18 @@
             android:layout_marginTop="30dip"/>
 
     <!--Table of availability, scrollabe horizontally-->
-    <ScrollView
+    <HorizontalScrollView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
         <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="#bb000000">
-            <TextView android:id="@+id/event_details_descriptionnn"
-                      android:layout_width="600dp"
-                      android:layout_height="wrap_content"
-                      android:text="asdf asdf asdfasdf adfasd asdfa sdfasdf asdf asdf asdfasdf asdfa sdf asdfas dfasdf asdf asdfasdf asdf asdf" />
+                android:orientation="vertical"
+                android:background="#bbcccccc">
+
 
         </LinearLayout>
-    </ScrollView>
+    </HorizontalScrollView>
 
 </LinearLayout>
 
