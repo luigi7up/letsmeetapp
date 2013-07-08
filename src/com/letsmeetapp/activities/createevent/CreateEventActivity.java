@@ -16,7 +16,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.letsmeetapp.Constants;
 import com.letsmeetapp.R;
-import com.letsmeetapp.activities.calendar.creating.CalendarActivity;
+import com.letsmeetapp.activities.calendar.creating.CreateCalendarActivity;
 import com.letsmeetapp.activities.eventinvite.InvitePeopleActivity;
 import com.letsmeetapp.customviews.CustomProgressSpinner;
 import com.letsmeetapp.model.Day;
@@ -72,7 +72,7 @@ public class CreateEventActivity extends FragmentActivity
                     @Override
                     public void onClick(View v) {
                         Event event = new Event();
-                        Intent intent = new Intent(CreateEventActivity.this, CalendarActivity.class);
+                        Intent intent = new Intent(CreateEventActivity.this, CreateCalendarActivity.class);
                         intent.putExtra("allSelectedDays", CreateEventActivity.this.allSelectedDays);
                         intent.putExtra("event", event);
                         startActivityForResult(intent, 1);
@@ -219,8 +219,7 @@ public class CreateEventActivity extends FragmentActivity
                 // The asynchronous load is complete and the data is now available for use.
                 mResponse = data;
                 RESTEventsParser parser = new RESTEventsParser();       //new parser for /events
-                //listAdapter = new AllEventsListAdapter(this, parser.parse(mResponse));
-                //listView.setAdapter(listAdapter);
+
                 progressDialog.dismiss();
                 break;
         }

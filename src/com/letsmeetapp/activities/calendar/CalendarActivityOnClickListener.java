@@ -1,20 +1,13 @@
 package com.letsmeetapp.activities.calendar;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Point;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.nfc.Tag;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
 import com.letsmeetapp.R;
-import com.letsmeetapp.model.Day;
 
 import java.util.HashSet;
 
@@ -26,12 +19,12 @@ public class CalendarActivityOnClickListener implements View.OnTouchListener {
 
     private static final String TAG = CalendarActivityOnClickListener.class.getName();
 
-    private CalendarActivityBase calendarActivityContext;   //Context in which touch happened (CalendarAtivity)
+    private CalendarActivity calendarActivityContext;   //Context in which touch happened (CalendarAtivity)
     private GridView calendarGridView;
     private HashSet<Point> movementCoordinates = new HashSet<Point>();  //contains the coordinates of a movement. Duplicates excluded (hence Set)
 
     //Constructor
-    public CalendarActivityOnClickListener(CalendarActivityBase context){
+    public CalendarActivityOnClickListener(CalendarActivity context){
         calendarActivityContext = context;
         calendarGridView = calendarActivityContext.getCalendarGridView();  //assign touched gridView into a local variable
     }

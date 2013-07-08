@@ -1,8 +1,6 @@
 package com.letsmeetapp.activities.calendar;
 
 import android.view.View;
-import com.letsmeetapp.activities.calendar.CalendarActivityBase;
-import com.letsmeetapp.activities.calendar.CalendarAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -14,9 +12,9 @@ import java.util.Calendar;
  */
 public class CalendarChangeMonthOnClickListener implements View.OnClickListener {
 
-    private CalendarActivityBase mContext;
+    private CalendarActivity mContext;
 
-    public CalendarChangeMonthOnClickListener(CalendarActivityBase calendarActivityContext){
+    public CalendarChangeMonthOnClickListener(CalendarActivity calendarActivityContext){
         this.mContext = calendarActivityContext;
     }
 
@@ -30,37 +28,37 @@ public class CalendarChangeMonthOnClickListener implements View.OnClickListener 
 
     public void prevMonth(){
         //mCalendar.set(Calendar.MONTH, mCalendar.get(Calendar.MONTH)-1);
-        mContext.getStartingDate().add(Calendar.MONTH, -1);
+        mContext.getMonthShowing().add(Calendar.MONTH, -1);
 
         //Reset the gridViewAdapter because now it contains days for another month
         mContext.setCalendarAdapter(
                 new CalendarAdapter(mContext,
-                        mContext.getStartingDate(),
+                        mContext.getMonthShowing(),
                         mContext.getAllSelectedDays()));
 
         mContext.getCalendarGridView().setAdapter(mContext.getCalendarAdapter());
 
         //TODO optimize! don't createevent object. Make it memeber var
         SimpleDateFormat month_date = new SimpleDateFormat("MMM");
-        String month_name = month_date.format(mContext.getStartingDate().getTime());
+        String month_name = month_date.format(mContext.getMonthShowing().getTime());
         mContext.getCalendarHeaderMonth().setText(month_name);
     }
 
     public void nextMonth(){
         //mCalendar.set(Calendar.MONTH, mCalendar.get(Calendar.MONTH)-1);
-        mContext.getStartingDate().add(Calendar.MONTH, +1);
+        mContext.getMonthShowing().add(Calendar.MONTH, +1);
 
         //Reset the gridViewAdapter because now it contains days for another month
         mContext.setCalendarAdapter(
                 new CalendarAdapter(mContext,
-                        mContext.getStartingDate(),
+                        mContext.getMonthShowing(),
                         mContext.getAllSelectedDays()));
 
         mContext.getCalendarGridView().setAdapter(mContext.getCalendarAdapter());
 
         //TODO optimize! don't createevent object. Make it memeber var
         SimpleDateFormat month_date = new SimpleDateFormat("MMM");
-        String month_name = month_date.format(mContext.getStartingDate().getTime());
+        String month_name = month_date.format(mContext.getMonthShowing().getTime());
         mContext.getCalendarHeaderMonth().setText(month_name);
     }
 }

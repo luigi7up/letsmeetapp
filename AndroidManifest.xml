@@ -17,7 +17,6 @@
             android:icon="@drawable/ic_launcher"
             android:label="@string/app_name"
             android:theme="@style/letsmeetappTheme" >
-
         <activity
                 android:name=".activities.allevents.AllEventsListActivity"
                 android:screenOrientation="portrait">
@@ -40,7 +39,7 @@
         </activity>
 
         <activity
-                android:name=".activities.calendar.creating.CalendarActivity"
+                android:name=".activities.calendar.creating.CreateCalendarActivity"
                 android:screenOrientation="portrait">
         </activity>
 

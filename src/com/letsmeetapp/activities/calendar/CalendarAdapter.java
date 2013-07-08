@@ -6,7 +6,6 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.*;
 import android.widget.BaseAdapter;
-import com.letsmeetapp.activities.calendar.creating.CalendarActivity;
 import com.letsmeetapp.model.Day;
 import com.letsmeetapp.model.Event;
 
@@ -122,12 +121,13 @@ public class CalendarAdapter extends BaseAdapter {
 
             Day newDay = new Day(newDate);
 
-            if(allSelectedDays.contains(newDate)){
-                newDay.setSelected(true);
+           CalendarDayView newDayCalendarDayView = new CalendarDayView(mContext, newDay, getDayViewDimension());
+           this.wholeMonthDayViews.add(newDayCalendarDayView);
+
+           if(allSelectedDays.contains(newDate)){
+               newDayCalendarDayView.setSelected(true);
             }
 
-            CalendarDayView newDayCalendarDayView = new CalendarDayView(mContext, newDay, getDayViewDimension());
-            this.wholeMonthDayViews.add(newDayCalendarDayView);
 
         }
         Log.d(TAG, "generateDaysInMonth" + wholeMonthDayViews);

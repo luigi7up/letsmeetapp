@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.letsmeetapp.R;
-import com.letsmeetapp.activities.calendar.creating.CalendarActivity;
 import com.letsmeetapp.model.Day;
 
 /**
@@ -18,15 +17,19 @@ import com.letsmeetapp.model.Day;
  */
 public class CalendarDayView extends LinearLayout{
 
+    private Context mContext;
     private Day day;
     private int dimension;      //holds the width/height value for the orientation
-    private Context mContext;
+
+
+
     private final int SELECTED_COLOR        = Color.argb(220,220,220,220);
     private final int NOT_SELECTED_COLOR    = Color.argb(220,240,240,240);
     private final int IN_EVENT_COLOR        = Color.argb(180,140,140,140);
     private final int AVAILABLE_Y_COLOR             = Color.GREEN;
     private final int AVAILABLE_N_COLOR             = Color.RED;
 
+    private boolean isSelected;
     private boolean isDead;        //If a month starts on Wednesday then Monday and Tuesday are dead: gray, no date
 
     public CalendarDayView(Context context, Day day ,int dimension) {
@@ -63,9 +66,9 @@ public class CalendarDayView extends LinearLayout{
         //CalendarActivity parentActivity = (CalendarActivity)parentCalendarAdapter.getmContext();
 
         //If the day that is about to be returned as a grid view exist in allSelectedDayList mark it as selected
-        if(parentCalendarActivity.getAllSelectedDays().contains(this.getDay())) this.getDay().setSelected(true);
+        if(parentCalendarActivity.getAllSelectedDays().contains(this.getDay())) this.setSelected(true);
 
-        if(this.getDay().isSelected() == false) setBackgroundColor(NOT_SELECTED_COLOR);
+        if(this.isSelected() == false) setBackgroundColor(NOT_SELECTED_COLOR);
         else setBackgroundColor(SELECTED_COLOR);
 
         if(this.getDay().isInEvent())
@@ -89,12 +92,12 @@ public class CalendarDayView extends LinearLayout{
         if(this.getDay().isInEvent()) return;
 
         Log.d("Luka","View for the day "+this.getDay()+" is toggled...");
-        if(this.getDay().isSelected()) {
-            this.getDay().setSelected(false);
+        if(this.isSelected()) {
+            this.setSelected(false);
             setBackgroundColor(NOT_SELECTED_COLOR);
         }
         else {
-            this.getDay().setSelected(true);
+            this.setSelected(true);
             setBackgroundColor(SELECTED_COLOR);
         }
     }
@@ -145,5 +148,13 @@ public class CalendarDayView extends LinearLayout{
 
     public void setDead(boolean dead) {
         isDead = dead;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 }

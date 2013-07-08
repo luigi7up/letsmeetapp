@@ -17,12 +17,12 @@ import java.util.Calendar;
  *  A base class for Activities that have a calendar inside (For CreateCalendarActivity or AvailabilityCalendarActivity)
  *  It offers some methods that are shared between all children classes.
  */
-public class CalendarActivityBase extends Activity {
+public class CalendarActivity extends Activity {
 
     protected GridView calendarGridView;
     protected BaseAdapter calendarAdapter;
     protected ArrayList<Day> allSelectedDays;     //a list of days that the creator initially selected
-    protected Calendar startingDate;              //a Calendar instance that is used to determinate which month to present when Activity is started
+    protected Calendar monthShowing;              //a Calendar instance that is used to determinate which month to present when Activity is started
     protected Event event;                         //used when seeing calendar for a Created event
     protected Button prevButton,nextButton, doneSelectingButton;
     protected TextView calendarHeaderMonth;
@@ -62,12 +62,12 @@ public class CalendarActivityBase extends Activity {
         this.allSelectedDays = allSelectedDays;
     }
 
-    public Calendar getStartingDate() {
-        return startingDate;
+    public Calendar getMonthShowing() {
+        return monthShowing;
     }
 
-    public void setStartingDate(Calendar startingDate) {
-        this.startingDate = startingDate;
+    public void setMonthShowing(Calendar monthShowing) {
+        this.monthShowing = monthShowing;
     }
 
     public Button getPrevButton() {

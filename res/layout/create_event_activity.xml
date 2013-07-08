@@ -1,71 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:gravity="center_horizontal"
-              android:background="@drawable/app_background"
-              android:clickable="true"
-              android:focusable="false"
-              android:focusableInTouchMode="false" >
-    <LinearLayout
-            android:id="@+id/page_buttons"
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:paddingRight="7dp"
-            android:layout_gravity="center_vertical"
-            android:background="@raw/action_bar_back"
-            android:weightSum="100" >
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        android:background="@drawable/app_background"
+        android:clickable="true"
+        android:focusable="false"
+        android:focusableInTouchMode="false" >
 
-        <TextView android:id="@+id/create_event_action_bar"
-                  style="@style/ListEventActionBarHeader"
-                  android:layout_weight="100"
-                  android:layout_marginTop="11dp"
-                  android:layout_marginLeft="0dp"
-                  android:text="Create event" />
+    <LinearLayout
+                  android:orientation="vertical"
+                  android:layout_width="fill_parent"
+                  android:layout_height="fill_parent"
+                  android:gravity="center_horizontal">
+        <LinearLayout
+                android:id="@+id/page_buttons"
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:paddingRight="7dp"
+                android:layout_gravity="center_vertical"
+                android:background="@raw/action_bar_back"
+                android:weightSum="100" >
+
+            <TextView android:id="@+id/create_event_action_bar"
+                      style="@style/ListEventActionBarHeader"
+                      android:layout_weight="100"
+                      android:layout_marginTop="11dp"
+                      android:layout_marginLeft="0dp"
+                      android:text="Create event" />
+
+        </LinearLayout>
+
+        <EditText android:id="@+id/create_event_name"
+                  style="@style/InputField"
+                  android:hint="@string/event_name"
+                  android:inputType="textAutoComplete"
+                  android:gravity="center|left"
+                  android:layout_width="260dp"  />
+        <EditText android:id="@+id/create_event_desc"
+
+                  style="@style/InputField"
+                  android:hint="@string/event_description"
+                  android:inputType="textMultiLine"
+                  android:gravity="top|left"
+                  android:layout_width="260dp"
+                  android:singleLine="false"
+                  android:minLines="3"
+                  android:maxLines="5"
+                  android:layout_height="wrap_content"
+                  android:scrollbars="vertical"
+                />
+
+
+        <Button android:id="@+id/select_dates"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+
+                android:text="@string/choose_period" />
+
+        <Button android:id="@+id/invite_people"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:text="@string/invite_people" />
+
+        <Button android:id="@+id/create_and_invite_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dip"
+                android:text="Create event" />
 
     </LinearLayout>
 
-    <EditText android:id="@+id/create_event_name"
-              style="@style/InputField"
-              android:hint="@string/event_name"
-              android:inputType="textAutoComplete"
-              android:gravity="center|left"
-              android:layout_width="260dp"  />
-    <EditText android:id="@+id/create_event_desc"
-
-              style="@style/InputField"
-              android:hint="@string/event_description"
-              android:inputType="textMultiLine"
-              android:gravity="top|left"
-              android:layout_width="260dp"
-              android:singleLine="false"
-              android:minLines="3"
-              android:maxLines="5"
-              android:layout_height="wrap_content"
-              android:scrollbars="vertical"
-            />
-
-
-    <Button android:id="@+id/select_dates"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dip"
-
-            android:text="@string/choose_period" />
-
-    <Button android:id="@+id/invite_people"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dip"
-            android:text="@string/invite_people" />
-
-    <Button android:id="@+id/create_and_invite_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dip"
-            android:text="Create event" />
-
-</LinearLayout>
+</ScrollView>
