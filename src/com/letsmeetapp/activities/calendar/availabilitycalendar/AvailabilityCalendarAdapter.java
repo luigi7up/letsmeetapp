@@ -1,4 +1,4 @@
-package com.letsmeetapp.activities.calendar.creating;
+package com.letsmeetapp.activities.calendar.availabilitycalendar;
 
 import android.content.Context;
 import android.util.DisplayMetrics;
@@ -10,40 +10,45 @@ import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import com.letsmeetapp.activities.calendar.CalendarDayView;
 import com.letsmeetapp.model.Day;
+import com.letsmeetapp.model.Event;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
- * Created with IntelliJ IDEA.
- * User: luka.eterovic
- * Date: 8/07/13
- * Time: 11:27
- * To change this template use File | Settings | File Templates.
+ * Its an adapter used by AvailabilityCalendarActivity.calendarGridView. It returns CalendarDayViews for a
+ * month that's beeing viewed. IF a month has 30 days and 3 dead days at the beginning it will return 33 days
+ * where first 3 will be of type dead. The adapter receives an Event object and returns different CalendarDayViews
+ * fo days that exist in object Event (meaning the initial days creator has selected when creating the event)
  */
-public class CreateCalendarAdapter extends BaseAdapter {
+public class AvailabilityCalendarAdapter extends BaseAdapter {
 
-    private static final String TAG = CreateCalendarAdapter.class.getName();
+    private static final String TAG = AvailabilityCalendarAdapter.class.getName();
 
-    private Context mContext;
-    private ArrayList<CalendarDayView>generatedDayViews;
-    private ArrayList<Day> eventDays;
-    private Calendar currentMonth;
+    private Context                     mContext;
+    protected Event                     event;                         //used when seeing calendar for a Created event
+    private ArrayList<CalendarDayView>  generatedDayViews;
+    private ArrayList<Day>              eventDays;
+    private Calendar                    currentMonth;
+
 
     private int dayViewDimension;
 
-    public CreateCalendarAdapter(Context c, Calendar currentMonth, ArrayList<Day> eventDays){
-        this.mContext   = c;
-        this.eventDays  = eventDays;
-        this.dayViewDimension = calculateDayViewDimension();
-        this.currentMonth = currentMonth;
+    public AvailabilityCalendarAdapter(Context c, Calendar currentMonth, ArrayList<Day> eventDays, Event event){
+        this.mContext           = c;
+        this.eventDays          = eventDays;
+        this.event              = event;
+        this.dayViewDimension   = calculateDayViewDimension();
+        this.currentMonth       = currentMonth;
         generateDayViews(currentMonth);     //Maybe calling it from out of instance with a setter?
+
+        Log.d(TAG,"Creating AvailabilityCalendarAdapter");
     }
 
     /*
     * This method has to create a new DayView for each day of a month that was passed in + some "dead views" if the day 1
-    * of the month falls for example on Tuesday.
+    * of the month falls for example on Tuesday. It marks events that exist in passed Event object as event days.
     * @currentMonth is a Calendar instance set to one day (whichever) of a month we want to generate views for.
     * */
     public void generateDayViews(Calendar aDayInMonth){
@@ -92,6 +97,19 @@ public class CreateCalendarAdapter extends BaseAdapter {
     }
 
 
+    /*
+    * Checks if the provided Day day is inside of event.getDays() provided
+    * It simply compares the day (its dateAsString value) with each one in the Event object
+    * @return indeicates whether the Day is in the event
+    * */
+    private boolean isInEvent(Day day, Event event){
+        for(Day d:event.getDays()){
+            if(day.getDateAsString().equalsIgnoreCase(d.getDateAsString())) return true;
+
+        }
+        return false;
+
+    }
 
     /**
      * Method returns the width of 7th part of a screen in order to pass it to a CalendarDayView to

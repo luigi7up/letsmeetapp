@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
- *  A base class for Activities that have a calendar inside (For CreateCalendarActivity or AvailabilityCalendarActivity)
+ *  A base class for Activities that have a calendar grid inside (For CreatingCalendarActivity or AvailabilityCalendarActivity)
  *  It offers some methods that are shared between all children classes.
  */
 public class CalendarActivity extends Activity {
@@ -23,7 +23,6 @@ public class CalendarActivity extends Activity {
     protected BaseAdapter calendarAdapter;
     protected ArrayList<Day> allSelectedDays;     //a list of days that the creator initially selected
     protected Calendar monthShowing;              //a Calendar instance that is used to determinate which month to present when Activity is started
-    protected Event event;                         //used when seeing calendar for a Created event
     protected Button prevButton,nextButton, doneSelectingButton;
     protected TextView calendarHeaderMonth;
 

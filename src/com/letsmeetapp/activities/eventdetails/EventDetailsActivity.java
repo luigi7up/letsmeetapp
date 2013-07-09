@@ -1,4 +1,4 @@
-package com.letsmeetapp.activities;
+package com.letsmeetapp.activities.eventdetails;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,14 +9,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.letsmeetapp.R;
-import com.letsmeetapp.activities.calendar.creating.CreateCalendarActivity;
+import com.letsmeetapp.activities.calendar.createcalendar.CreateCalendarActivity;
 import com.letsmeetapp.model.Day;
 import com.letsmeetapp.model.Event;
-import com.letsmeetapp.utilities.VisualUtility;
 
 import java.util.ArrayList;
-
-import static com.letsmeetapp.utilities.TextUtils._;
 
 /**
  * Created with IntelliJ IDEA.

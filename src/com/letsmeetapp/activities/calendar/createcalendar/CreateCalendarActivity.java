@@ -1,4 +1,4 @@
-package com.letsmeetapp.activities.calendar.creating;
+package com.letsmeetapp.activities.calendar.createcalendar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,6 +33,8 @@ public class CreateCalendarActivity extends CalendarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Log.d(TAG,"onCreate AvailabilityCalendarActivity");
+
         //Inflate the default view (holds header with buttons, grid...)
         setContentView(R.layout.calendar_activity);
 
@@ -49,9 +51,10 @@ public class CreateCalendarActivity extends CalendarActivity {
 
         //GEt the hold of the grid to assign it to the adapter
         calendarGridView = (GridView)findViewById(R.id.calendar_grid_view);
-        if(event == null) calendarAdapter = new CreateCalendarAdapter(this, monthShowing, this.allSelectedDays);
-        else calendarAdapter = new CalendarAdapter(this, monthShowing, this.allSelectedDays, this.event);
+        //if(event == null) calendarAdapter = new CreateCalendarAdapter(this, monthShowing, this.allSelectedDays);
+        //else calendarAdapter = new CalendarAdapter(this, monthShowing, this.allSelectedDays, this.event);
 
+        calendarAdapter = new CreateCalendarAdapter(this, monthShowing, this.allSelectedDays);
 
         calendarGridView.setAdapter(calendarAdapter);
 
@@ -82,9 +85,6 @@ public class CreateCalendarActivity extends CalendarActivity {
                 Intent returnIntent = new Intent();
                 Log.d("Luka", "getAllSelectedDays: "+CreateCalendarActivity.this.getAllSelectedDays().toString());
                 returnIntent.putParcelableArrayListExtra("allSelectedDays", CreateCalendarActivity.this.allSelectedDays);
-                returnIntent.putExtra("event", CreateCalendarActivity.this.event);
-
-                Log.d(TAG, "I just set returnIntetn event to"+CreateCalendarActivity.this.event);
                 setResult(RESULT_OK, returnIntent);
                 finish();
             }

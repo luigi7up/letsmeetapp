@@ -65,8 +65,11 @@ public class CalendarActivityOnClickListener implements View.OnTouchListener {
 
             //For all touched positions: touchedDayView.toggleSelected();
             for(int p:positionsTouched){
+
                 CalendarDayView touchedDayView = (CalendarDayView)this.calendarActivityContext.getCalendarAdapter().getItem(p);
-                touchedDayView.toggleSelected();
+                if(touchedDayView.isDead()) continue;   //can't toggle the dead days so skip the view...
+
+                touchedDayView.toggleSelected();        //Select/Deselect
 
                 //If the day that is about to be returned as a grid view exist in allSelectedDayList mark it as selected
                 if(calendarActivityContext.getAllSelectedDays().contains(touchedDayView.getDay())) {
@@ -77,7 +80,6 @@ public class CalendarActivityOnClickListener implements View.OnTouchListener {
 
                 if(touchedDayView.getDay().isInEvent() == true){
                     showAvailabilityDialog(touchedDayView);
-
                 }
             }
 
@@ -112,9 +114,9 @@ public class CalendarActivityOnClickListener implements View.OnTouchListener {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "Clicked OK on " + dayView1.getDay().getDateAsString());
-                calendarActivityContext.event.getEventDayByDateString(dayView1.getDay().getDateAsString()).setCurrentUserAvailability("y");
+                //calendarActivityContext.event.getEventDayByDateString(dayView1.getDay().getDateAsString()).setCurrentUserAvailability("y");
 
-                Log.d(TAG, "and it's set to " + calendarActivityContext.event.getEventDayByDateString(dayView1.getDay().getDateAsString()).getCurrentUserAvailability());
+                //Log.d(TAG, "and it's set to " + calendarActivityContext.event.getEventDayByDateString(dayView1.getDay().getDateAsString()).getCurrentUserAvailability());
 
                 dialog.dismiss();
 
@@ -125,8 +127,8 @@ public class CalendarActivityOnClickListener implements View.OnTouchListener {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "Clicked NO  "+dayView1.getDay().getDateAsString());
-                calendarActivityContext.event.getEventDayByDateString(dayView1.getDay().getDateAsString()).setCurrentUserAvailability("n");
-                Log.d(TAG, "and it's set to " + calendarActivityContext.event.getEventDayByDateString(dayView1.getDay().getDateAsString()).getCurrentUserAvailability());
+                //calendarActivityContext.event.getEventDayByDateString(dayView1.getDay().getDateAsString()).setCurrentUserAvailability("n");
+                //Log.d(TAG, "and it's set to " + calendarActivityContext.event.getEventDayByDateString(dayView1.getDay().getDateAsString()).getCurrentUserAvailability());
                 dialog.dismiss();
             }
         });

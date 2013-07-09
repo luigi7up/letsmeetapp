@@ -16,7 +16,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.letsmeetapp.Constants;
 import com.letsmeetapp.R;
-import com.letsmeetapp.activities.calendar.creating.CreateCalendarActivity;
+import com.letsmeetapp.activities.calendar.createcalendar.CreateCalendarActivity;
 import com.letsmeetapp.activities.eventinvite.InvitePeopleActivity;
 import com.letsmeetapp.customviews.CustomProgressSpinner;
 import com.letsmeetapp.model.Day;
