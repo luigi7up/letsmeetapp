@@ -21,7 +21,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 /**
- * Represents the activity holding a calendar view for a month, the button to confirm the selection etc.
+ * Activity holding a calendar for the creation of event. It shows a grid view with CreateCalendarAdapter
  */
 public class CreateCalendarActivity extends CalendarActivity {
 

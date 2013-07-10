@@ -23,7 +23,7 @@ public class CalendarDayView extends LinearLayout{
 
     private Style           style;
     private Availability    availability;
-    private Behaviour       behaviour;
+    private Behaviour       behaviour;          //CLICKABLE, NOT_CLICKABLE
 
     private boolean daySelected;
     private boolean isDead;        //If a month starts on Wednesday then Monday and Tuesday are dead: gray, no date
@@ -111,7 +111,7 @@ public class CalendarDayView extends LinearLayout{
     /*
     * Possible styles CalendarDayView
     * */
-    enum Style {
+    public enum Style {
 
        /*
         private final int SELECTED_COLOR        = Color.argb(220,220,220,220);
@@ -129,13 +129,13 @@ public class CalendarDayView extends LinearLayout{
         public int getColor(){return this.color;}
 
     }
-    enum Availability{
+    public enum Availability{
         AVAILABLE_Y,AVAILABLE_M,AVAILABLE_N;
     }
     /*
     * Posible interaction states of CalendarDayView
     * */
-    enum Behaviour {
+    public enum Behaviour {
         CLICKABLE, NOT_CLICKABLE;
     }
 

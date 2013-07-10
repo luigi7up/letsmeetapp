@@ -44,6 +44,13 @@
         </activity>
 
         <activity
+                android:name=".activities.calendar.availabilitycalendar.AvailabilityCalendarActivity"
+                android:screenOrientation="portrait">
+        </activity>
+
+
+
+        <activity
                 android:name=".activities.eventinvite.InvitePeopleActivity"
                 android:screenOrientation="portrait">
         </activity>

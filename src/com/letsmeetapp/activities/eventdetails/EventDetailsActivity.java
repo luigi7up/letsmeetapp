@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.letsmeetapp.R;
+import com.letsmeetapp.activities.calendar.availabilitycalendar.AvailabilityCalendarActivity;
 import com.letsmeetapp.activities.calendar.createcalendar.CreateCalendarActivity;
 import com.letsmeetapp.model.Day;
 import com.letsmeetapp.model.Event;
@@ -57,7 +58,7 @@ public class EventDetailsActivity extends Activity {
         eventCalendarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(EventDetailsActivity.this, CreateCalendarActivity.class);
+                Intent intent = new Intent(EventDetailsActivity.this, AvailabilityCalendarActivity.class);
                 intent.putExtra("event", EventDetailsActivity.this.event);      //Calendar doesn't implemetn Parcelable so I send the whole event instead of event.getCreationdate...
                 intent.putExtra("allSelectedDays",new ArrayList<Day>());        //Calendar doesn't implemetn Parcelable so I send the whole event instead of event.getCreationdate...
                 startActivityForResult(intent, 1);

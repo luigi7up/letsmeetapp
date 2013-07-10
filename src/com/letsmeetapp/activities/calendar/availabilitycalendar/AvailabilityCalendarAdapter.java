@@ -85,14 +85,17 @@ public class AvailabilityCalendarAdapter extends BaseAdapter {
 
             Day newDay = new Day(newDate);
             CalendarDayView newDayCalendarDayView = new CalendarDayView(mContext, newDay, dayViewDimension);
-            this.generatedDayViews.add(newDayCalendarDayView);
-            /*
-            * When user exits and comes back to CreateCalendar we have to mark as selected the views that contain days
-            * selected previously.
-            * */
-            if(eventDays.contains(newDate)){
-                newDayCalendarDayView.setSelected(true);
+
+            if(isInEvent(newDay, event)){
+                newDay.setInEvent(true);
+                newDayCalendarDayView.setBehaviour(CalendarDayView.Behaviour.CLICKABLE);
+                newDayCalendarDayView.setStyle(CalendarDayView.Style.SELECTED);
+            }else{
+                newDay.setInEvent(false);
+                newDayCalendarDayView.setBehaviour(CalendarDayView.Behaviour.CLICKABLE);
             }
+            this.generatedDayViews.add(newDayCalendarDayView);
+
         }
     }
 
@@ -104,7 +107,10 @@ public class AvailabilityCalendarAdapter extends BaseAdapter {
     * */
     private boolean isInEvent(Day day, Event event){
         for(Day d:event.getDays()){
-            if(day.getDateAsString().equalsIgnoreCase(d.getDateAsString())) return true;
+
+            if(day.getDateAsString().equalsIgnoreCase(d.getDateAsString())) {
+                return true;
+            }
 
         }
         return false;

@@ -125,10 +125,8 @@ public class CalendarAdapter extends BaseAdapter {
            this.wholeMonthDayViews.add(newDayCalendarDayView);
 
            if(allSelectedDays.contains(newDate)){
-               newDayCalendarDayView.setSelected(true);
-            }
-
-
+               newDayCalendarDayView.setDaySelected(true);
+           }
         }
         Log.d(TAG, "generateDaysInMonth" + wholeMonthDayViews);
     }

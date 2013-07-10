@@ -80,15 +80,15 @@ public class CreateCalendarAdapter extends BaseAdapter {
 
             Log.d(TAG, "adapter, day added: "+newDate.getTime());
 
-            Day newDay = new Day(newDate);
+            Day newDay = new Day(newDate);                                      //create a new Day providing the data as a constructor arg
             CalendarDayView newDayCalendarDayView = new CalendarDayView(mContext, newDay, dayViewDimension);
             this.generatedDayViews.add(newDayCalendarDayView);
             /*
             * When user exits and comes back to CreateCalendar we have to mark as selected the views that contain days
             * selected previously.
             * */
-            if(eventDays.contains(newDate)){
-                newDayCalendarDayView.setSelected(true);
+            if(eventDays.contains(newDay)){
+                newDayCalendarDayView.setDaySelected(true);
             }
         }
     }
