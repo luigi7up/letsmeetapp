@@ -13,6 +13,7 @@ import com.letsmeetapp.activities.calendar.CalendarActivity;
 import com.letsmeetapp.activities.calendar.CalendarActivityOnClickListener;
 import com.letsmeetapp.activities.calendar.CalendarAdapter;
 import com.letsmeetapp.activities.calendar.CalendarChangeMonthOnClickListener;
+import com.letsmeetapp.activities.calendar.availabilitycalendar.AvailabilityCalendarAdapter;
 import com.letsmeetapp.model.Day;
 
 import java.text.SimpleDateFormat;
@@ -54,9 +55,8 @@ public class CreateCalendarActivity extends CalendarActivity {
         //if(event == null) calendarAdapter = new CreateCalendarAdapter(this, monthShowing, this.allSelectedDays);
         //else calendarAdapter = new CalendarAdapter(this, monthShowing, this.allSelectedDays, this.event);
 
-        calendarAdapter = new CreateCalendarAdapter(this, monthShowing, this.allSelectedDays);
-
-        calendarGridView.setAdapter(calendarAdapter);
+        CalendarAdapter ca = new CreateCalendarAdapter(this, monthShowing, this.allSelectedDays);
+        calendarGridView.setAdapter(ca);
 
         //Register handler fot onTouch event over calendarGridView
         calendarGridView.setOnTouchListener(new CalendarActivityOnClickListener(CreateCalendarActivity.this));
@@ -92,6 +92,12 @@ public class CreateCalendarActivity extends CalendarActivity {
 
     }//onCreate
 
+    @Override
+    public void resetCalendarAdapter(){
+        CalendarAdapter newCalendarAdapter = new CreateCalendarAdapter(this, this.getMonthShowing(),this.getAllSelectedDays());
+        this.calendarGridView.setAdapter(newCalendarAdapter);
+    }
+
 
     //GETTER / SETTER
 
@@ -102,4 +108,5 @@ public class CreateCalendarActivity extends CalendarActivity {
     public void setCurrentUserAvailability(HashMap<Day, String> currentUserAvailability) {
         this.currentUserAvailability = currentUserAvailability;
     }
+
 }

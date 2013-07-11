@@ -31,12 +31,16 @@ public class CalendarChangeMonthOnClickListener implements View.OnClickListener 
         mContext.getMonthShowing().add(Calendar.MONTH, -1);
 
         //Reset the gridViewAdapter because now it contains days for another month
-        mContext.setCalendarAdapter(
+        mContext.resetCalendarAdapter();
+
+        /*setCalendarAdapter(
                 new CalendarAdapter(mContext,
                         mContext.getMonthShowing(),
                         mContext.getAllSelectedDays()));
 
         mContext.getCalendarGridView().setAdapter(mContext.getCalendarAdapter());
+        */
+
 
         //TODO optimize! don't createevent object. Make it memeber var
         SimpleDateFormat month_date = new SimpleDateFormat("MMM");
@@ -49,12 +53,15 @@ public class CalendarChangeMonthOnClickListener implements View.OnClickListener 
         mContext.getMonthShowing().add(Calendar.MONTH, +1);
 
         //Reset the gridViewAdapter because now it contains days for another month
+        mContext.resetCalendarAdapter();
+        /*
         mContext.setCalendarAdapter(
                 new CalendarAdapter(mContext,
                         mContext.getMonthShowing(),
                         mContext.getAllSelectedDays()));
 
         mContext.getCalendarGridView().setAdapter(mContext.getCalendarAdapter());
+         */
 
         //TODO optimize! don't createevent object. Make it memeber var
         SimpleDateFormat month_date = new SimpleDateFormat("MMM");

@@ -66,7 +66,7 @@ public class CalendarActivityOnClickListener implements View.OnTouchListener {
             //For all touched positions: touchedDayView.toggleSelected();
             for(int p:positionsTouched){
 
-                CalendarDayView touchedDayView = (CalendarDayView)this.calendarActivityContext.getCalendarAdapter().getItem(p);
+                CalendarDayView touchedDayView = (CalendarDayView)this.calendarActivityContext.calendarGridView.getAdapter().getItem(p);
                 if(touchedDayView.isDead()) continue;   //can't toggle the dead days so skip the view...
 
                 touchedDayView.toggleSelected();        //Select/Deselect

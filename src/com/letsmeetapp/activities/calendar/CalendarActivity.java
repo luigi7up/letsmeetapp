@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 import com.letsmeetapp.R;
+import com.letsmeetapp.activities.calendar.availabilitycalendar.AvailabilityCalendarAdapter;
 import com.letsmeetapp.model.Day;
 import com.letsmeetapp.model.Event;
 
@@ -17,10 +18,9 @@ import java.util.Calendar;
  *  A base class for Activities that have a calendar grid inside (For CreatingCalendarActivity or AvailabilityCalendarActivity)
  *  It offers some methods that are shared between all children classes.
  */
-public class CalendarActivity extends Activity {
+public abstract class CalendarActivity extends Activity {
 
     protected GridView calendarGridView;
-    protected BaseAdapter calendarAdapter;
     protected ArrayList<Day> allSelectedDays;     //a list of days that the creator initially selected
     protected Calendar monthShowing;              //a Calendar instance that is used to determinate which month to present when Activity is started
     protected Button prevButton,nextButton, doneSelectingButton;
@@ -36,6 +36,15 @@ public class CalendarActivity extends Activity {
     }
 
 
+    /**
+     * All Calendar Activities must implment this method that can be called from CalendarChangeMonthOnClickLister to avoid.
+     * When clicking previous or next month new adapter for this object has to be created. Its better to invert the contro so that
+     * the object itself creates its adapter
+     */
+    public abstract void resetCalendarAdapter();
+
+
+
     //SETTER / GETTER
     public GridView getCalendarGridView() {
         return calendarGridView;
@@ -43,14 +52,6 @@ public class CalendarActivity extends Activity {
 
     public void setCalendarGridView(GridView calendarGridView) {
         this.calendarGridView = calendarGridView;
-    }
-
-    public BaseAdapter getCalendarAdapter() {
-        return calendarAdapter;
-    }
-
-    public void setCalendarAdapter(BaseAdapter calendarAdapter) {
-        this.calendarAdapter = calendarAdapter;
     }
 
     public ArrayList<Day> getAllSelectedDays() {

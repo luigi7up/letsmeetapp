@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.BaseAdapter;
+import com.letsmeetapp.activities.calendar.CalendarActivity;
+import com.letsmeetapp.activities.calendar.CalendarAdapter;
 import com.letsmeetapp.activities.calendar.CalendarDayView;
 import com.letsmeetapp.model.Day;
 
@@ -22,11 +24,10 @@ import java.util.GregorianCalendar;
  * Time: 11:27
  * To change this template use File | Settings | File Templates.
  */
-public class CreateCalendarAdapter extends BaseAdapter {
+public class CreateCalendarAdapter extends CalendarAdapter {
 
     private static final String TAG = CreateCalendarAdapter.class.getName();
 
-    private Context mContext;
     private ArrayList<CalendarDayView>generatedDayViews;
     private ArrayList<Day> eventDays;
     private Calendar currentMonth;
@@ -34,7 +35,8 @@ public class CreateCalendarAdapter extends BaseAdapter {
     private int dayViewDimension;
 
     public CreateCalendarAdapter(Context c, Calendar currentMonth, ArrayList<Day> eventDays){
-        this.mContext   = c;
+        super(c);
+
         this.eventDays  = eventDays;
         this.dayViewDimension = calculateDayViewDimension();
         this.currentMonth = currentMonth;
@@ -49,6 +51,7 @@ public class CreateCalendarAdapter extends BaseAdapter {
     * @currentMonth is a Calendar instance set to one day (whichever) of a month we want to generate views for.
     * */
     public void generateDayViews(Calendar aDayInMonth){
+        //TODO move the implementation of the method to the CalendarAdapter class and in child classses call necessary methods on already generated views...
 
         //Initialize the array to avoid nullPointer
         generatedDayViews = new ArrayList<CalendarDayView>();
@@ -60,6 +63,7 @@ public class CreateCalendarAdapter extends BaseAdapter {
         Calendar firstDayInMonth = new GregorianCalendar();
         firstDayInMonth.set(aDayInMonth.get(Calendar.YEAR), aDayInMonth.get(Calendar.MONTH), 1);  //1 is Sunday, 2 is Monday etc...
 
+        //TODO THERE'S BUG WITH 1st of DECEMBER 2013 !!!
         Log.d(TAG, "First day falls on : " + firstDayInMonth.get(Calendar.DAY_OF_WEEK));
         int deadDaysToInject = firstDayInMonth.get(Calendar.DAY_OF_WEEK) - 2;
 
@@ -68,7 +72,7 @@ public class CreateCalendarAdapter extends BaseAdapter {
         for(int i = 0; i<deadDaysToInject; i++){
             GregorianCalendar newDate = new GregorianCalendar();
             Day deadDay = new Day(newDate);
-            CalendarDayView newDayCalendarDayView = new CalendarDayView(mContext, deadDay, dayViewDimension,true);
+            CalendarDayView newDayCalendarDayView = new CalendarDayView(this.getmContext(), deadDay, dayViewDimension,true);
             this.generatedDayViews.add(newDayCalendarDayView);
         }
 
@@ -81,7 +85,7 @@ public class CreateCalendarAdapter extends BaseAdapter {
             Log.d(TAG, "adapter, day added: "+newDate.getTime());
 
             Day newDay = new Day(newDate);                                      //create a new Day providing the data as a constructor arg
-            CalendarDayView newDayCalendarDayView = new CalendarDayView(mContext, newDay, dayViewDimension);
+            CalendarDayView newDayCalendarDayView = new CalendarDayView(this.getmContext(), newDay, dayViewDimension);
             this.generatedDayViews.add(newDayCalendarDayView);
             /*
             * When user exits and comes back to CreateCalendar we have to mark as selected the views that contain days
@@ -91,33 +95,6 @@ public class CreateCalendarAdapter extends BaseAdapter {
                 newDayCalendarDayView.setDaySelected(true);
             }
         }
-    }
-
-
-
-    /**
-     * Method returns the width of 7th part of a screen in order to pass it to a CalendarDayView to
-     * set its width and height
-     * @return 7th part of a calendar screen(in orientation)
-     * */
-    private int calculateDayViewDimension(){
-        // get display metrics
-        final DisplayMetrics metrics = new DisplayMetrics();
-
-        WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        int orientation_width_dp = display.getWidth();  // deprecated
-        int orientation_height_dp = display.getHeight();  // deprecated
-
-        Log.d("Luka","Calculating dayViewDimension"+orientation_width_dp/7);
-
-        return  orientation_width_dp/7;
-
-        //get the column width on this device to set the calendar day height.
-        //NOTE android.R.id.content gives you the root element of a view, without having to know its actual name/type/ID.
-        //this.orientation_width_dp = VisualUtility.dpFromPxForScreen(width, display.findViewById(android.R.id.content));
-        //this.orientation_height_dp = VisualUtility.dpFromPxForScreen(height, this.findViewById(android.R.id.content));
-
     }
 
 
@@ -145,4 +122,14 @@ public class CreateCalendarAdapter extends BaseAdapter {
 
 
     /*  SETTER/GETTER*/
+
+    @Override
+    public Context getmContext() {
+        return super.getmContext();    //To change body of overridden methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public void setmContext(CalendarActivity mContext) {
+        super.setmContext(mContext);    //To change body of overridden methods use File | Settings | File Templates.
+    }
 }

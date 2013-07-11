@@ -56,9 +56,9 @@ public class AvailabilityCalendarActivity extends CalendarActivity {
         //if(event == null) calendarAdapter = new AvailabilityCalendarAdapter(this, monthShowing, this.allSelectedDays,this.event);
         //else calendarAdapter = new CalendarAdapter(this, monthShowing, this.allSelectedDays, this.event);
 
-        calendarAdapter = new AvailabilityCalendarAdapter(this, monthShowing, this.allSelectedDays,this.event);
+        CalendarAdapter ca = new AvailabilityCalendarAdapter(this, monthShowing, this.allSelectedDays,this.event);
 
-        calendarGridView.setAdapter(calendarAdapter);
+        calendarGridView.setAdapter(ca);
 
         //Register handler fot onTouch event over calendarGridView
         calendarGridView.setOnTouchListener(new CalendarActivityOnClickListener(AvailabilityCalendarActivity.this));
@@ -96,6 +96,17 @@ public class AvailabilityCalendarActivity extends CalendarActivity {
         });
 
     }//onCreate
+
+    /*
+    * Creates its new adapter. It is used to generate new grids in cases when prev month next month is called from OnClickListener
+    * */
+
+     @Override
+     public void resetCalendarAdapter(){
+        CalendarAdapter newCalendarAdapter = new AvailabilityCalendarAdapter(this, this.getMonthShowing(),this.getAllSelectedDays(),this.getEvent());
+        this.calendarGridView.setAdapter(newCalendarAdapter);
+    }
+
 
 
     //GETTER / SETTER
