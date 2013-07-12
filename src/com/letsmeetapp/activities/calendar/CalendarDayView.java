@@ -21,9 +21,9 @@ public class CalendarDayView extends LinearLayout{
     private Day day;
     private int dimension;      //holds the width/height value for the orientation
 
-    private Style           style;
-    private Availability    availability;
-    private Behaviour       behaviour;          //CLICKABLE, NOT_CLICKABLE
+    private Style style;
+    private Availability availability;
+    private Behaviour behaviour;              //CLICKABLE, NOT_CLICKABLE
 
     private boolean daySelected;
     private boolean isDead;        //If a month starts on Wednesday then Monday and Tuesday are dead: gray, no date
@@ -62,13 +62,14 @@ public class CalendarDayView extends LinearLayout{
         //CalendarActivity parentActivity = (CalendarActivity)parentCalendarAdapter.getmContext();
 
         //If the day that is about to be returned as a grid view exist in allSelectedDayList mark it as selected
-        if(parentCalendarActivity.getAllSelectedDays().contains(this.getDay())) this.setSelected(true);
+        //if(parentCalendarActivity.getAllSelectedDays().contains(this.getDay())) this.setSelected(true);
 
-        if(this.isDaySelected() == false) setStyle(Style.NOT_SELECTED);
-        else setStyle(Style.SELECTED);
+        //if(this.isDaySelected() == false) setStyle(Style.NOT_SELECTED);
+        //else setStyle(Style.SELECTED);
 
         if(this.getDay().isInEvent())
         {
+
             if((this.getDay().getCurrentUserAvailability()).equalsIgnoreCase("y")==true) setAvailability(Availability.AVAILABLE_Y);
             if((this.getDay().getCurrentUserAvailability()).equalsIgnoreCase("n")==true) setAvailability(Availability.AVAILABLE_N);
         }

@@ -63,24 +63,12 @@ public class CalendarActivityOnClickListener implements View.OnTouchListener {
                 positionsTouched.add(position);
             }
 
-            //For all touched positions: touchedDayView.toggleSelected();
+            //For all touched positions: pass the concrete dayViewTouched back to the activity holding calendar...
             for(int p:positionsTouched){
 
                 CalendarDayView touchedDayView = (CalendarDayView)this.calendarActivityContext.calendarGridView.getAdapter().getItem(p);
-                if(touchedDayView.isDead()) continue;   //can't toggle the dead days so skip the view...
+                calendarActivityContext.dayViewTouched(touchedDayView);
 
-                touchedDayView.toggleSelected();        //Select/Deselect
-
-                //If the day that is about to be returned as a grid view exist in allSelectedDayList mark it as selected
-                if(calendarActivityContext.getAllSelectedDays().contains(touchedDayView.getDay())) {
-                    calendarActivityContext.getAllSelectedDays().remove(touchedDayView.getDay());
-                }else{
-                    calendarActivityContext.getAllSelectedDays().add(touchedDayView.getDay());
-                }
-
-                if(touchedDayView.getDay().isInEvent() == true){
-                    showAvailabilityDialog(touchedDayView);
-                }
             }
 
             //clear the arrays...
@@ -95,48 +83,7 @@ public class CalendarActivityOnClickListener implements View.OnTouchListener {
 
     }
 
-    /*
-    * Takes the context in which to show the dialog and a CalendarDayView on which it should perform the action of switching its Day availability to OK or NO
-    * */
-    private void showAvailabilityDialog(CalendarDayView dayView){
-        Log.d(TAG, "POPUP!");
 
-        final CalendarDayView dayView1 = dayView;
-
-        final Dialog dialog = new Dialog(calendarActivityContext);
-        dialog.setContentView(R.layout.availability_popup);
-        dialog.show();
-        //Get the reference to OK and NO buttons
-        Button ok_button = (Button)dialog.findViewById(R.id.availability_btn_yes);
-        Button no_button = (Button)dialog.findViewById(R.id.availability_btn_no);
-
-        ok_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "Clicked OK on " + dayView1.getDay().getDateAsString());
-                //calendarActivityContext.event.getEventDayByDateString(dayView1.getDay().getDateAsString()).setCurrentUserAvailability("y");
-
-                //Log.d(TAG, "and it's set to " + calendarActivityContext.event.getEventDayByDateString(dayView1.getDay().getDateAsString()).getCurrentUserAvailability());
-
-                dialog.dismiss();
-
-            }
-        });
-
-        no_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "Clicked NO  "+dayView1.getDay().getDateAsString());
-                //calendarActivityContext.event.getEventDayByDateString(dayView1.getDay().getDateAsString()).setCurrentUserAvailability("n");
-                //Log.d(TAG, "and it's set to " + calendarActivityContext.event.getEventDayByDateString(dayView1.getDay().getDateAsString()).getCurrentUserAvailability());
-                dialog.dismiss();
-            }
-        });
-
-
-
-
-    }
 
 
 }

@@ -21,12 +21,16 @@ import java.util.Calendar;
 public abstract class CalendarActivity extends Activity {
 
     protected GridView calendarGridView;
-    protected ArrayList<Day> allSelectedDays;     //a list of days that the creator initially selected
+    //protected ArrayList<Day> allSelectedDays;     //a list of days that the creator initially selected
     protected Calendar monthShowing;              //a Calendar instance that is used to determinate which month to present when Activity is started
     protected Button prevButton,nextButton, doneSelectingButton;
     protected TextView calendarHeaderMonth;
 
-
+    /*
+    * Each class extending CalendarActivity will offer its implementation of this method. That way we can have a
+    * shared CalendarActivityOnClickListener simply passing the logic to the Activity itself...
+    * */
+    protected abstract void dayViewTouched(CalendarDayView touchedDayView);   //Touches received in CalendarActivityOnClickListener will be passed back to concerete CalendarActivityX implementation to decide what it means
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -34,14 +38,12 @@ public abstract class CalendarActivity extends Activity {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-
-
     /**
      * All Calendar Activities must implment this method that can be called from CalendarChangeMonthOnClickLister to avoid.
      * When clicking previous or next month new adapter for this object has to be created. Its better to invert the contro so that
      * the object itself creates its adapter
      */
-    public abstract void resetCalendarAdapter();
+    public abstract void resetCalendarAdapter(String direction);
 
 
 
@@ -54,16 +56,8 @@ public abstract class CalendarActivity extends Activity {
         this.calendarGridView = calendarGridView;
     }
 
-    public ArrayList<Day> getAllSelectedDays() {
-        return allSelectedDays;
-    }
-
-    public void setAllSelectedDays(ArrayList<Day> allSelectedDays) {
-        this.allSelectedDays = allSelectedDays;
-    }
-
     public Calendar getMonthShowing() {
-        return monthShowing;
+        return this.monthShowing;
     }
 
     public void setMonthShowing(Calendar monthShowing) {

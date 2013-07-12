@@ -9,10 +9,7 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 import com.letsmeetapp.R;
-import com.letsmeetapp.activities.calendar.CalendarActivity;
-import com.letsmeetapp.activities.calendar.CalendarActivityOnClickListener;
-import com.letsmeetapp.activities.calendar.CalendarAdapter;
-import com.letsmeetapp.activities.calendar.CalendarChangeMonthOnClickListener;
+import com.letsmeetapp.activities.calendar.*;
 import com.letsmeetapp.activities.calendar.availabilitycalendar.AvailabilityCalendarAdapter;
 import com.letsmeetapp.model.Day;
 
@@ -27,6 +24,8 @@ import java.util.HashMap;
 public class CreateCalendarActivity extends CalendarActivity {
 
     private static final String TAG = CreateCalendarActivity.class.getName();
+
+    private ArrayList<Day>allSelectedDays;  //days selected for the event
 
     private HashMap<Day, String> currentUserAvailability;     //Contains availability for each day user has clicked
 
@@ -93,7 +92,27 @@ public class CreateCalendarActivity extends CalendarActivity {
     }//onCreate
 
     @Override
-    public void resetCalendarAdapter(){
+    protected void dayViewTouched(CalendarDayView touchedDayView) {
+        if(touchedDayView.isDead()) return;     //no action on deadViews...
+        touchedDayView.toggleSelected();        //Select/Deselect
+
+        if(this.getAllSelectedDays().contains(touchedDayView.getDay())) {
+            this.getAllSelectedDays().remove(touchedDayView.getDay());
+        }else{
+            this.getAllSelectedDays().add(touchedDayView.getDay());
+        }
+
+    }
+
+    @Override
+    public void resetCalendarAdapter(String direction){
+        //TODO if user is trying to go to a month lower than the minimum event date or higher then the maximum do nosthing and show dialog
+        if(direction.equals("next")){
+            this.getMonthShowing().add(Calendar.MONTH, +1);
+        }else if(direction.equals("prev")){
+            this.getMonthShowing().add(Calendar.MONTH, -1);
+        }
+
         CalendarAdapter newCalendarAdapter = new CreateCalendarAdapter(this, this.getMonthShowing(),this.getAllSelectedDays());
         this.calendarGridView.setAdapter(newCalendarAdapter);
     }
@@ -104,9 +123,15 @@ public class CreateCalendarActivity extends CalendarActivity {
     public HashMap<Day, String> getCurrentUserAvailability() {
         return currentUserAvailability;
     }
-
     public void setCurrentUserAvailability(HashMap<Day, String> currentUserAvailability) {
         this.currentUserAvailability = currentUserAvailability;
     }
 
+    public ArrayList<Day> getAllSelectedDays() {
+        return allSelectedDays;
+    }
+
+    public void setAllSelectedDays(ArrayList<Day> allSelectedDays) {
+        this.allSelectedDays = allSelectedDays;
+    }
 }

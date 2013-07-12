@@ -27,20 +27,9 @@ public class CalendarChangeMonthOnClickListener implements View.OnClickListener 
 
 
     public void prevMonth(){
-        //mCalendar.set(Calendar.MONTH, mCalendar.get(Calendar.MONTH)-1);
-        mContext.getMonthShowing().add(Calendar.MONTH, -1);
 
         //Reset the gridViewAdapter because now it contains days for another month
-        mContext.resetCalendarAdapter();
-
-        /*setCalendarAdapter(
-                new CalendarAdapter(mContext,
-                        mContext.getMonthShowing(),
-                        mContext.getAllSelectedDays()));
-
-        mContext.getCalendarGridView().setAdapter(mContext.getCalendarAdapter());
-        */
-
+        mContext.resetCalendarAdapter("prev");
 
         //TODO optimize! don't createevent object. Make it memeber var
         SimpleDateFormat month_date = new SimpleDateFormat("MMM");
@@ -49,19 +38,10 @@ public class CalendarChangeMonthOnClickListener implements View.OnClickListener 
     }
 
     public void nextMonth(){
-        //mCalendar.set(Calendar.MONTH, mCalendar.get(Calendar.MONTH)-1);
-        mContext.getMonthShowing().add(Calendar.MONTH, +1);
+
 
         //Reset the gridViewAdapter because now it contains days for another month
-        mContext.resetCalendarAdapter();
-        /*
-        mContext.setCalendarAdapter(
-                new CalendarAdapter(mContext,
-                        mContext.getMonthShowing(),
-                        mContext.getAllSelectedDays()));
-
-        mContext.getCalendarGridView().setAdapter(mContext.getCalendarAdapter());
-         */
+        mContext.resetCalendarAdapter("next");
 
         //TODO optimize! don't createevent object. Make it memeber var
         SimpleDateFormat month_date = new SimpleDateFormat("MMM");
