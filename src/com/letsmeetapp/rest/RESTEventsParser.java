@@ -49,6 +49,8 @@ public class RESTEventsParser {
             for(int x = 0;x<daysArray.size(); x++){
                 days.add(new Day(stringToCalendar(daysArray.get(x).getAsString())));
             }
+            //Sort the days now...
+            Collections.sort(days);
 
             //"invited_users":[ {"email@asd.com":[ "y", "n" , "m"...]}, {"email@asd.com":[ y, y , y...]} ]
             JsonArray invitedUsersArray = jsonObject.get("invited_users").getAsJsonArray();

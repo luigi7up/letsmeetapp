@@ -1,6 +1,7 @@
 package com.letsmeetapp.activities.calendar.availabilitycalendar;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -36,9 +37,8 @@ public class AvailabilityCalendarAdapter extends CalendarAdapter {
 
     private int dayViewDimension;
 
-    public AvailabilityCalendarAdapter(Context c, Calendar currentMonth, ArrayList<Day> eventDays, Event event){
+    public AvailabilityCalendarAdapter(Context c, Calendar currentMonth, Event event){
         super(c);
-        this.eventDays          = eventDays;
         this.event              = event;
         this.dayViewDimension   = calculateDayViewDimension();
         this.currentMonth       = currentMonth;
@@ -85,22 +85,25 @@ public class AvailabilityCalendarAdapter extends CalendarAdapter {
             newDate.set(newDate.MONTH, aDayInMonth.get(aDayInMonth.MONTH));    //Set the MONTH value of the newDate to the startingDay's MONTH
             newDate.set(newDate.DAY_OF_MONTH, i+1);                            //Set the DAY of newDate to 1,2,3,...31
 
-            Log.d(TAG, "adapter, day added: "+newDate.getTime());
-
             Day newDay = new Day(newDate);
             CalendarDayView newDayCalendarDayView = new CalendarDayView(this.getmContext(), newDay, dayViewDimension);
 
-            if(isInEvent(newDay, event)){
-                newDay.setInEvent(true);
-                newDayCalendarDayView.setBehaviour(CalendarDayView.Behaviour.CLICKABLE);
+            if(isInEvent(newDay, event) ==  true){
+                newDayCalendarDayView.getDay().setInEvent(true);
                 newDayCalendarDayView.setStyle(CalendarDayView.Style.SELECTED);
-            }else{
-                newDay.setInEvent(false);
                 newDayCalendarDayView.setBehaviour(CalendarDayView.Behaviour.CLICKABLE);
+            }else{
+                newDayCalendarDayView.getDay().setInEvent(false);
+                newDayCalendarDayView.setStyle(CalendarDayView.Style.NOT_SELECTED);
+                newDayCalendarDayView.setBehaviour(CalendarDayView.Behaviour.NOT_CLICKABLE);
+
             }
+
             this.generatedDayViews.add(newDayCalendarDayView);
 
         }
+        Log.d(TAG, "generatedDayViews");
+
     }
 
 
@@ -111,9 +114,11 @@ public class AvailabilityCalendarAdapter extends CalendarAdapter {
     * */
     private boolean isInEvent(Day day, Event event){
         for(Day d:event.getDays()){
-
             if(day.getDateAsString().equalsIgnoreCase(d.getDateAsString())) {
+                Log.d(TAG, "(TRUE) Comparing day "+day.getDateAsString()+" day "+d.getDateAsString()) ;
                 return true;
+            }else {
+                Log.d(TAG, "(FALSE) Comparing day "+day.getDateAsString()+" day "+d.getDateAsString()) ;
             }
 
         }
