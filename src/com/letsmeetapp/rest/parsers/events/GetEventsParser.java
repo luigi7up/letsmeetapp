@@ -1,34 +1,40 @@
-package com.letsmeetapp.rest;
+package com.letsmeetapp.rest.parsers.events;
 
 import android.util.Log;
 import com.google.gson.*;
 import com.letsmeetapp.model.Day;
 import com.letsmeetapp.model.Event;
+import com.letsmeetapp.rest.RESTResponse;
 import com.letsmeetapp.rest.parsers.Parser;
-
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Map;
 
 /**
- * It is used as the parser of EVENTS resource that the web service return. It implements the Parsable interface
- * with one method : parse()
- *
+ * Created with IntelliJ IDEA.
+ * User: luka
+ * Date: 15.07.13.
+ * Time: 21:17
+ * To change this template use File | Settings | File Templates.
  */
-public class RESTEventsParser {
+public class GetEventsParser implements Parser{
 
-    private static final String TAG = RESTEventsParser.class.getName();
+    private static final String TAG = GetEventsParser.class.getName();
     private RESTResponse mResource;
+    private ArrayList<Event> allEvents;
 
-    public RESTEventsParser(){
-    }
+    public GetEventsParser(){}
 
-    //@Override
-    public ArrayList<Event> parse(RESTResponse response) {
+
+
+    @Override
+    public void parse(RESTResponse response){
 
         //TODO test this and add necessary exception catchers!
-        ArrayList<Event> allEvents = new ArrayList<Event>();
+        allEvents = new ArrayList<Event>();
         JsonParser parser   = new JsonParser();
         JsonArray jsonArray = parser.parse(response.getData()).getAsJsonArray();
 
@@ -82,10 +88,13 @@ public class RESTEventsParser {
 
         }
 
-        return allEvents;
-
-
     }
+
+    @Override
+    public ArrayList<Event> getParsedResult() {
+        return allEvents;
+    }
+
     /**
      * Parses a date string that node gets from mysql to Calendar object
      */
@@ -96,11 +105,10 @@ public class RESTEventsParser {
         try {
             cal.setTime(sdf.parse(input));// all done
         } catch (ParseException e) {
-            Log.e(TAG, "Provided string could not be parsed to Calendar: "+input);
+            Log.e(TAG, "Provided string could not be parsed to Calendar: " + input);
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
         return cal;
     }
-
 
 }

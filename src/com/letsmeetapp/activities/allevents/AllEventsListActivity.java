@@ -20,6 +20,8 @@ import com.letsmeetapp.rest.HTTPVerb;
 import com.letsmeetapp.rest.RESTEventsParser;
 import com.letsmeetapp.rest.RESTLoader;
 import com.letsmeetapp.rest.RESTResponse;
+import com.letsmeetapp.rest.parsers.Parser;
+import com.letsmeetapp.rest.parsers.events.GetEventsParser;
 import com.letsmeetapp.utilities.NetUtils;
 
 import java.util.ArrayList;
@@ -128,8 +130,10 @@ public class AllEventsListActivity extends FragmentActivity
 
                 // The asynchronous load is complete and the data is now available for use.
                 mResponse = response;
-                RESTEventsParser parser = new RESTEventsParser();       //new parser for /events response
-                listAdapter = new AllEventsListAdapter(this, parser.parse(mResponse));   //pass parsed response to listAdapter
+
+                Parser parser = new GetEventsParser();       //new parser for /events response
+                parser.parse(mResponse);
+                listAdapter = new AllEventsListAdapter(this, (ArrayList<Event>)parser.getParsedResult());   //pass parsed response to listAdapter
                 listView.setAdapter(listAdapter);
 
                 break;
