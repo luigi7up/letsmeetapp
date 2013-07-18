@@ -17,7 +17,6 @@ import com.letsmeetapp.activities.createevent.CreateEventActivity;
 import com.letsmeetapp.customviews.CustomProgressSpinner;
 import com.letsmeetapp.model.Event;
 import com.letsmeetapp.rest.HTTPVerb;
-import com.letsmeetapp.rest.RESTEventsParser;
 import com.letsmeetapp.rest.RESTLoader;
 import com.letsmeetapp.rest.RESTResponse;
 import com.letsmeetapp.rest.parsers.Parser;
