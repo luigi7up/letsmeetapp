@@ -7,9 +7,20 @@ package com.letsmeetapp.rest;
  * Time: 22:12
  * To change this template use File | Settings | File Templates.
  */
-public class Authentication {
+public class Session {
+
+    private static Session instance;
     private String email;
     private String md5Pass;
+
+
+    private Session(){}
+
+    public static Session getInstance(){
+        if(instance == null){
+            return new Session();
+        }else return instance;
+    }
 
     public String getEmail() {
         return email;
