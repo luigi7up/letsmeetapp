@@ -16,11 +16,12 @@ import java.util.Calendar;
 public class Event implements Parcelable{
 
     private String id_event;
-    private int id_creator;
+    private String creator_email;
+    private String creator_nickname;
     private String name;
     private String description;
     private ArrayList<Day> days;    //Days selected by creator
-    private ArrayList<String> invited_users;
+    private ArrayList<UserAvailability> invited_users;
     private Calendar created;                   //Days selected by creator
 
 
@@ -30,14 +31,15 @@ public class Event implements Parcelable{
     public Event() {
     }
 
-    public Event(String id_event, String name, String description,int id_creator,
-                 ArrayList<String> invited_users, ArrayList<Day> days,
+    public Event(String id_event, String name, String description,String creator_email,String creator_nickname,
+                 ArrayList<UserAvailability> invited_users, ArrayList<Day> days,
                  Calendar created ) {
 
         this.id_event                = id_event;
-        this.id_creator              = id_creator;
         this.name                    = name;
         this.description             = description;
+        this.creator_email           = creator_email;
+        this.creator_nickname        = creator_nickname;
         this.days                    = days;
         this.invited_users           = invited_users;
         this.created                 = created;
@@ -54,9 +56,10 @@ public class Event implements Parcelable{
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(id_event);
-        dest.writeInt(id_creator);
         dest.writeString(name);
         dest.writeString(description);
+        dest.writeString(creator_email);
+        dest.writeString(creator_nickname);
         dest.writeValue(days);              //ArrayList<Day>   implements Parcelable
         dest.writeValue(invited_users);    //ArrayList<String>
         dest.writeValue(created);          //Calendar
@@ -67,11 +70,12 @@ public class Event implements Parcelable{
         public Event createFromParcel(Parcel in) {
             //Read serialized values
             String id_event                 = in.readString();
-            int id_creator                  = in.readInt();
             String name         = in.readString();
             String description    = in.readString();
-            ArrayList<Day> days             = (ArrayList<Day>)in.readValue(getClass().getClassLoader());
-            ArrayList<String> invited_users    = (ArrayList<String>)in.readValue(getClass().getClassLoader());
+            String creator_email                    = in.readString();
+            String creator_nickname                 = in.readString();
+            ArrayList<Day> days                     = (ArrayList<Day>)in.readValue(getClass().getClassLoader());
+            ArrayList<UserAvailability> invited_users    = (ArrayList<UserAvailability>)in.readValue(getClass().getClassLoader());
             Calendar created           = (Calendar)in.readValue(getClass().getClassLoader());
 
 
@@ -79,9 +83,10 @@ public class Event implements Parcelable{
             Event event = new Event();
 
             event.setId_event(id_event);
-            event.setId_creator(id_creator);
             event.setName(name);
             event.setDescription(description);
+            event.setCreator_email(creator_email);
+            event.setCreator_nickname(creator_nickname);
             event.setDays(days);
             event.setInvited_users(invited_users);
             event.setCreated(created);
@@ -105,9 +110,10 @@ public class Event implements Parcelable{
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
 
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("id_creator", this.getId_creator());
+        jsonObject.addProperty("id_event", this.getId_event());
         jsonObject.addProperty("name", this.getName());
         jsonObject.addProperty("description", this.getDescription());
+        jsonObject.addProperty("creator_email", this.getCreator_email());
         //jsonObject.addProperty("created", this.getCreated().toString());
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
@@ -125,20 +131,17 @@ public class Event implements Parcelable{
 
         /*
         {
-            "id_event" : 18,
-                "creator_id" : 1,
-                "name" : "First event",
-                "description" : "Describing the first event here",
-                "created" : "2013-06-14T19:25:12.000Z",
-                "days" : ["2013-07-13T22:00:00.000Z", "2013-07-14T22:00:00.000Z", "2013-07-15T22:00:00.000Z"],
-            "invited_users" : ["luigi", "mickey"]
+             "id_event": 38,
+            "name": "First event ",
+            "description": "Descibing it. 7 days, 3 ppl with creator included",
+            "creator_email": "user1real@abc.com",
+            "creator_nickname": "User1Nick",
         }
         */
         return jsonObject.toString();
 
 
     }
-
 
     /*
     * Event contains an ArrayList<Day> days; and this method returns a Day in this ArrayList if its dateToString is equal
@@ -160,12 +163,20 @@ public class Event implements Parcelable{
         this.id_event = id_event;
     }
 
-    public int getId_creator() {
-        return id_creator;
+    public String getCreator_email() {
+        return creator_email;
     }
 
-    public void setId_creator(int id_creator) {
-        this.id_creator= id_creator;
+    public void setCreator_email(String creator_email) {
+        this.creator_email = creator_email;
+    }
+
+    public String getCreator_nickname() {
+        return creator_nickname;
+    }
+
+    public void setCreator_nickname(String creator_nickname) {
+        this.creator_nickname = creator_nickname;
     }
 
     public String getName() {
@@ -192,11 +203,11 @@ public class Event implements Parcelable{
         this.days = days;
     }
 
-    public ArrayList<String> getInvited_users() {
+    public ArrayList<UserAvailability> getInvited_users() {
         return invited_users;
     }
 
-    public void setInvited_users(ArrayList<String> invited_users) {
+    public void setInvited_users(ArrayList<UserAvailability> invited_users) {
         this.invited_users = invited_users;
     }
 

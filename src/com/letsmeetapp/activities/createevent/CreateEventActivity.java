@@ -22,7 +22,6 @@ import com.letsmeetapp.customviews.CustomProgressSpinner;
 import com.letsmeetapp.model.Day;
 import com.letsmeetapp.model.Event;
 import com.letsmeetapp.rest.HTTPVerb;
-import com.letsmeetapp.rest.RESTEventsParser;
 import com.letsmeetapp.rest.RESTLoader;
 import com.letsmeetapp.rest.RESTResponse;
 import com.letsmeetapp.utilities.NetUtils;
@@ -122,9 +121,9 @@ public class CreateEventActivity extends FragmentActivity
                         newEvent = new Event();
                         newEvent.setName(CreateEventActivity.this.createEventNameEditText.getText().toString());
                         newEvent.setDescription(CreateEventActivity.this.createEventDescEditText.getText().toString());
-                        newEvent.setId_creator(1);
+                        newEvent.setCreator_email("setOnLine124@Createevent.com");
                         newEvent.setDays(allSelectedDays);
-                        newEvent.setInvited_users(invitedUsers);
+                        //newEvent.setInvited_users(invitedUsers);
 
                         //Get the loaderManager and initialize a loader 1 (POST /events)which is defined in onCreateLoader
                         if(loaderManager  == null ){
@@ -218,7 +217,7 @@ public class CreateEventActivity extends FragmentActivity
             case 1:         //ID of the loader...
                 // The asynchronous load is complete and the data is now available for use.
                 mResponse = data;
-                RESTEventsParser parser = new RESTEventsParser();       //new parser for /events
+                //RESTEventsParser parser = new RESTEventsParser();       //new parser for /events
 
                 progressDialog.dismiss();
                 break;
