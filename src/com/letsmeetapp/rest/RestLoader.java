@@ -3,6 +3,7 @@ package com.letsmeetapp.rest;
 
 import android.content.Context;
 import android.net.Uri;
+import android.net.http.AndroidHttpClient;
 import android.os.Bundle;
 
 import android.support.v4.content.AsyncTaskLoader;
@@ -40,13 +41,15 @@ public class RESTLoader extends AsyncTaskLoader<RESTResponse> {
     // old or not. The value we have here is 10 minutes;
     private static final long STALE_DELTA = 600000;
 
-    private Context mContext;
-    private HTTPVerb mVerb;
+    private Context     mContext;
+    private HTTPVerb    mVerb;
     private Uri          mAction;
     private Bundle       mParams;
     private RESTResponse mRestResponse;
-    private static final int TIMEOUT = 5000;      //if server doesn't respond fire timeout in TIEMOUT miliseconds
-    private static final int SO_TIMEOUT = 10000;      //if server takes more than SO_TIEMOUT in transfering data
+    private DefaultHttpClient client;
+    private static final int TIMEOUT = 6000;        //if server doesn't respond fire timeout in TIEMOUT miliseconds
+    private static final int SO_TIMEOUT = 10000;    //if server takes more than SO_TIEMOUT in transfering data
+
 
     private long mLastLoad;
 
@@ -67,13 +70,15 @@ public class RESTLoader extends AsyncTaskLoader<RESTResponse> {
         mVerb   = verb;
         mAction = action;
         mParams = params;
-
     }
 
     @Override
     public RESTResponse loadInBackground(){
 
         try {
+
+            Log.d(TAG, "URL to be called is "+mAction.toString());
+
             // At the very least we always need an action.
             if (mAction == null) {
                 Log.e(TAG, "You did not define an action. REST call canceled.");
@@ -139,7 +144,7 @@ public class RESTLoader extends AsyncTaskLoader<RESTResponse> {
 
             if (request != null) {
 
-                HttpClient client = new DefaultHttpClient();
+                client = new DefaultHttpClient();
 
                 //Set timeout limits
                 // Set the timeout in milliseconds until a connection is established.
@@ -159,7 +164,7 @@ public class RESTLoader extends AsyncTaskLoader<RESTResponse> {
 
                 HttpEntity responseEntity = response.getEntity();
                 StatusLine responseStatus = response.getStatusLine();
-                int        statusCode     = responseStatus != null ? responseStatus.getStatusCode() : 0;
+                int statusCode     = responseStatus != null ? responseStatus.getStatusCode() : 0;
 
                 // Here we create our response and send it back to the LoaderCallbacks<RESTResponse> implementation.
                 RESTResponse restResponse = new RESTResponse(responseEntity != null ? EntityUtils.toString(responseEntity) : null, statusCode);
@@ -183,7 +188,7 @@ public class RESTLoader extends AsyncTaskLoader<RESTResponse> {
         }
         catch (IOException e) {
             Log.e(TAG, "There was a problem when sending the request.", e);
-            //TODO return and empty Response and then in the client code check if code == 0 to deduce if server was reached
+            //TODO return and empty Response and then in the client code check if code == 0 to deduce if server was reached.
             return new RESTResponse();
         }
     }

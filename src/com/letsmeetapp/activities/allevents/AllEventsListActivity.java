@@ -47,7 +47,8 @@ public class AllEventsListActivity extends FragmentActivity
         super.onCreate(savedInstance);
 
         //TODO implement the Sesession logic. When user starts the app ths object holds his email and pass hash to be sent in the REST requests
-        Session.getInstance().setEmail("user6invitedTo38@aaa.com");
+        //Session.getInstance().setEmail("user6real@abc.com");
+        //Session.getInstance().setMd5Pass("1234");
 
 
 
@@ -106,7 +107,7 @@ public class AllEventsListActivity extends FragmentActivity
             Log.d(TAG, "onCreateLoader called");
             if(NetUtils.isOnline(AllEventsListActivity.this))    {
                 progressDialog = CustomProgressSpinner.show(AllEventsListActivity.this,"","");
-                mRestLoader = new RESTLoader(this, HTTPVerb.GET, Uri.parse(Constants.REST_BASE_URL+"events?auth"+Session.getInstance().getEmail()));
+                mRestLoader = new RESTLoader(this, HTTPVerb.GET, Uri.parse(Constants.REST_BASE_URL+"events"+Session.getInstance().asURLauth()));
                 return mRestLoader;     //this is passed to onLoadFinished callback
             }else{
                 Toast.makeText(AllEventsListActivity.this.getApplicationContext(), "No internet :(", Toast.LENGTH_LONG).show();
@@ -132,6 +133,10 @@ public class AllEventsListActivity extends FragmentActivity
 
                 // The asynchronous load is complete and the data is now available for use.
                 mResponse = response;
+                if(mResponse.getCode() == 401) {
+                    Toast.makeText(AllEventsListActivity.this.getApplicationContext(), "Not authenticated", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 Parser parser = new GetEventsParser();       //new parser for /events response
                 parser.parse(mResponse);

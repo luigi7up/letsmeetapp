@@ -107,6 +107,8 @@ public class AvailabilityCalendarAdapter extends CalendarAdapter {
     }
 
 
+
+
     /*
     * Checks if the provided Day day is inside of event.getDays() provided
     * It simply compares the day (its dateAsString value) with each one in the Event object
