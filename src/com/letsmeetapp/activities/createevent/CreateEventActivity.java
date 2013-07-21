@@ -16,14 +16,17 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.letsmeetapp.Constants;
 import com.letsmeetapp.R;
+import com.letsmeetapp.activities.allevents.AllEventsListActivity;
 import com.letsmeetapp.activities.calendar.createcalendar.CreateCalendarActivity;
 import com.letsmeetapp.activities.eventinvite.InvitePeopleActivity;
 import com.letsmeetapp.customviews.CustomProgressSpinner;
 import com.letsmeetapp.model.Day;
 import com.letsmeetapp.model.Event;
+import com.letsmeetapp.model.UserAvailability;
 import com.letsmeetapp.rest.HTTPVerb;
 import com.letsmeetapp.rest.RESTLoader;
 import com.letsmeetapp.rest.RESTResponse;
+import com.letsmeetapp.rest.Session;
 import com.letsmeetapp.utilities.NetUtils;
 import com.letsmeetapp.utilities.VisualUtility;
 
@@ -47,7 +50,7 @@ public class CreateEventActivity extends FragmentActivity
     private Button createEvent;
 
     EditText createEventNameEditText , createEventDescEditText;
-    private ArrayList<String> invitedUsers = new ArrayList<String>();
+    private ArrayList<UserAvailability> invitedUsers    = new ArrayList<UserAvailability>();
     private ArrayList<Day> allSelectedDays = new ArrayList<Day>();  //holds dates that will have been selected...
     private Event newEvent;
     private LoaderManager loaderManager;        //needed for the RESTLoader that will send POST /events
@@ -123,7 +126,7 @@ public class CreateEventActivity extends FragmentActivity
                         newEvent.setDescription(CreateEventActivity.this.createEventDescEditText.getText().toString());
                         newEvent.setCreator_email("setOnLine124@Createevent.com");
                         newEvent.setDays(allSelectedDays);
-                        //newEvent.setInvited_users(invitedUsers);
+                        newEvent.setInvited_users(invitedUsers);
 
                         //Get the loaderManager and initialize a loader 1 (POST /events)which is defined in onCreateLoader
                         if(loaderManager  == null ){
@@ -172,8 +175,9 @@ public class CreateEventActivity extends FragmentActivity
         //coming back from InvitePeople
         if(requestCode == 2){
             if(resultCode == RESULT_OK){
-                //fill with the values returned
-                invitedUsers = (ArrayList<String>)data.getExtras().get("emails");
+                //Convert each email into separat UserAvailability object and add it to invitedUsers ArrayList
+                invitedUsers = (ArrayList<UserAvailability>)data.getExtras().get("emails");
+
                 if(invitedUsers != null && invitedUsers.size() > 0) {
                     invitePeopleButton.setText(invitedUsers.size()+" people invited");
                 }
@@ -201,7 +205,7 @@ public class CreateEventActivity extends FragmentActivity
                 String postBodyJson = newEvent.asJSON();            //custom json serialization
 
                 myParams.putCharSequence("postBodyJson", postBodyJson);
-                return new RESTLoader(this, HTTPVerb.POST, Uri.parse(Constants.REST_BASE_URL + "events"), myParams);
+                return new RESTLoader(this, HTTPVerb.POST, Uri.parse(Constants.REST_BASE_URL + "events"+ Session.getInstance().asURLauth()), myParams);
 
             }else{
                 Toast.makeText(CreateEventActivity.this.getApplicationContext(), "No internet :(", Toast.LENGTH_LONG).show();
@@ -219,7 +223,29 @@ public class CreateEventActivity extends FragmentActivity
                 mResponse = data;
                 //RESTEventsParser parser = new RESTEventsParser();       //new parser for /events
 
-                progressDialog.dismiss();
+                // The asynchronous load is complete and the data is now available for use.
+                Log.d(TAG, "RESTLoader :: Create event finished");
+
+                if(mResponse.getCode() == 200){
+                    //User is recognized
+                    Log.d(TAG, "Code 200 returned");
+                    //No parser because we look only the code
+                    Toast.makeText(CreateEventActivity.this.getApplicationContext(), "New event created!", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(CreateEventActivity.this, AllEventsListActivity.class);    //User recognized! continue to the events screen
+                    startActivity(intent);
+                    finish();   //destroy this activity from the. User cant go back to it
+                }else if(mResponse.getCode()== 401){
+                    //User has to provide email/pass
+                    Log.d(TAG, "Code 401 returned");
+                    Toast.makeText(CreateEventActivity.this.getApplicationContext(), "User not recognized!", Toast.LENGTH_LONG).show();
+                }else if(mResponse.getCode()== 0){
+                    Log.w(TAG, "Code 0 returned."+" - not reaching the server");
+                    Toast.makeText(CreateEventActivity.this.getApplicationContext(), "Not reaching the server :(!", Toast.LENGTH_LONG).show();
+
+                }else{
+                    Log.e(TAG, "Unexpected code " +mResponse.getCode()+" returned ?!");
+                    Toast.makeText(CreateEventActivity.this.getApplicationContext(), "Error occured :(!", Toast.LENGTH_LONG).show();
+                }
                 break;
         }
     }
