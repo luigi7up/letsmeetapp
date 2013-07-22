@@ -116,6 +116,7 @@ public class Event implements Parcelable{
         jsonObject.addProperty("creator_email", this.getCreator_email());
         //jsonObject.addProperty("created", this.getCreated().toString());
 
+        //DAYS
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
         ArrayList<String> daysAsStrings = new ArrayList<String>();
         for(Day d:days){
@@ -125,8 +126,9 @@ public class Event implements Parcelable{
         JsonElement daysAsArray = gson.toJsonTree(daysAsStrings, new TypeToken<ArrayList<String>>() {}.getType());
         jsonObject.add("days",daysAsArray);
 
+        //INVITED USERS (It's UserAvailability insted of simple String now!)...
+        JsonElement invitedUsersAsArray = gson.toJsonTree(this.getInvited_users(), new TypeToken<ArrayList<UserAvailability>>(){}.getType());
 
-        JsonElement invitedUsersAsArray = gson.toJsonTree(this.getInvited_users(), new TypeToken<ArrayList<String>>() {}.getType());
         jsonObject.add("invited_users",invitedUsersAsArray);
 
         /*

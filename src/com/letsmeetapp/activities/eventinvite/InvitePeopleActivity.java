@@ -13,6 +13,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import com.letsmeetapp.R;
 import com.letsmeetapp.model.Day;
+import com.letsmeetapp.model.UserAvailability;
 
 import java.util.ArrayList;
 
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 public class InvitePeopleActivity extends Activity{
 
     private EditText newEmailInput;
-    private ArrayList<String> emails = new ArrayList<String>();
+    private ArrayList<UserAvailability> emails    = new ArrayList<UserAvailability>();
     private Button doneButton;
 
     @Override
@@ -33,7 +34,7 @@ public class InvitePeopleActivity extends Activity{
         setContentView(R.layout.invite_ppl_activity);
 
         //Assign emails sent from the previous activity
-        emails = (ArrayList<String>)getIntent().getExtras().get("emails");
+        emails = (ArrayList<UserAvailability>)getIntent().getExtras().get("emails");
 
         //Get the reference to the newEmail input field
         newEmailInput = (EditText)findViewById(R.id.new_email);
@@ -50,7 +51,8 @@ public class InvitePeopleActivity extends Activity{
 
                 //If new email is entered add it to emails and return it to the calling activity
                 if(newEmailInput.getText().toString().length() > 0){
-                    emails.add(newEmailInput.getText().toString());
+                    String newEmail = newEmailInput.getText().toString();
+                    emails.add(new UserAvailability(newEmail,null,null));
                 }
 
                 Intent returnIntent = new Intent();

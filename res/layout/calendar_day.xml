@@ -14,5 +14,13 @@
               android:textColor="#000">
 
     </TextView>
+    <TextView android:id="@+id/dayavailable"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textSize="11dp"
+              android:gravity="bottom|right"
+              android:textColor="#000">
+
+    </TextView>
 
 </LinearLayout>

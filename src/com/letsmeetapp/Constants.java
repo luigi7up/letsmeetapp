@@ -26,9 +26,6 @@ public class Constants {
             //REST_BASE_URL = "http://192.168.1.64:1983/";     //my comp at home
             //REST_BASE_URL = "http://letsmeetapp.herokuapp.com/";
 
-            //Harcoded string to be sent to APIs in order to authenticate the user. TESTING PURPOSES!!!
-            final String CREDENTIALS = "luigi7up@gmail.com";
-
 
         }else{  //for PROD
             REST_BASE_URL = "http://www.letsmeetapp.com/rest/";

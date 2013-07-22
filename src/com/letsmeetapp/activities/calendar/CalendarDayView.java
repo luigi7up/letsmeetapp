@@ -1,6 +1,7 @@
 package com.letsmeetapp.activities.calendar;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,9 +18,13 @@ import com.letsmeetapp.model.Day;
  */
 public class CalendarDayView extends LinearLayout{
 
+    private static final String TAG = CalendarDayView.class.getName();
+
     private Context mContext;
     private Day day;
     private int dimension;      //holds the width/height value for the orientation
+
+    private TextView dayNumberTextView, dayAvailabilityTextView;
 
     private Style style;
     private Availability availability;
@@ -47,8 +52,11 @@ public class CalendarDayView extends LinearLayout{
         } else{
             //Inflate the the xml layout _calendar_day that holds all sub views
             layoutInflater.inflate(R.layout.calendar_day, this);
-            TextView dayNumberTextView = (TextView)findViewById(R.id.daynumber);
+            dayNumberTextView = (TextView)findViewById(R.id.daynumber);
             dayNumberTextView.setText(String.valueOf(day.getDateDayNumber()));
+
+            dayAvailabilityTextView = (TextView)findViewById(R.id.dayavailable);
+            dayAvailabilityTextView.setText(String.valueOf(day.getCurrentUserAvailability()));
         }
 
     }
@@ -59,6 +67,8 @@ public class CalendarDayView extends LinearLayout{
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);    //To change body of overridden methods use File | Settings | File Templates.
 
         CalendarActivity parentCalendarActivity = (CalendarActivity)mContext;
+
+
         //CalendarActivity parentActivity = (CalendarActivity)parentCalendarAdapter.getmContext();
 
         //If the day that is about to be returned as a grid view exist in allSelectedDayList mark it as selected
@@ -66,16 +76,34 @@ public class CalendarDayView extends LinearLayout{
 
         //if(this.isDaySelected() == false) setStyle(Style.NOT_SELECTED);
         //else setStyle(Style.SELECTED);
-
+        /*
         if(this.getDay().isInEvent())
         {
 
             if((this.getDay().getCurrentUserAvailability()).equalsIgnoreCase("y")==true) setAvailability(Availability.AVAILABLE_Y);
             if((this.getDay().getCurrentUserAvailability()).equalsIgnoreCase("n")==true) setAvailability(Availability.AVAILABLE_N);
         }
-
+         */
 
         setMeasuredDimension(dimension-1,dimension-1);
+
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        //When user changes the availability view has to be invalidated!
+
+        /*
+        Log.d(TAG,"OnDraw on day: "+this.getDay().getDateAsString()+" with availability "+this.getDay().getCurrentUserAvailability());
+        if(this.getDay().isInEvent() == true) this.setStyle(Style.SELECTED);
+
+        if(this.getDay().getCurrentUserAvailability().equals("y")) this.setStyle(Style.AVAILABLE);
+        else if(this.getDay().getCurrentUserAvailability().equals("n")) this.setStyle(CalendarDayView.Style.NOT_AVAILABLE);
+        else if(this.getDay().getCurrentUserAvailability().equals("m")) this.setStyle(CalendarDayView.Style.SELECTED);
+         */
+        dayAvailabilityTextView.setText(this.getDay().getCurrentUserAvailability());
+
     }
 
     //Toggles the value selected from true to false
@@ -95,6 +123,8 @@ public class CalendarDayView extends LinearLayout{
             setStyle(Style.SELECTED);
         }
     }
+
+
 
 
     public void setStyle(Style s){
@@ -122,7 +152,8 @@ public class CalendarDayView extends LinearLayout{
         private final int AVAILABLE_N_COLOR             = Color.RED;
          */
 
-        SELECTED(Color.argb(220,220,220,220)), NOT_SELECTED(Color.argb(220,240,240,240));
+        SELECTED(Color.argb(220,220,220,220)), NOT_SELECTED(Color.argb(220,240,240,240)),
+        AVAILABLE(Color.argb(120,120,120,220)),NOT_AVAILABLE(Color.argb(100,120,220,220));
         private int color;
         private Style(int color){
             this.color = color;
@@ -130,6 +161,7 @@ public class CalendarDayView extends LinearLayout{
         public int getColor(){return this.color;}
 
     }
+
     public enum Availability{
         AVAILABLE_Y,AVAILABLE_M,AVAILABLE_N;
     }
@@ -146,8 +178,6 @@ public class CalendarDayView extends LinearLayout{
     public String toString(){
         return day.toString();
     }
-
-
 
     /*  GET SET */
     public Day getDay() {
@@ -188,5 +218,21 @@ public class CalendarDayView extends LinearLayout{
 
     public void setDaySelected(boolean daySelected) {
         this.daySelected = daySelected;
+    }
+
+    public TextView getDayNumberTextView() {
+        return dayNumberTextView;
+    }
+
+    public void setDayNumberTextView(TextView dayNumberTextView) {
+        this.dayNumberTextView = dayNumberTextView;
+    }
+
+    public TextView getDayAvailabilityTextView() {
+        return dayAvailabilityTextView;
+    }
+
+    public void setDayAvailabilityTextView(TextView dayAvailabilityTextView) {
+        this.dayAvailabilityTextView = dayAvailabilityTextView;
     }
 }

@@ -28,7 +28,7 @@ public class AvailabilityCalendarActivity extends CalendarActivity {
     private static final String TAG = AvailabilityCalendarActivity.class.getName();
 
     private HashMap<Day, String> currentUserAvailability;     //Contains availability for each day user has clicked
-    private Event event;                         //used when seeing calendar for a Created event
+    private Event event;                                       //used when seeing calendar for a Created event
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,9 +93,6 @@ public class AvailabilityCalendarActivity extends CalendarActivity {
 
     }//onCreate
 
-    /*
-    * Creates its new adapter. It is used to generate new grids in cases when prev month next month is called from OnClickListener
-    * */
 
     @Override
     protected void dayViewTouched(CalendarDayView touchedDayView) {
@@ -111,12 +108,14 @@ public class AvailabilityCalendarActivity extends CalendarActivity {
     * Takes the context in which to show the dialog and a CalendarDayView on which it should perform the action of switching its Day availability to OK or NO
     * */
     private void showAvailabilityDialog(CalendarDayView dayView){
-        Log.d(TAG, "POPUP!");
+        Log.d(TAG, "Popup for day !"+dayView.getDay().getDateAsString());
 
         final CalendarDayView dayView1 = dayView;
 
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.availability_popup);
+        TextView title = (TextView)findViewById(R.id.availability_popup_title);
+        title.setText("Are you available on "+dayView1.getDay().getDateAsString());
         dialog.show();
         //Get the reference to OK and NO buttons
         Button ok_button = (Button)dialog.findViewById(R.id.availability_btn_yes);
@@ -126,10 +125,10 @@ public class AvailabilityCalendarActivity extends CalendarActivity {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "Clicked OK on " + dayView1.getDay().getDateAsString());
-                //calendarActivityContext.event.getEventDayByDateString(dayView1.getDay().getDateAsString()).setCurrentUserAvailability("y");
-
+                AvailabilityCalendarActivity.this.event.getEventDayByDateString(dayView1.getDay().getDateAsString()).setCurrentUserAvailability("y");
+                dayView1.getDayAvailabilityTextView().invalidate();
+                dayView1.getDayAvailabilityTextView().setText("y");
                 //Log.d(TAG, "and it's set to " + calendarActivityContext.event.getEventDayByDateString(dayView1.getDay().getDateAsString()).getCurrentUserAvailability());
-
                 dialog.dismiss();
 
             }
@@ -139,8 +138,9 @@ public class AvailabilityCalendarActivity extends CalendarActivity {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "Clicked NO  "+dayView1.getDay().getDateAsString());
-                //calendarActivityContext.event.getEventDayByDateString(dayView1.getDay().getDateAsString()).setCurrentUserAvailability("n");
+                AvailabilityCalendarActivity.this.event.getEventDayByDateString(dayView1.getDay().getDateAsString()).setCurrentUserAvailability("n");
                 //Log.d(TAG, "and it's set to " + calendarActivityContext.event.getEventDayByDateString(dayView1.getDay().getDateAsString()).getCurrentUserAvailability());
+                dayView1.requestLayout();
                 dialog.dismiss();
             }
         });

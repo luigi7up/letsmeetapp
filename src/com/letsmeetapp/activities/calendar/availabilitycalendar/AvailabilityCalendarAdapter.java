@@ -13,6 +13,8 @@ import com.letsmeetapp.activities.calendar.CalendarAdapter;
 import com.letsmeetapp.activities.calendar.CalendarDayView;
 import com.letsmeetapp.model.Day;
 import com.letsmeetapp.model.Event;
+import com.letsmeetapp.model.UserAvailability;
+import com.letsmeetapp.rest.Session;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -92,11 +94,18 @@ public class AvailabilityCalendarAdapter extends CalendarAdapter {
                 newDayCalendarDayView.getDay().setInEvent(true);
                 newDayCalendarDayView.setStyle(CalendarDayView.Style.SELECTED);
                 newDayCalendarDayView.setBehaviour(CalendarDayView.Behaviour.CLICKABLE);
+
+                String dayAvailability = getCurrentUsersAvailabilityForADay(newDayCalendarDayView.getDay(), event, Session.getInstance().getEmail());
+                newDayCalendarDayView.getDay().setCurrentUserAvailability(dayAvailability);
+
+                //newDayCalendarDayView.getDay().setCurrentUserAvailability(dayAvailability);
+                Log.d(TAG, "Day in event availability "+newDayCalendarDayView.getDay().getDateAsString()+" available: "+dayAvailability);
+
+
             }else{
                 newDayCalendarDayView.getDay().setInEvent(false);
                 newDayCalendarDayView.setStyle(CalendarDayView.Style.NOT_SELECTED);
                 newDayCalendarDayView.setBehaviour(CalendarDayView.Behaviour.NOT_CLICKABLE);
-
             }
 
             this.generatedDayViews.add(newDayCalendarDayView);
@@ -105,6 +114,8 @@ public class AvailabilityCalendarAdapter extends CalendarAdapter {
         Log.d(TAG, "generatedDayViews");
 
     }
+
+
 
 
     /*
@@ -120,9 +131,33 @@ public class AvailabilityCalendarAdapter extends CalendarAdapter {
             }else {
                 Log.d(TAG, "(FALSE) Comparing day "+day.getDateAsString()+" day "+d.getDateAsString()) ;
             }
-
         }
         return false;
+
+    }
+
+
+    /*
+    * Methods goes through day availability for a user inside the EVENT object that was created from parsing GET /events
+    * */
+     private String getCurrentUsersAvailabilityForADay(Day day, Event event, String userEmail){
+        //Get the index of a day in the event.days array to be able to extract the availability for it in events.invited_usesrs.availability
+        int dayIndexInEvent = 0;
+        int counter =0;
+        for(Day d:event.getDays()){
+            if(d.equals(day)){
+                dayIndexInEvent = counter;
+            }
+            counter++;
+        }
+         for(UserAvailability ua:event.getInvited_users()){
+             if(ua.getUser_email()!=null && ua.getUser_email().equalsIgnoreCase(userEmail)){
+                 return ua.getAvailability().get(dayIndexInEvent);
+             }
+         }
+
+         Log.e(TAG, "Couldn't find the availability for "+userEmail+" in the day "+day+" for event "+event.getId_event());
+         return "?";
 
     }
 
