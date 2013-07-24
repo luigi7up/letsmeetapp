@@ -20,7 +20,7 @@ public class Event implements Parcelable{
     private String creator_nickname;
     private String name;
     private String description;
-    private ArrayList<Day> days;    //Days selected by creator
+    private ArrayList<Day> days;            //Days selected by creator
     private ArrayList<UserAvailability> invited_users;
     private Calendar created;                   //Days selected by creator
 

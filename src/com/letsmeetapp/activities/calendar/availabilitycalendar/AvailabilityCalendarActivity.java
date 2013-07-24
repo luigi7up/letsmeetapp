@@ -14,6 +14,7 @@ import com.letsmeetapp.R;
 import com.letsmeetapp.activities.calendar.*;
 import com.letsmeetapp.model.Day;
 import com.letsmeetapp.model.Event;
+import com.letsmeetapp.rest.Session;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,15 +28,14 @@ public class AvailabilityCalendarActivity extends CalendarActivity {
 
     private static final String TAG = AvailabilityCalendarActivity.class.getName();
 
-    private HashMap<Day, String> currentUserAvailability;     //Contains availability for each day user has clicked
+
     private Event event;                                      //used when seeing calendar for a Created event
-    private CalendarDayView touchedDayView;                      //Reference to a touched view that a OnClick handler of popup can access
+    private CalendarDayView touchedDayView;                   //Reference to a touched view that a OnClick handler of popup can access
+    private EventDaysUserAvailability eventDaysUserAvailability;    //Initialized with all days for event and logged user's availability
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Log.d(TAG,"onCreate AvailabilityCalendarActivity");
 
         //Inflate the default view (holds header with buttons, grid...)
         setContentView(R.layout.calendar_activity);
@@ -45,6 +45,8 @@ public class AvailabilityCalendarActivity extends CalendarActivity {
 
         //get all previously selected dates (when exiting and coming back...)
         event = (Event)getIntent().getExtras().get("event");
+        //Initialize the object that holds availability for each day!
+        eventDaysUserAvailability = new EventDaysUserAvailability(event);
 
         //Open the calendar showing the month of first day in the event
         if(monthShowing == null) monthShowing = event.getDays().get(0).getCurrentDate();
@@ -94,14 +96,18 @@ public class AvailabilityCalendarActivity extends CalendarActivity {
 
     }//onCreate
 
-
     @Override
     protected void dayViewTouched(CalendarDayView touchedDayView) {
 
         if(touchedDayView.isDead()) return;   //skip it
 
         if(touchedDayView.getDay().isInEvent() == true){
+
             this.touchedDayView = touchedDayView;
+            //this.touchedDayView.toggleSelected();
+
+            //touchedDayView.setBackgroundColor(android.R.color.holo_red_dark);
+            //touchedDayView.setStyle(CalendarDayView.Style.NOT_SELECTED);
             showAvailabilityDialog();
         }
     }
@@ -125,10 +131,13 @@ public class AvailabilityCalendarActivity extends CalendarActivity {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "Clicked OK on " + AvailabilityCalendarActivity.this.touchedDayView.getDay().getDateAsString());
-                AvailabilityCalendarActivity.this.event.getEventDayByDateString(AvailabilityCalendarActivity.this.touchedDayView.getDay().getDateAsString()).setCurrentUserAvailability("y");
+    /*
+                            AvailabilityCalendarActivity.this.event.getEventDayByDateString(AvailabilityCalendarActivity.this.touchedDayView.getDay().getDateAsString()).setCurrentUserAvailability("y");
                 //dayView1.getDayAvailabilityTextView().invalidate();
                 AvailabilityCalendarActivity.this.touchedDayView.getDayAvailabilityTextView().setText("y");
-                AvailabilityCalendarActivity.this.touchedDayView.setBackgroundColor(android.R.color.holo_green_light);
+                AvailabilityCalendarActivity.this.touchedDayView.setBackgroundColor(android.R.color.holo_gr                */
+                AvailabilityCalendarActivity.this.touchedDayView.setAvailabilityText("y");
+
 
                 //Log.d(TAG, "and it's set to " + calendarActivityContext.event.getEventDayByDateString(dayView1.getDay().getDateAsString()).getCurrentUserAvailability());
                 dialog.dismiss();
@@ -140,10 +149,15 @@ public class AvailabilityCalendarActivity extends CalendarActivity {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "Clicked NO  "+AvailabilityCalendarActivity.this.touchedDayView.getDay().getDateAsString());
+
+               /*
                 AvailabilityCalendarActivity.this.event.getEventDayByDateString(AvailabilityCalendarActivity.this.touchedDayView.getDay().getDateAsString()).setCurrentUserAvailability("n");
                 //Log.d(TAG, "and it's set to " + calendarActivityContext.event.getEventDayByDateString(dayView1.getDay().getDateAsString()).getCurrentUserAvailability());
                 AvailabilityCalendarActivity.this.touchedDayView.getDayAvailabilityTextView().setText("n");
                 AvailabilityCalendarActivity.this.touchedDayView.setBackgroundColor(android.R.color.holo_red_dark);
+                */
+
+                AvailabilityCalendarActivity.this.touchedDayView.setAvailabilityText("n");
                 dialog.dismiss();
             }
         });
@@ -158,7 +172,6 @@ public class AvailabilityCalendarActivity extends CalendarActivity {
     /*
     * Checks if a calendar can change month
     * */
-
     @Override
     public void resetCalendarAdapter(String direction){
         //TODO if user is trying to go to a month lower than the minimum event date or higher then the maximum do nosthing and show dialog
@@ -201,12 +214,13 @@ public class AvailabilityCalendarActivity extends CalendarActivity {
 
     //GETTER / SETTER
 
-    public HashMap<Day, String> getCurrentUserAvailability() {
-        return currentUserAvailability;
+
+    public EventDaysUserAvailability getEventDaysUserAvailability() {
+        return eventDaysUserAvailability;
     }
 
-    public void setCurrentUserAvailability(HashMap<Day, String> currentUserAvailability) {
-        this.currentUserAvailability = currentUserAvailability;
+    public void setEventDaysUserAvailability(EventDaysUserAvailability eventDaysUserAvailability) {
+        this.eventDaysUserAvailability = eventDaysUserAvailability;
     }
 
     public Event getEvent() {
@@ -216,4 +230,5 @@ public class AvailabilityCalendarActivity extends CalendarActivity {
     public void setEvent(Event event) {
         this.event = event;
     }
+
 }

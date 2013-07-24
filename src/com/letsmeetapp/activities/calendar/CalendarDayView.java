@@ -67,7 +67,7 @@ public class CalendarDayView extends LinearLayout{
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);    //To change body of overridden methods use File | Settings | File Templates.
 
         CalendarActivity parentCalendarActivity = (CalendarActivity)mContext;
-
+        Log.d(TAG,"onMeasure called on CalendarDayView for Day: "+this.getDay().getDateAsString());
 
         //CalendarActivity parentActivity = (CalendarActivity)parentCalendarAdapter.getmContext();
 
@@ -89,9 +89,14 @@ public class CalendarDayView extends LinearLayout{
 
     }
 
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        Log.d(TAG,"onDraw called on CalendarDayView for Day: "+this.getDay().getDateAsString());
+
+
+
         //When user changes the availability view has to be invalidated!
 
         /*
@@ -102,11 +107,11 @@ public class CalendarDayView extends LinearLayout{
         else if(this.getDay().getCurrentUserAvailability().equals("n")) this.setStyle(CalendarDayView.Style.NOT_AVAILABLE);
         else if(this.getDay().getCurrentUserAvailability().equals("m")) this.setStyle(CalendarDayView.Style.SELECTED);
          */
-        dayAvailabilityTextView.setText(this.getDay().getCurrentUserAvailability());
+        //dayAvailabilityTextView.setText(this.getDay().getCurrentUserAvailability());
 
     }
 
-    //Toggles the value selected from true to false
+    //Changes the value of isDaySelected of the Day object inside it
     public void toggleSelected(){
 
         //if(isDead() == true) return;                //don't allow click
@@ -124,7 +129,12 @@ public class CalendarDayView extends LinearLayout{
         }
     }
 
-
+    /*
+    * Function gets the availability TextView and sets the value for it
+    * */
+    public void setAvailabilityText(String val){
+        dayAvailabilityTextView.setText(val);
+    }
 
 
     public void setStyle(Style s){
