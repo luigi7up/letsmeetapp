@@ -28,7 +28,8 @@ public class AvailabilityCalendarActivity extends CalendarActivity {
     private static final String TAG = AvailabilityCalendarActivity.class.getName();
 
     private HashMap<Day, String> currentUserAvailability;     //Contains availability for each day user has clicked
-    private Event event;                                       //used when seeing calendar for a Created event
+    private Event event;                                      //used when seeing calendar for a Created event
+    private CalendarDayView touchedDayView;                      //Reference to a touched view that a OnClick handler of popup can access
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,22 +101,21 @@ public class AvailabilityCalendarActivity extends CalendarActivity {
         if(touchedDayView.isDead()) return;   //skip it
 
         if(touchedDayView.getDay().isInEvent() == true){
-            showAvailabilityDialog(touchedDayView);
+            this.touchedDayView = touchedDayView;
+            showAvailabilityDialog();
         }
     }
 
     /*
     * Takes the context in which to show the dialog and a CalendarDayView on which it should perform the action of switching its Day availability to OK or NO
     * */
-    private void showAvailabilityDialog(CalendarDayView dayView){
-        Log.d(TAG, "Popup for day !"+dayView.getDay().getDateAsString());
-
-        final CalendarDayView dayView1 = dayView;
+    private void showAvailabilityDialog(){
+        Log.d(TAG, "Popup for day !"+this.touchedDayView.getDay().getDateAsString());
 
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.availability_popup);
-        TextView title = (TextView)findViewById(R.id.availability_popup_title);
-        title.setText("Are you available on "+dayView1.getDay().getDateAsString());
+        TextView titleTV = (TextView)dialog.findViewById(R.id.availability_popup_title);
+        titleTV.setText("Are you available on "+this.touchedDayView.getDay().getDateAsString());
         dialog.show();
         //Get the reference to OK and NO buttons
         Button ok_button = (Button)dialog.findViewById(R.id.availability_btn_yes);
@@ -124,10 +124,12 @@ public class AvailabilityCalendarActivity extends CalendarActivity {
         ok_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "Clicked OK on " + dayView1.getDay().getDateAsString());
-                AvailabilityCalendarActivity.this.event.getEventDayByDateString(dayView1.getDay().getDateAsString()).setCurrentUserAvailability("y");
-                dayView1.getDayAvailabilityTextView().invalidate();
-                dayView1.getDayAvailabilityTextView().setText("y");
+                Log.d(TAG, "Clicked OK on " + AvailabilityCalendarActivity.this.touchedDayView.getDay().getDateAsString());
+                AvailabilityCalendarActivity.this.event.getEventDayByDateString(AvailabilityCalendarActivity.this.touchedDayView.getDay().getDateAsString()).setCurrentUserAvailability("y");
+                //dayView1.getDayAvailabilityTextView().invalidate();
+                AvailabilityCalendarActivity.this.touchedDayView.getDayAvailabilityTextView().setText("y");
+                AvailabilityCalendarActivity.this.touchedDayView.setBackgroundColor(android.R.color.holo_green_light);
+
                 //Log.d(TAG, "and it's set to " + calendarActivityContext.event.getEventDayByDateString(dayView1.getDay().getDateAsString()).getCurrentUserAvailability());
                 dialog.dismiss();
 
@@ -137,10 +139,11 @@ public class AvailabilityCalendarActivity extends CalendarActivity {
         no_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "Clicked NO  "+dayView1.getDay().getDateAsString());
-                AvailabilityCalendarActivity.this.event.getEventDayByDateString(dayView1.getDay().getDateAsString()).setCurrentUserAvailability("n");
+                Log.d(TAG, "Clicked NO  "+AvailabilityCalendarActivity.this.touchedDayView.getDay().getDateAsString());
+                AvailabilityCalendarActivity.this.event.getEventDayByDateString(AvailabilityCalendarActivity.this.touchedDayView.getDay().getDateAsString()).setCurrentUserAvailability("n");
                 //Log.d(TAG, "and it's set to " + calendarActivityContext.event.getEventDayByDateString(dayView1.getDay().getDateAsString()).getCurrentUserAvailability());
-                dayView1.requestLayout();
+                AvailabilityCalendarActivity.this.touchedDayView.getDayAvailabilityTextView().setText("n");
+                AvailabilityCalendarActivity.this.touchedDayView.setBackgroundColor(android.R.color.holo_red_dark);
                 dialog.dismiss();
             }
         });
