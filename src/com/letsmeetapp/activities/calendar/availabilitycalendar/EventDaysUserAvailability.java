@@ -6,8 +6,10 @@ import com.letsmeetapp.model.Event;
 import com.letsmeetapp.model.UserAvailability;
 import com.letsmeetapp.rest.Session;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class is used inside AvailabilityCalendarActivity to keep data about all Days in the current event user is viewing
@@ -19,7 +21,7 @@ public class EventDaysUserAvailability {
 
     private static final String TAG = AvailabilityCalendarActivity.class.getName();
 
-    private HashMap<Day, String> availabilityForDays;
+    private HashMap<Day, String> availabilityForDays = new HashMap<Day, String>();  //init HashMap...
     private ArrayList<Day> days;            //Days extracted from passed event object
     private boolean hasChanged;
 
@@ -29,6 +31,7 @@ public class EventDaysUserAvailability {
 
         //asign all ["y","n","m"] to each day respectively
         for(UserAvailability ua: event.getInvited_users()){
+            if(ua.getUser_email() == null) continue;    //unregistered invited user. skip it
             if(ua.getUser_email().equalsIgnoreCase(Session.getInstance().getEmail())){
                 for(int i = 0; i<event.getDays().size();i++){
                     availabilityForDays.put(event.getDays().get(i), ua.getAvailability().get(i));
@@ -52,6 +55,37 @@ public class EventDaysUserAvailability {
 
     public String getAvailabilityForDay(Day d){
         return availabilityForDays.get(d);
+    }
+
+    /*
+    * Manually serializing all the data found into a String representing a JSON that is to be sent to the REST service*/
+    public String toJson(){
+
+        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ");
+
+        2013-07-10T15:37:24.000Z
+
+       //new StringBuilder("a").append("b").append("c").toString().
+        StringBuilder sBuilder = new StringBuilder();
+
+        //for(HashMap<Day,String> current : availabilityForDays){}
+
+        sBuilder.append("[");
+        //Iterate all availabilityForDays
+        for(Map.Entry<Day, String> entry : availabilityForDays.entrySet()) {
+            Day day               = entry.getKey();
+            String availability = entry.getValue();
+            String d = sdf.format(day.getCurrentDate().getTime());
+
+            sBuilder.append("{").append("\"").append(d).append("\"").append(":").append("\"").append(availability).append("\"").append("}").append(",");
+        }
+        //Remove the last comma
+        sBuilder.setLength(sBuilder.length()-1);
+        //close it
+        sBuilder.append("]");
+
+        return sBuilder.toString();
     }
 
 

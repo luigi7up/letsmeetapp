@@ -202,9 +202,9 @@ public class CreateEventActivity extends FragmentActivity
                 progressDialog = CustomProgressSpinner.show(CreateEventActivity.this, "", "");
 
                 Bundle myParams = new Bundle();
-                String postBodyJson = newEvent.asJSON();            //custom json serialization
+                String body = newEvent.asJSON();            //custom json serialization
 
-                myParams.putCharSequence("postBodyJson", postBodyJson);
+                myParams.putCharSequence("body", body);
                 return new RESTLoader(this, HTTPVerb.POST, Uri.parse(Constants.REST_BASE_URL + "events"+ Session.getInstance().asURLauth()), myParams);
 
             }else{

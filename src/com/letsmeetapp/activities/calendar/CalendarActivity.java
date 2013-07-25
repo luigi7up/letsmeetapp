@@ -1,6 +1,7 @@
 package com.letsmeetapp.activities.calendar;
 
 import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -18,7 +19,7 @@ import java.util.Calendar;
  *  A base class for Activities that have a calendar grid inside (For CreatingCalendarActivity or AvailabilityCalendarActivity)
  *  It offers some methods that are shared between all children classes.
  */
-public abstract class CalendarActivity extends Activity {
+public abstract class CalendarActivity extends FragmentActivity {
 
     protected GridView calendarGridView;
     //protected ArrayList<Day> allSelectedDays;     //a list of days that the creator initially selected

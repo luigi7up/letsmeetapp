@@ -2,7 +2,10 @@ package com.letsmeetapp.activities.calendar.availabilitycalendar;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -10,11 +13,18 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.letsmeetapp.Constants;
 import com.letsmeetapp.R;
+import com.letsmeetapp.activities.allevents.AllEventsListActivity;
 import com.letsmeetapp.activities.calendar.*;
+import com.letsmeetapp.customviews.CustomProgressSpinner;
 import com.letsmeetapp.model.Day;
 import com.letsmeetapp.model.Event;
+import com.letsmeetapp.rest.HTTPVerb;
+import com.letsmeetapp.rest.RESTLoader;
+import com.letsmeetapp.rest.RESTResponse;
 import com.letsmeetapp.rest.Session;
+import com.letsmeetapp.utilities.NetUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,7 +34,8 @@ import java.util.HashMap;
 /**
  * Represents the activity holding a calendar view for a month, the button to confirm the selection etc.
  */
-public class AvailabilityCalendarActivity extends CalendarActivity {
+public class AvailabilityCalendarActivity extends CalendarActivity
+        implements LoaderManager.LoaderCallbacks<RESTResponse>{
 
     private static final String TAG = AvailabilityCalendarActivity.class.getName();
 
@@ -32,6 +43,9 @@ public class AvailabilityCalendarActivity extends CalendarActivity {
     private Event event;                                      //used when seeing calendar for a Created event
     private CalendarDayView touchedDayView;                   //Reference to a touched view that a OnClick handler of popup can access
     private EventDaysUserAvailability eventDaysUserAvailability;    //Initialized with all days for event and logged user's availability
+
+    private LoaderManager loaderManager;        //needed for the RESTLoader that will send POST /events
+    private RESTResponse mResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +59,8 @@ public class AvailabilityCalendarActivity extends CalendarActivity {
 
         //get all previously selected dates (when exiting and coming back...)
         event = (Event)getIntent().getExtras().get("event");
-        //Initialize the object that holds availability for each day!
+
+        //This object takes the event as parameter and server as a holder of mapping for Day:availability
         eventDaysUserAvailability = new EventDaysUserAvailability(event);
 
         //Open the calendar showing the month of first day in the event
@@ -53,11 +68,11 @@ public class AvailabilityCalendarActivity extends CalendarActivity {
 
         //GEt the hold of the grid to assign it to the adapter
         calendarGridView = (GridView)findViewById(R.id.calendar_grid_view);
-        //if(event == null) calendarAdapter = new AvailabilityCalendarAdapter(this, monthShowing, this.allSelectedDays,this.event);
-        //else calendarAdapter = new CalendarAdapter(this, monthShowing, this.allSelectedDays, this.event);
 
+        //Create adapter passing the default month to show and Event object
         CalendarAdapter ca = new AvailabilityCalendarAdapter(this, monthShowing,this.event);
 
+        //Assign the adapter to the grid
         calendarGridView.setAdapter(ca);
 
         //Register handler fot onTouch event over calendarGridView
@@ -68,6 +83,7 @@ public class AvailabilityCalendarActivity extends CalendarActivity {
         prevButton.setTag("prevButton");
         nextButton = (Button)findViewById(R.id.nextButton);
         nextButton.setTag("nextButton");
+        //Set OnClick listeners
         prevButton.setOnClickListener(new CalendarChangeMonthOnClickListener(AvailabilityCalendarActivity.this));
         nextButton.setOnClickListener(new CalendarChangeMonthOnClickListener(AvailabilityCalendarActivity.this));
 
@@ -84,13 +100,20 @@ public class AvailabilityCalendarActivity extends CalendarActivity {
         doneSelectingButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent returnIntent = new Intent();
-                //returnIntent.putParcelableArrayListExtra("allSelectedDays", AvailabilityCalendarActivity.this.allSelectedDays);
-                returnIntent.putExtra("event", AvailabilityCalendarActivity.this.event);
 
-                Log.d(TAG, "I just set returnIntetn event to"+AvailabilityCalendarActivity.this.event);
+                //Get the loaderManager and initialize a loader 1 (POST /events)which is defined in onCreateLoader
+                if(loaderManager  == null ){
+                    loaderManager = getSupportLoaderManager();
+                    loaderManager.initLoader(1,null,AvailabilityCalendarActivity.this);
+                }
+                else loaderManager.restartLoader(1, null, AvailabilityCalendarActivity.this);
+
+                /*
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("event", AvailabilityCalendarActivity.this.event);
                 setResult(RESULT_OK, returnIntent);
                 finish();
+                */
             }
         });
 
@@ -102,12 +125,7 @@ public class AvailabilityCalendarActivity extends CalendarActivity {
         if(touchedDayView.isDead()) return;   //skip it
 
         if(touchedDayView.getDay().isInEvent() == true){
-
-            this.touchedDayView = touchedDayView;
-            //this.touchedDayView.toggleSelected();
-
-            //touchedDayView.setBackgroundColor(android.R.color.holo_red_dark);
-            //touchedDayView.setStyle(CalendarDayView.Style.NOT_SELECTED);
+            this.touchedDayView = touchedDayView;       //assign it to a member var to be accesible from the popup
             showAvailabilityDialog();
         }
     }
@@ -116,12 +134,11 @@ public class AvailabilityCalendarActivity extends CalendarActivity {
     * Takes the context in which to show the dialog and a CalendarDayView on which it should perform the action of switching its Day availability to OK or NO
     * */
     private void showAvailabilityDialog(){
-        Log.d(TAG, "Popup for day !"+this.touchedDayView.getDay().getDateAsString());
 
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.availability_popup);
         TextView titleTV = (TextView)dialog.findViewById(R.id.availability_popup_title);
-        titleTV.setText("Are you available on "+this.touchedDayView.getDay().getDateAsString());
+        titleTV.setText("Are you available on "+this.touchedDayView.getDay().getDateAsString()+"?");
         dialog.show();
         //Get the reference to OK and NO buttons
         Button ok_button = (Button)dialog.findViewById(R.id.availability_btn_yes);
@@ -131,14 +148,9 @@ public class AvailabilityCalendarActivity extends CalendarActivity {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "Clicked OK on " + AvailabilityCalendarActivity.this.touchedDayView.getDay().getDateAsString());
-    /*
-                            AvailabilityCalendarActivity.this.event.getEventDayByDateString(AvailabilityCalendarActivity.this.touchedDayView.getDay().getDateAsString()).setCurrentUserAvailability("y");
-                //dayView1.getDayAvailabilityTextView().invalidate();
-                AvailabilityCalendarActivity.this.touchedDayView.getDayAvailabilityTextView().setText("y");
-                AvailabilityCalendarActivity.this.touchedDayView.setBackgroundColor(android.R.color.holo_gr                */
-                AvailabilityCalendarActivity.this.touchedDayView.setAvailabilityText("y");
-
-
+                //save user selection in the EventDaysUserAvailability object
+                AvailabilityCalendarActivity.this.eventDaysUserAvailability.changeAvailabilityForDay(touchedDayView.getDay(), "y");
+                touchedDayView.setAvailabilityText("y");    //change visually too
                 //Log.d(TAG, "and it's set to " + calendarActivityContext.event.getEventDayByDateString(dayView1.getDay().getDateAsString()).getCurrentUserAvailability());
                 dialog.dismiss();
 
@@ -149,28 +161,17 @@ public class AvailabilityCalendarActivity extends CalendarActivity {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "Clicked NO  "+AvailabilityCalendarActivity.this.touchedDayView.getDay().getDateAsString());
-
-               /*
-                AvailabilityCalendarActivity.this.event.getEventDayByDateString(AvailabilityCalendarActivity.this.touchedDayView.getDay().getDateAsString()).setCurrentUserAvailability("n");
-                //Log.d(TAG, "and it's set to " + calendarActivityContext.event.getEventDayByDateString(dayView1.getDay().getDateAsString()).getCurrentUserAvailability());
-                AvailabilityCalendarActivity.this.touchedDayView.getDayAvailabilityTextView().setText("n");
-                AvailabilityCalendarActivity.this.touchedDayView.setBackgroundColor(android.R.color.holo_red_dark);
-                */
-
-                AvailabilityCalendarActivity.this.touchedDayView.setAvailabilityText("n");
+                //save user selection in the EventDaysUserAvailability object
+                AvailabilityCalendarActivity.this.eventDaysUserAvailability.changeAvailabilityForDay(touchedDayView.getDay(), "n");
+                touchedDayView.setAvailabilityText("n");    //change visually too
                 dialog.dismiss();
             }
         });
-
-
-
-
     }
 
-
-
     /*
-    * Checks if a calendar can change month
+    * Form CalendarOnMonthListener this method is called to repopulate the calendar grid with next
+    * or prev month days
     * */
     @Override
     public void resetCalendarAdapter(String direction){
@@ -211,10 +212,68 @@ public class AvailabilityCalendarActivity extends CalendarActivity {
     }
 
 
+    @Override
+    public Loader<RESTResponse> onCreateLoader(int id, Bundle bundle) {
+        //Create the loader...
+        if(id == 1){
+            Log.d(TAG, "Creating RESTLoader for the LoaderManager");
+
+            if(NetUtils.isOnline(AvailabilityCalendarActivity.this))    {
+                //shows and returns
+                //progressDialog = CustomProgressSpinner.show(CreateEventActivity.this, "", "");
+
+                Bundle myParams = new Bundle();
+                String body = eventDaysUserAvailability.toJson(); //TODO implemnt toJSON!!!
+
+                myParams.putCharSequence("body", body);
+                return new RESTLoader(this, HTTPVerb.PUT, Uri.parse(Constants.REST_BASE_URL + "events/"+event.getId_event()+"/availability"+ Session.getInstance().asURLauth()), myParams);
+
+            }else{
+                Toast.makeText(AvailabilityCalendarActivity.this.getApplicationContext(), "No internet :(", Toast.LENGTH_LONG).show();
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<RESTResponse> loader, RESTResponse data) {
+        switch (loader.getId()) {
+            case 1:         //ID of the loader...
+                mResponse = data;                                // The asynchronous load is complete and the data is now available for use.
+                Log.d(TAG, "RESTLoader :: Updating availability finished");
+
+                if(mResponse.getCode() == 200){
+                    //Availability updated
+                    Log.d(TAG, "Code 200 returned");
+                    //No parser because we look only the code
+                    Toast.makeText(AvailabilityCalendarActivity.this.getApplicationContext(), "Your availability is updated", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(AvailabilityCalendarActivity.this, AllEventsListActivity.class);
+                    startActivity(intent);
+                    finish();   //destroy this activity from the. User cant go back to it
+                }else if(mResponse.getCode()== 401){
+                    //User has to provide email/pass
+                    Log.d(TAG, "Code 401 returned");
+                    Toast.makeText(AvailabilityCalendarActivity.this.getApplicationContext(), "User not recognized!", Toast.LENGTH_LONG).show();
+                }else if(mResponse.getCode()== 0){
+                    Log.w(TAG, "Code 0 returned."+" - not reaching the server");
+                    Toast.makeText(AvailabilityCalendarActivity.this.getApplicationContext(), "Not reaching the server :(!", Toast.LENGTH_LONG).show();
+
+                }else{
+                    Log.e(TAG, "Unexpected code " +mResponse.getCode()+" returned ?!");
+                    Log.e(TAG, "Data: " +mResponse.getData());
+
+                    Toast.makeText(AvailabilityCalendarActivity.this.getApplicationContext(), "Error occured :(!", Toast.LENGTH_LONG).show();
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void onLoaderReset(Loader<RESTResponse> restResponseLoader) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
 
     //GETTER / SETTER
-
-
     public EventDaysUserAvailability getEventDaysUserAvailability() {
         return eventDaysUserAvailability;
     }

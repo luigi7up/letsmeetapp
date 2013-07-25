@@ -121,7 +121,7 @@ public class RESTLoader extends AsyncTaskLoader<RESTResponse> {
 
                     if (mParams != null) {
                         StringEntity requestEntity;
-                        requestEntity = new StringEntity(mParams.getString("postBodyJson"));
+                        requestEntity = new StringEntity(mParams.getString("body"));
                         postRequest.setEntity(requestEntity);
                     }
                 }
@@ -131,13 +131,16 @@ public class RESTLoader extends AsyncTaskLoader<RESTResponse> {
                     request = new HttpPut();
                     request.setURI(new URI(mAction.toString()));
 
+                    request.setHeader("Content-Type", "application/json");   //Since all our communication is done using JSON set the header....
                     // Attach form entity if necessary.
                     HttpPut putRequest = (HttpPut) request;
 
                     if (mParams != null) {
-                        UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(paramsToList(mParams));
-                        putRequest.setEntity(formEntity);
+                        StringEntity requestEntity;
+                        requestEntity = new StringEntity(mParams.getString("body"));
+                        putRequest.setEntity(requestEntity);
                     }
+
                 }
                 break;
             }
