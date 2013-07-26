@@ -56,7 +56,7 @@ public class CalendarDayView extends LinearLayout{
             dayNumberTextView.setText(String.valueOf(day.getDateDayNumber()));
 
             dayAvailabilityTextView = (TextView)findViewById(R.id.dayavailable);
-            dayAvailabilityTextView.setText(String.valueOf(day.getCurrentUserAvailability()));
+           // dayAvailabilityTextView.setText(String.valueOf(day.getCurrentUserAvailability()));
         }
 
     }
@@ -69,22 +69,6 @@ public class CalendarDayView extends LinearLayout{
         CalendarActivity parentCalendarActivity = (CalendarActivity)mContext;
         Log.d(TAG,"onMeasure called on CalendarDayView for Day: "+this.getDay().getDateAsString());
 
-        //CalendarActivity parentActivity = (CalendarActivity)parentCalendarAdapter.getmContext();
-
-        //If the day that is about to be returned as a grid view exist in allSelectedDayList mark it as selected
-        //if(parentCalendarActivity.getAllSelectedDays().contains(this.getDay())) this.setSelected(true);
-
-        //if(this.isDaySelected() == false) setStyle(Style.NOT_SELECTED);
-        //else setStyle(Style.SELECTED);
-        /*
-        if(this.getDay().isInEvent())
-        {
-
-            if((this.getDay().getCurrentUserAvailability()).equalsIgnoreCase("y")==true) setAvailability(Availability.AVAILABLE_Y);
-            if((this.getDay().getCurrentUserAvailability()).equalsIgnoreCase("n")==true) setAvailability(Availability.AVAILABLE_N);
-        }
-         */
-
         setMeasuredDimension(dimension-1,dimension-1);
 
     }
@@ -94,20 +78,6 @@ public class CalendarDayView extends LinearLayout{
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         Log.d(TAG,"onDraw called on CalendarDayView for Day: "+this.getDay().getDateAsString());
-
-
-
-        //When user changes the availability view has to be invalidated!
-
-        /*
-        Log.d(TAG,"OnDraw on day: "+this.getDay().getDateAsString()+" with availability "+this.getDay().getCurrentUserAvailability());
-        if(this.getDay().isInEvent() == true) this.setStyle(Style.SELECTED);
-
-        if(this.getDay().getCurrentUserAvailability().equals("y")) this.setStyle(Style.AVAILABLE);
-        else if(this.getDay().getCurrentUserAvailability().equals("n")) this.setStyle(CalendarDayView.Style.NOT_AVAILABLE);
-        else if(this.getDay().getCurrentUserAvailability().equals("m")) this.setStyle(CalendarDayView.Style.SELECTED);
-         */
-        //dayAvailabilityTextView.setText(this.getDay().getCurrentUserAvailability());
 
     }
 

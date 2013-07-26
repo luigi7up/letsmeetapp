@@ -96,7 +96,9 @@ public class AvailabilityCalendarAdapter extends CalendarAdapter {
                 newDayCalendarDayView.setBehaviour(CalendarDayView.Behaviour.CLICKABLE);
 
                 String dayAvailability = getCurrentUsersAvailabilityForADay(newDayCalendarDayView.getDay(), event, Session.getInstance().getEmail());
-                newDayCalendarDayView.getDay().setCurrentUserAvailability(dayAvailability);
+                //newDayCalendarDayView.getDay().setCurrentUserAvailability(dayAvailability);
+
+                newDayCalendarDayView.setAvailabilityText(dayAvailability);
 
                 //newDayCalendarDayView.getDay().setCurrentUserAvailability(dayAvailability);
                 Log.d(TAG, "Day in event availability "+newDayCalendarDayView.getDay().getDateAsString()+" available: "+dayAvailability);

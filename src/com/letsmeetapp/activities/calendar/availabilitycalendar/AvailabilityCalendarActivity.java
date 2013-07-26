@@ -108,11 +108,13 @@ public class AvailabilityCalendarActivity extends CalendarActivity
                 }
                 else loaderManager.restartLoader(1, null, AvailabilityCalendarActivity.this);
 
+
                 /*
                 Intent returnIntent = new Intent();
                 returnIntent.putExtra("event", AvailabilityCalendarActivity.this.event);
                 setResult(RESULT_OK, returnIntent);
                 finish();
+
                 */
             }
         });
@@ -247,8 +249,8 @@ public class AvailabilityCalendarActivity extends CalendarActivity
                     Log.d(TAG, "Code 200 returned");
                     //No parser because we look only the code
                     Toast.makeText(AvailabilityCalendarActivity.this.getApplicationContext(), "Your availability is updated", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(AvailabilityCalendarActivity.this, AllEventsListActivity.class);
-                    startActivity(intent);
+                    //Intent intent = new Intent(AvailabilityCalendarActivity.this, AllEventsListActivity.class);
+                    //startActivity(intent);
                     finish();   //destroy this activity from the. User cant go back to it
                 }else if(mResponse.getCode()== 401){
                     //User has to provide email/pass
