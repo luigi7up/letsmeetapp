@@ -42,7 +42,6 @@ public class EventDetailsActivity extends Activity {
         Toast.makeText(this.getApplicationContext(), "Im gonna show the details of "+event.getName(), Toast.LENGTH_SHORT).show();
         Log.d(TAG, "Details for the event "+ event.getName());
 
-
         nameTextView               = (TextView)findViewById(R.id.event_details_name);
         descriptionTextView        = (TextView)findViewById(R.id.event_details_description);
         //invitedPeopleTextView      = (TextView)findViewById(R.id.event_details_invited_people);
@@ -80,6 +79,7 @@ public class EventDetailsActivity extends Activity {
                 //fill with the values returned
                 //event = (Event)data.getParcelableExtra("event");
                 EventDetailsActivity.this.event = (Event)data.getParcelableExtra("event");
+
             }
             else if (resultCode == RESULT_CANCELED) {
                 Log.d(TAG, "onActivityResult received RESULT_CANCEL from CalendarActivity with data: "+data);
