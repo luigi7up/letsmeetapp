@@ -41,22 +41,12 @@
               android:layout_height="wrap_content"
               android:text="description" />
 
-    <!--
-    <TextView android:id="@+id/event_details_invited_people"
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:text="people" />
-    <TextView android:id="@+id/event_details_days"
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:text="days" />
-    -->
 
 
     <Button android:id="@+id/open_event_calendar_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/event_calendar"
+            android:text="@string/your_availability"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dip"/>
 
@@ -69,8 +59,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="#bbcccccc">
-
-
         </LinearLayout>
     </HorizontalScrollView>
 

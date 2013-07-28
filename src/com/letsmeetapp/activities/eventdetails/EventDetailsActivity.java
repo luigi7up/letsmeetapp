@@ -61,12 +61,13 @@ public class EventDetailsActivity extends Activity {
                 Intent intent = new Intent(EventDetailsActivity.this, AvailabilityCalendarActivity.class);
                 intent.putExtra("event", EventDetailsActivity.this.event);      //Calendar doesn't implemetn Parcelable so I send the whole event instead of event.getCreationdate...
                 intent.putExtra("allSelectedDays",new ArrayList<Day>());        //Calendar doesn't implemetn Parcelable so I send the whole event instead of event.getCreationdate...
-                startActivityForResult(intent, 1);
+                startActivity(intent);
 
             }
         });
 
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -74,6 +75,8 @@ public class EventDetailsActivity extends Activity {
         //coming back from CalendarActivity
         if(requestCode == 1){
             if(resultCode == RESULT_OK){
+
+                //TODO refresh the EVENT object by calling GET /events and show new availability result...
                 //fill with the values returned
                 //event = (Event)data.getParcelableExtra("event");
                 EventDetailsActivity.this.event = (Event)data.getParcelableExtra("event");
@@ -82,5 +85,7 @@ public class EventDetailsActivity extends Activity {
                 Log.d(TAG, "onActivityResult received RESULT_CANCEL from CalendarActivity with data: "+data);
             }
         }
+
+
     }
 }

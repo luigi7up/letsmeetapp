@@ -14,7 +14,6 @@ import android.widget.Toast;
 import com.letsmeetapp.Constants;
 import com.letsmeetapp.R;
 import com.letsmeetapp.activities.allevents.AllEventsListActivity;
-import com.letsmeetapp.activities.createevent.CreateEventActivity;
 import com.letsmeetapp.rest.*;
 import com.letsmeetapp.utilities.NetUtils;
 

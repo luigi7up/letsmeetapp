@@ -17,8 +17,6 @@ import com.letsmeetapp.Constants;
 import com.letsmeetapp.R;
 import com.letsmeetapp.activities.allevents.AllEventsListActivity;
 import com.letsmeetapp.activities.calendar.*;
-import com.letsmeetapp.customviews.CustomProgressSpinner;
-import com.letsmeetapp.model.Day;
 import com.letsmeetapp.model.Event;
 import com.letsmeetapp.rest.HTTPVerb;
 import com.letsmeetapp.rest.RESTLoader;
@@ -27,9 +25,7 @@ import com.letsmeetapp.rest.Session;
 import com.letsmeetapp.utilities.NetUtils;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 
 /**
  * Represents the activity holding a calendar view for a month, the button to confirm the selection etc.
@@ -247,9 +243,12 @@ public class AvailabilityCalendarActivity extends CalendarActivity
                     Log.d(TAG, "Code 200 returned");
                     //No parser because we look only the code
                     Toast.makeText(AvailabilityCalendarActivity.this.getApplicationContext(), "Your availability is updated", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(AvailabilityCalendarActivity.this, AllEventsListActivity.class);
-                    startActivity(intent);
+
+                    //Intent intent = new Intent(AvailabilityCalendarActivity.this, AllEventsListActivity.class);
+                    //startActivity(intent);
                     finish();   //destroy this activity from the. User cant go back to it
+                    //return;
+
                 }else if(mResponse.getCode()== 401){
                     //User has to provide email/pass
                     Log.d(TAG, "Code 401 returned");

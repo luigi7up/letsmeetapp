@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 /**
  * Represents the main screen of the application that shows a list of events a user has been invited to or that he(she
- * has created. The way it works is it gets an instance of LoaderManager class and it initializes a new RestLoader
+ * has created. The way it works is it gets an instance of LoaderManager class and it initializes a new RESTLoader
  *
  */
 public class AllEventsListActivity extends FragmentActivity
