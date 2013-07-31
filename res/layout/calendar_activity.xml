@@ -6,8 +6,7 @@
               android:layout_height="fill_parent"
               android:orientation="vertical"
               android:gravity="top"
-              android:background="@drawable/app_background"
-        >
+              android:background="@drawable/app_background">
     <LinearLayout
             android:id="@+id/page_buttons"
             android:orientation="horizontal"
@@ -148,7 +147,8 @@
               android:stretchMode="columnWidth"
               android:horizontalSpacing="0dp"
               android:verticalSpacing="1dp"
-              android:gravity="top"
+              android:gravity="center|top"
+              android:paddingLeft="1dp"
 
             />
     <Button android:id="@+id/done_selecting_dates"

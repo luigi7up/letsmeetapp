@@ -26,6 +26,7 @@ import com.letsmeetapp.utilities.NetUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Collections;
 
 /**
  * Represents the activity holding a calendar view for a month, the button to confirm the selection etc.
@@ -38,7 +39,7 @@ public class AvailabilityCalendarActivity extends CalendarActivity
 
     private Event event;                                      //used when seeing calendar for a Created event
     private CalendarDayView touchedDayView;                   //Reference to a touched view that a OnClick handler of popup can access
-    private EventDaysUserAvailability eventDaysUserAvailability;    //Initialized with all days for event and logged user's availability
+    private EventDaysUserAvailability eventDaysUserAvailability;    //holds the users availability for each day in event.
 
     private LoaderManager loaderManager;        //needed for the RESTLoader that will send POST /events
     private RESTResponse mResponse;
@@ -51,12 +52,9 @@ public class AvailabilityCalendarActivity extends CalendarActivity
         setContentView(R.layout.calendar_activity);
 
         //get all previously selected dates (when exiting and coming back...)
-        //allSelectedDays = (ArrayList<Day>)getIntent().getExtras().get("allSelectedDays");
-
-        //get all previously selected dates (when exiting and coming back...)
         event = (Event)getIntent().getExtras().get("event");
 
-        //This object takes the event as parameter and server as a holder of mapping for Day:availability
+        //Initially extracts user's availability from Event object. Later it's updated with new selections. Lastly it's sent to the service
         eventDaysUserAvailability = new EventDaysUserAvailability(event);
 
         //Open the calendar showing the month of first day in the event
@@ -105,13 +103,6 @@ public class AvailabilityCalendarActivity extends CalendarActivity
                 else loaderManager.restartLoader(1, null, AvailabilityCalendarActivity.this);
 
 
-                /*
-                Intent returnIntent = new Intent();
-                returnIntent.putExtra("event", AvailabilityCalendarActivity.this.event);
-                setResult(RESULT_OK, returnIntent);
-                finish();
-
-                */
             }
         });
 
@@ -173,17 +164,27 @@ public class AvailabilityCalendarActivity extends CalendarActivity
     * */
     @Override
     public void resetCalendarAdapter(String direction){
+
+        //Sort the days
+        Collections.sort(event.getDays());
+
         //TODO if user is trying to go to a month lower than the minimum event date or higher then the maximum do nosthing and show dialog
         Calendar minEventDay    = event.getDays().get(0).getCurrentDate();
         int minEventDaysYear    = minEventDay.get(Calendar.YEAR);
-        int minEventDaysMonth   = minEventDay.get(Calendar.MONTH);
+        int minEventDaysMonth   = minEventDay.get(Calendar.MONTH);  //if event holds days from month 6,7,8 thia will have value 6
+
+        Log.d(TAG,"Min: "+minEventDaysMonth);
 
         Calendar maxEventDay    = event.getDays().get(event.getDays().size()-1).getCurrentDate();
         int maxEventDaysYear    = maxEventDay.get(Calendar.YEAR);
-        int maxEventDaysMonth   = maxEventDay.get(Calendar.MONTH);
+        int maxEventDaysMonth   = maxEventDay.get(Calendar.MONTH);  //if event holds days from month 6,7,8 thia will have value 8
+
+        Log.d(TAG,"Max: "+maxEventDaysMonth);
 
         int currentMonth    = getMonthShowing().get(Calendar.MONTH);
         int currentYear     = getMonthShowing().get(Calendar.YEAR);
+
+        Log.d(TAG,"Current month: "+currentMonth);
 
         //User wants to go to the next month
         if(direction.equals("next")){
@@ -245,10 +246,7 @@ public class AvailabilityCalendarActivity extends CalendarActivity
                     Log.d(TAG, "Code 200 returned");
                     //No parser because we look only the code
                     Toast.makeText(AvailabilityCalendarActivity.this.getApplicationContext(), "Your availability is updated", Toast.LENGTH_LONG).show();
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/clean
                     //Intent intent = new Intent(AvailabilityCalendarActivity.this, AllEventsListActivity.class);
                     //startActivity(intent);
                     finish();   //destroy this activity from the. User cant go back to it

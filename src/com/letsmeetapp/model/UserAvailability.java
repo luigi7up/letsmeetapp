@@ -8,7 +8,7 @@ import java.util.Calendar;
 
 /**
 *   Event JSON comes with an array "invited_users" where each object of that array holds the information about
- *   the invited user email, availability per day etc.
+ *   the invited user email, availability per day etc. This is a helper class that makes that manipulation easier
  */
 public class UserAvailability implements Parcelable {
     String email_invitation;

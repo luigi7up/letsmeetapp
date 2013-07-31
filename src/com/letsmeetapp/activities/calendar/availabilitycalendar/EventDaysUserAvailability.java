@@ -64,10 +64,6 @@ public class EventDaysUserAvailability {
         //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-<<<<<<< HEAD
-=======
-        //2013-07-10T15:37:24.000Z
->>>>>>> origin/clean
 
        //new StringBuilder("a").append("b").append("c").toString().
         StringBuilder sBuilder = new StringBuilder();

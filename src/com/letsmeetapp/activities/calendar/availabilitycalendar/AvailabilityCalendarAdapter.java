@@ -30,7 +30,7 @@ public class AvailabilityCalendarAdapter extends CalendarAdapter {
 
     private static final String TAG = AvailabilityCalendarAdapter.class.getName();
 
-
+    private Context mContext;
     private Event                       event;                         //used when seeing calendar for a Created event
     private ArrayList<CalendarDayView>  generatedDayViews;
     private ArrayList<Day>              eventDays;
@@ -41,6 +41,7 @@ public class AvailabilityCalendarAdapter extends CalendarAdapter {
 
     public AvailabilityCalendarAdapter(Context c, Calendar currentMonth, Event event){
         super(c);
+        this.mContext                = c;
         this.event              = event;
         this.dayViewDimension   = calculateDayViewDimension();
         this.currentMonth       = currentMonth;
@@ -95,13 +96,8 @@ public class AvailabilityCalendarAdapter extends CalendarAdapter {
                 newDayCalendarDayView.setStyle(CalendarDayView.Style.SELECTED);
                 newDayCalendarDayView.setBehaviour(CalendarDayView.Behaviour.CLICKABLE);
 
-                String dayAvailability = getCurrentUsersAvailabilityForADay(newDayCalendarDayView.getDay(), event, Session.getInstance().getEmail());
-<<<<<<< HEAD
-                newDayCalendarDayView.getDay().setCurrentUserAvailability(dayAvailability);
-=======
-                //newDayCalendarDayView.getDay().setCurrentUserAvailability(dayAvailability);
-
->>>>>>> origin/clean
+                //String dayAvailability = getCurrentUsersAvailabilityForADay(newDayCalendarDayView.getDay(), event, Session.getInstance().getEmail());
+                String dayAvailability = ((AvailabilityCalendarActivity)mContext).getEventDaysUserAvailability().getAvailabilityForDay(newDayCalendarDayView.getDay());
                 newDayCalendarDayView.setAvailabilityText(dayAvailability);
 
                 //newDayCalendarDayView.getDay().setCurrentUserAvailability(dayAvailability);
@@ -143,10 +139,13 @@ public class AvailabilityCalendarAdapter extends CalendarAdapter {
     }
 
 
+
+
     /*
     * Methods goes through day availability for a user inside the EVENT object that was created from parsing GET /events
     * */
-     private String getCurrentUsersAvailabilityForADay(Day day, Event event, String userEmail){
+
+/*      private String getCurrentUsersAvailabilityForADay(Day day, Event event, String userEmail){
         //Get the index of a day in the event.days array to be able to extract the availability for it in events.invited_usesrs.availability
         int dayIndexInEvent = 0;
         int counter =0;
@@ -156,9 +155,15 @@ public class AvailabilityCalendarAdapter extends CalendarAdapter {
             }
             counter++;
         }
+         //Find
          for(UserAvailability ua:event.getInvited_users()){
              if(ua.getUser_email()!=null && ua.getUser_email().equalsIgnoreCase(userEmail)){
-                 return ua.getAvailability().get(dayIndexInEvent);
+                 return ((AvailabilityCalendarActivity)mContext).getEventDaysUserAvailability().getAvailabilityForDay(day);
+                 //return ua.getAvailability().get(dayIndexInEvent);
+
+                 //cont eventDaysUserAvailability.
+                 //getAvailabilityForDay
+
              }
          }
 
@@ -166,6 +171,10 @@ public class AvailabilityCalendarAdapter extends CalendarAdapter {
          return "?";
 
     }
+    */
+
+
+
 
     @Override
     public int getCount() {

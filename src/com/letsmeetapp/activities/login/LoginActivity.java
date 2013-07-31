@@ -43,11 +43,10 @@ public class LoginActivity extends FragmentActivity implements LoaderManager.Loa
         */
 
         //TODO remove hard coded values...
-        Session.getInstance().setEmail("user5real@abc.com");
+        Session.getInstance().setEmail("user6real@abc.com");
         Session.getInstance().setMd5Pass("1234");
 
         //TODO Implement the logic of show splash screen and try to check the users login using the credentials from the SharedPrefs
-
 
         this.setContentView(R.layout.login_credentials_activity);
         emailEditT  = (EditText)this.findViewById(R.id.login_email);

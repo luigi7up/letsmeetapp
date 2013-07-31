@@ -19,39 +19,36 @@
         <option name="nightMode" value="notnight" />
         <option name="targetHashString" value="android-17" />
         <option name="theme" value="AppBaseTheme" />
-        <option name="visible" value="false" />
       </GlobalState>
     </option>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="Availa" />
-    <option name="TOOL_WINDOW_LOG_LEVEL" value="ERROR" />
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="Availability" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="DEBUG" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c75b5f84-20e5-4378-a527-a118c18d101f" name="Default" comment="">
-      <change type="MOVED" beforePath="C:\Users\luka\IdeaProjects\letsmeetapp\src\com\letsmeetapp\rest\RestLoader.java" afterPath="$PROJECT_DIR$/src/com/letsmeetapp/rest/RESTLoader.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/letsmeetapp/activities/allevents/AllEventsListActivity.java" afterPath="$PROJECT_DIR$/src/com/letsmeetapp/activities/allevents/AllEventsListActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/letsmeetapp/activities/calendar/availabilitycalendar/AvailabilityCalendarActivity.java" afterPath="$PROJECT_DIR$/src/com/letsmeetapp/activities/calendar/availabilitycalendar/AvailabilityCalendarActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/letsmeetapp/activities/calendar/availabilitycalendar/AvailabilityCalendarAdapter.java" afterPath="$PROJECT_DIR$/src/com/letsmeetapp/activities/calendar/availabilitycalendar/AvailabilityCalendarAdapter.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/letsmeetapp/Constants.java" afterPath="$PROJECT_DIR$/src/com/letsmeetapp/Constants.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/letsmeetapp/activities/calendar/availabilitycalendar/EventDaysUserAvailability.java" afterPath="$PROJECT_DIR$/src/com/letsmeetapp/activities/calendar/availabilitycalendar/EventDaysUserAvailability.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/letsmeetapp/activities/eventdetails/EventDetailsActivity.java" afterPath="$PROJECT_DIR$/src/com/letsmeetapp/activities/eventdetails/EventDetailsActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/letsmeetapp/activities/login/LoginActivity.java" afterPath="$PROJECT_DIR$/src/com/letsmeetapp/activities/login/LoginActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/event_details_activity.xml" afterPath="$PROJECT_DIR$/res/layout/event_details_activity.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/values/strings.xml" afterPath="$PROJECT_DIR$/res/values/strings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/letsmeetapp/model/UserAvailability.java" afterPath="$PROJECT_DIR$/src/com/letsmeetapp/model/UserAvailability.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/calendar_activity.xml" afterPath="$PROJECT_DIR$/res/layout/calendar_activity.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/calendar_day.xml" afterPath="$PROJECT_DIR$/res/layout/calendar_day.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="letsmeetapp.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1375038425015" ignored="false" />
-    <file path="/fragment.java" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1374489067213" ignored="false" />
+    <file path="/Dummy.txt" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1375170375205" ignored="false" />
+    <file path="/fragment.java" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1375171175935" ignored="false" />
     <file path="/CalendarActivityOnTouchListener.java" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1369829773952" ignored="false" />
     <file path="/CalendarAdapter.java" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1373555956599" ignored="false" />
     <file path="/CalendarActivity.java" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1373631263920" ignored="false" />
     <file path="/CalendarDayView.java" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1374502289323" ignored="false" />
     <file path="/Day.java" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1371835504802" ignored="false" />
     <file path="/main_bckgrd.xml" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1369899858432" ignored="false" />
-    <file path="/calendar_activity.xml" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1372777011954" ignored="false" />
+    <file path="/calendar_activity.xml" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1375185973729" ignored="false" />
     <file path="/app_background.xml" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1370863599351" ignored="false" />
     <file path="/create_event_main.xml" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1369902079488" ignored="false" />
     <file path="/CreateEventActivity.java" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1374151862831" ignored="false" />
@@ -59,7 +56,7 @@
     <file path="/create_event_activity.xml" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1373294323984" ignored="false" />
     <file path="/styles.xml" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1371991275430" ignored="false" />
     <file path="/themes.xml" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1370535776946" ignored="false" />
-    <file path="/calendar_day.xml" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1374500505434" ignored="false" />
+    <file path="/calendar_day.xml" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1375186245101" ignored="false" />
     <file path="/Constants.java" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1372323032856" ignored="false" />
     <file path="$PROJECT_DIR$/../themesandstyles/AndroidManifest.xml" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1370345071870" ignored="false" />
     <file path="$PROJECT_DIR$/../themesandstyles/res/values/strings.xml" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1370345071948" ignored="false" />
@@ -130,17 +127,17 @@
     <file path="/AvailabilityActivity.java" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1373285594235" ignored="false" />
     <file path="/AvailabilityCalendarActivityOnClickListener.java" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1372759716816" ignored="false" />
     <file path="/AvailabilityCalendarChangeMonthOnClickListener.java" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1372760076877" ignored="false" />
-    <file path="/AvailabilityCalendarAdapter.java" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1374868832323" ignored="false" />
+    <file path="/AvailabilityCalendarAdapter.java" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1375173577883" ignored="false" />
     <file path="/CalendarActivityBase.java" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1373285408267" ignored="false" />
     <file path="/calendar_day_dead.xml" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1372774798290" ignored="false" />
     <file path="/CreateCalendarAdapter.java" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1373625668632" ignored="false" />
     <file path="/CreateCalendarAdapterTest.java" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1373357349871" ignored="false" />
-    <file path="/AvailabilityCalendarActivity.java" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1375043454816" ignored="false" />
+    <file path="/AvailabilityCalendarActivity.java" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1375182123163" ignored="false" />
     <file path="/CreateCalendarActivity.java" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1373625443641" ignored="false" />
     <file path="/GetEvents.java" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1373899607065" ignored="false" />
     <file path="/IParser.java" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1373899653751" ignored="false" />
     <file path="/GetEventsParser.java" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1374155853849" ignored="false" />
-    <file path="/UserAvailability.java" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1374156226198" ignored="false" />
+    <file path="/UserAvailability.java" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1375173281901" ignored="false" />
     <file path="/availability_popup.xml" changelist="c75b5f84-20e5-4378-a527-a118c18d101f" time="1374579539948" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -226,8 +223,8 @@
         <option name="CONDITION_ENABLED" value="true" />
         <option name="CLASS_FILTERS_ENABLED" value="false" />
         <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
+        <option name="CONDITION" value="&#13;&#13;JAVA" />
+        <option name="LOG_MESSAGE" value="&#13;&#13;JAVA" />
       </breakpoint>
     </line_breakpoints>
     <breakpoint_rules />
@@ -242,40 +239,62 @@
       <file leaf-file-name="AvailabilityCalendarActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/letsmeetapp/activities/calendar/availabilitycalendar/AvailabilityCalendarActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="246" column="22" selection-start="11544" selection-end="11544" vertical-scroll-proportion="-10.6">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EventDetailsActivity.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/letsmeetapp/activities/eventdetails/EventDetailsActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="70" column="4" selection-start="2914" selection-end="2914" vertical-scroll-proportion="0.5436047">
+            <state line="51" column="36" selection-start="2045" selection-end="2045" vertical-scroll-proportion="0.0">
               <folding>
-                <element signature="method#onCreate#0;class#EventDetailsActivity#0" expanded="false" />
-                <element signature="method#onActivityResult#0;class#EventDetailsActivity#0" expanded="false" />
+                <element signature="method#dayViewTouched#0;class#AvailabilityCalendarActivity#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="event_details_activity.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/res/layout/event_details_activity.xml">
+      <file leaf-file-name="calendar_activity.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/layout/calendar_activity.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="150" column="38" selection-start="6016" selection-end="6016" vertical-scroll-proportion="-65.28">
+              <folding />
+            </state>
+          </provider>
           <provider editor-type-id="android-designer">
             <state />
           </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="calendar_day.xml" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/res/layout/calendar_day.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="60" column="47" selection-start="2330" selection-end="2330" vertical-scroll-proportion="-7.6666665">
+            <state line="13" column="14" selection-start="539" selection-end="539" vertical-scroll-proportion="0.47424892">
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AvailabilityCalendarAdapter.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/letsmeetapp/activities/calendar/availabilitycalendar/AvailabilityCalendarAdapter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="41" column="22" selection-start="1688" selection-end="1688" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="method#isInEvent#0;class#AvailabilityCalendarAdapter#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LoginActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/letsmeetapp/activities/login/LoginActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="49" column="0" selection-start="2058" selection-end="2058" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="strings.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
+      <file leaf-file-name="UserAvailability.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/letsmeetapp/model/UserAvailability.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="18" selection-start="586" selection-end="586" vertical-scroll-proportion="-8.84">
+            <state line="10" column="113" selection-start="373" selection-end="373" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -305,29 +324,33 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/com/letsmeetapp/model/UserAvailability.java" />
-        <option value="$PROJECT_DIR$/src/com/letsmeetapp/model/Event.java" />
-        <option value="$PROJECT_DIR$/src/com/letsmeetapp/activities/login/LoginActivity.java" />
-        <option value="$PROJECT_DIR$/res/layout/calendar_day.xml" />
         <option value="$PROJECT_DIR$/src/com/letsmeetapp/model/Day.java" />
         <option value="$PROJECT_DIR$/src/com/letsmeetapp/activities/calendar/CalendarDayView.java" />
         <option value="$PROJECT_DIR$/res/layout/availability_popup.xml" />
         <option value="$PROJECT_DIR$/src/com/letsmeetapp/rest/RestLoader.java" />
         <option value="$PROJECT_DIR$/src/com/letsmeetapp/activities/allevents/AllEventsListActivity.java" />
-        <option value="$PROJECT_DIR$/src/com/letsmeetapp/Constants.java" />
-        <option value="$PROJECT_DIR$/src/com/letsmeetapp/activities/calendar/availabilitycalendar/EventDaysUserAvailability.java" />
-        <option value="$PROJECT_DIR$/src/com/letsmeetapp/activities/calendar/availabilitycalendar/AvailabilityCalendarAdapter.java" />
-        <option value="$PROJECT_DIR$/src/com/letsmeetapp/activities/calendar/availabilitycalendar/AvailabilityCalendarActivity.java" />
         <option value="$PROJECT_DIR$/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/res/layout/event_details_activity.xml" />
         <option value="$PROJECT_DIR$/src/com/letsmeetapp/activities/eventdetails/EventDetailsActivity.java" />
+        <option value="$PROJECT_DIR$/src/com/letsmeetapp/activities/calendar/availabilitycalendar/EventDaysUserAvailability.java" />
+        <option value="$PROJECT_DIR$/src/com/letsmeetapp/Constants.java" />
+        <option value="$PROJECT_DIR$/src/com/letsmeetapp/model/UserAvailability.java" />
+        <option value="$PROJECT_DIR$/src/com/letsmeetapp/activities/calendar/availabilitycalendar/AvailabilityCalendarAdapter.java" />
+        <option value="$PROJECT_DIR$/src/com/letsmeetapp/activities/login/LoginActivity.java" />
+        <option value="$PROJECT_DIR$/src/com/letsmeetapp/activities/calendar/availabilitycalendar/AvailabilityCalendarActivity.java" />
+        <option value="$PROJECT_DIR$/res/layout/calendar_activity.xml" />
+        <option value="$PROJECT_DIR$/res/layout/calendar_day.xml" />
       </list>
     </option>
   </component>
+  <component name="MavenProjectNavigator">
+    <treeState />
+  </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="150" />
-    <option name="width" value="1692" />
-    <option name="height" value="1050" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1296" />
+    <option name="height" value="1010" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -381,6 +404,7 @@
     </navigator>
     <panes>
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -440,6 +464,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="rest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="letsmeetapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="letsmeetapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="letsmeetapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="model" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -575,7 +621,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1081,31 +1126,31 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="150" y="0" width="1692" height="1050" extended-state="0" />
+    <frame x="-8" y="-8" width="1296" height="1010" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30357143" sideWeight="0.8114543" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.831184" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17824967" sideWeight="0.81618655" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3024619" sideWeight="0.8114543" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.6493976" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28606158" sideWeight="0.64819276" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1493976" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24959481" sideWeight="0.7924971" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19932811" sideWeight="0.507722" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35180724" sideWeight="0.507722" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3415638" sideWeight="0.49227798" order="11" side_tool="true" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5494506" sideWeight="0.23680824" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33146697" sideWeight="0.7110682" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3313253" sideWeight="0.7110682" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36576787" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3282532" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24959481" sideWeight="0.6787808" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.297546" sideWeight="0.8006719" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.059967585" sideWeight="0.8385542" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.6493976" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="top" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15316045" sideWeight="0.64819276" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34615386" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.6705744" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.6705744" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.6705744" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3281075" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Thumbnails" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32942554" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
@@ -1195,126 +1240,124 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/letsmeetapp/activities/login/LoginActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="45" selection-start="1925" selection-end="1925" vertical-scroll-proportion="0.5300353">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/letsmeetapp/activities/calendar/CalendarActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="28" selection-start="1401" selection-end="1401" vertical-scroll-proportion="0.33333334">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/letsmeetapp/activities/calendar/CalendarActivityOnClickListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="69" column="45" selection-start="3071" selection-end="3085" vertical-scroll-proportion="0.64981276">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/calendar_day.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="43" selection-start="613" selection-end="625" vertical-scroll-proportion="0.5450902" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/letsmeetapp/activities/calendar/CalendarDayView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="230" column="31" selection-start="7376" selection-end="7376" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/availability_popup.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="55" selection-start="329" selection-end="353" vertical-scroll-proportion="0.0327553" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/letsmeetapp/Constants.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="50" selection-start="1015" selection-end="1015" vertical-scroll-proportion="0.8185907">
+        <state line="20" column="48" selection-start="629" selection-end="629" vertical-scroll-proportion="0.38202247">
           <folding />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/letsmeetapp/activities/allevents/AllEventsListActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="104" selection-start="1061" selection-end="1061" vertical-scroll-proportion="0.1559633" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/letsmeetapp/rest/RESTLoader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="16" selection-start="1184" selection-end="1184" vertical-scroll-proportion="0.28035983">
+        <state line="0" column="74" selection-start="0" selection-end="30" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/letsmeetapp/model/Day.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="170" column="16" selection-start="5534" selection-end="5534" vertical-scroll-proportion="0.0">
+        <state line="52" column="34" selection-start="1951" selection-end="1951" vertical-scroll-proportion="0.106471814">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/letsmeetapp/activities/calendar/availabilitycalendar/AvailabilityCalendarAdapter.java">
+    <entry file="file://$PROJECT_DIR$/src/com/letsmeetapp/activities/calendar/CalendarActivityOnClickListener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="109" column="65" selection-start="5478" selection-end="5478" vertical-scroll-proportion="0.0">
+        <state line="27" column="16" selection-start="1117" selection-end="1117" vertical-scroll-proportion="0.502">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/letsmeetapp/model/Event.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="199" column="22" selection-start="6719" selection-end="6719" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/letsmeetapp/activities/calendar/CalendarChangeMonthOnClickListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="43" column="37" selection-start="1462" selection-end="1482" vertical-scroll-proportion="0.7443609">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/letsmeetapp/model/UserAvailability.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="113" selection-start="373" selection-end="373" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/letsmeetapp/activities/allevents/AllEventsListActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="49" column="4" selection-start="1876" selection-end="1876" vertical-scroll-proportion="-0.20700152">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/letsmeetapp/activities/login/LoginActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="49" column="0" selection-start="2058" selection-end="2058" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/letsmeetapp/activities/calendar/availabilitycalendar/EventDaysUserAvailability.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="61" column="26" selection-start="2653" selection-end="2653" vertical-scroll-proportion="0.73015875">
+        <state line="52" column="27" selection-start="2352" selection-end="2371" vertical-scroll-proportion="1.0413105">
           <folding>
-            <element signature="method#EventDaysUserAvailability#0;class#EventDaysUserAvailability#0" expanded="false" />
-            <element signature="method#changeAvailabilityForDay#0;class#EventDaysUserAvailability#0" expanded="false" />
             <element signature="method#toJson#0;class#EventDaysUserAvailability#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/letsmeetapp/activities/calendar/availabilitycalendar/AvailabilityCalendarAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="22" selection-start="1688" selection-end="1688" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="method#isInEvent#0;class#AvailabilityCalendarAdapter#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/android-sdk/platforms/android-17/android.jar!/res/drawable-xhdpi/grid_selector_background_pressed.9.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="jar://C:/android-sdk/platforms/android-17/android.jar!/res/drawable-hdpi/grid_selector_background_focus.9.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/letsmeetapp/activities/calendar/availabilitycalendar/AvailabilityCalendarActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="246" column="22" selection-start="11544" selection-end="11544" vertical-scroll-proportion="-10.6">
-          <folding />
+        <state line="51" column="36" selection-start="2045" selection-end="2045" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="method#dayViewTouched#0;class#AvailabilityCalendarActivity#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
+    <entry file="file://$PROJECT_DIR$/res/layout/calendar_activity.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="18" selection-start="586" selection-end="586" vertical-scroll-proportion="-8.84">
+        <state line="150" column="38" selection-start="6016" selection-end="6016" vertical-scroll-proportion="-65.28">
           <folding />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/event_details_activity.xml">
       <provider editor-type-id="android-designer">
         <state />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/calendar_day.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="60" column="47" selection-start="2330" selection-end="2330" vertical-scroll-proportion="-7.6666665">
+        <state line="13" column="14" selection-start="539" selection-end="539" vertical-scroll-proportion="0.47424892">
           <folding />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/letsmeetapp/activities/eventdetails/EventDetailsActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="70" column="4" selection-start="2914" selection-end="2914" vertical-scroll-proportion="0.5436047">
-          <folding>
-            <element signature="method#onCreate#0;class#EventDetailsActivity#0" expanded="false" />
-            <element signature="method#onActivityResult#0;class#EventDetailsActivity#0" expanded="false" />
-          </folding>
-        </state>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
   </component>
